@@ -1,7 +1,7 @@
 # Jjodel Documentation
 
 This repository contains the official documentation for 
-[Jjodel](https://github.com/jjodel-modeling/jjodel) — 
+[Jjodel](https://github.com/jjodel-modeling/) — 
 an open-source web-based metamodeling tool for research and education.
 
 ## Structure
