@@ -31,6 +31,7 @@ export default defineConfig({
         items: [
           { text: 'What is MDE?', link: '/concepts/what-is-mde' },
           { text: 'Metamodel vs Model', link: '/concepts/metamodel-vs-model' },
+          { text: 'The modeling layers', link: '/concepts/modeling-layers' },
         ]
       }
     ]

@@ -78,5 +78,5 @@ building course material around concrete, runnable examples.
 ## Further reading
 
 - [Metamodel vs Model](./metamodel-vs-model.md) — the distinction in depth
-- [The four MOF layers](./mof-layers.md) — M0 through M3 explained
+- [The modeling layers](./modeling-layers.md) — M0 through M3 explained
 - [Model transformations](./transformations-theory.md) — how models become other models

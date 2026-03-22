@@ -117,6 +117,6 @@ class — a model object that conforms to the definition you wrote.
 ## Further reading
 
 - [What is MDE?](./what-is-mde.md) — the broader context
-- [The four MOF layers](./mof-layers.md) — M0 through M3 in depth
+- [The modeling layers](./modeling-layers.md) — M0 through M3 in depth
 - [Classes and attributes](./classes-attributes.md) — how to define them in Jjodel
 - [References](./references.md) — composition, association, multiplicity
