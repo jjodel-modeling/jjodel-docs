@@ -2,7 +2,8 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://docs.jjodel.io',
+  site: 'https://jjodel-modeling.github.io',
+  base: '/jjodel-docs/',
   integrations: [
     starlight({
       title: 'Jjodel',
@@ -86,7 +87,6 @@ export default defineConfig({
         },
       ],
       components: {
-        // Override header to add "Try Jjodel" button
         SiteTitle: './src/components/SiteTitle.astro',
       },
     }),
