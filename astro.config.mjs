@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://jjodel-modeling.github.io',
-  base: '/jjodel-docs/',
+  site: 'https://docs.jjodel.io',
   integrations: [
     starlight({
       title: 'Jjodel',
