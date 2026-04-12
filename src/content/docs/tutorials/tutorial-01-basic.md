@@ -5,8 +5,6 @@ sidebar:
   order: 1
 ---
 
-# Tutorial 1: A Basic Class Diagram Language
-
 In this tutorial you will build a simple UML class diagram language from scratch. By the end, you will have a working language workbench that lets you create class diagrams with classes, attributes, and associations.
 
 **Prerequisites:** A Jjodel account and familiarity with the [Getting Started](../getting-started/) guide.

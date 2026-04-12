@@ -5,8 +5,6 @@ sidebar:
   order: 3
 ---
 
-# Jjodel Events
-
 Jjodel supports an event-driven interaction model that allows you to define custom behaviors in response to user actions on model elements. Events are configured through the **Events** tab in the Viewpoint Properties Panel.
 
 ## Supported Events

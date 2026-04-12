@@ -5,8 +5,6 @@ sidebar:
   order: 1
 ---
 
-# Install Jjodel Locally
-
 While Jjodel is designed as a cloud-native platform accessible at [app.jjodel.io](https://app.jjodel.io), you can also run it locally for offline use, development, or research purposes.
 
 ## Option 1 — Docker (Recommended)

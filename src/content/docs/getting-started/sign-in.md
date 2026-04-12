@@ -5,8 +5,6 @@ sidebar:
   order: 2
 ---
 
-# Sign In & Registration
-
 Jjodel is a cloud-based platform — all you need is a browser and an account.
 
 ## Creating an Account

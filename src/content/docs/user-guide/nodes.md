@@ -6,8 +6,6 @@ sidebar:
   label: Nodes & Edges
 ---
 
-# Nodes & Edges
-
 In Jjodel's graphical editor, model elements are rendered as **nodes** (shapes) and **edges** (connections). Understanding how nodes and edges work is essential for creating effective visual representations of your models.
 
 ## Nodes

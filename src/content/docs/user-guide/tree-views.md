@@ -6,8 +6,6 @@ sidebar:
   label: Tree Views
 ---
 
-# Tree Views
-
 Jjodel provides two specialized tree views — one for metamodels and one for models — that offer a hierarchical, text-oriented perspective of your modeling artifacts. Tree views complement the graphical canvas by making it easy to navigate, inspect, and edit complex structures.
 
 ## Tree View (Metamodel)

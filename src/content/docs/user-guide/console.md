@@ -6,8 +6,6 @@ sidebar:
   label: Console
 ---
 
-# Console
-
 The Jjodel Console is a built-in tool for interacting programmatically with your models and metamodels. It allows you to execute expressions, query model elements, test constraints, and debug viewpoint configurations.
 
 ## Accessing the Console

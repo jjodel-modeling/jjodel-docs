@@ -5,8 +5,6 @@ sidebar:
   order: 2
 ---
 
-# Project Structure
-
 In Jjodel, a **project** is the top-level container that organizes all the resources needed to define, visualize, and work with your modeling languages. Understanding the project structure helps you manage complexity as your languages grow.
 
 ## Anatomy of a Project

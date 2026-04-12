@@ -5,8 +5,6 @@ sidebar:
   order: 2
 ---
 
-# JjOM API Reference
-
 The JjOM API provides programmatic access to all elements in the Jjodel Object Model. You can use the API from the Console, within JjEL expressions, in viewpoint templates, and in event handlers.
 
 ## DClass API

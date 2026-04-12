@@ -5,8 +5,6 @@ sidebar:
   order: 10
 ---
 
-# Frequently Asked Questions
-
 ## General
 
 ### What is Jjodel?

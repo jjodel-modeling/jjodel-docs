@@ -1,13 +1,12 @@
 /* Jjodel Docs — Custom Starlight Theme */
 
-/* Color palette extracted from jjodel.io brand */
 :root {
-  /* Primary accent — Jjodel yellow/gold */
-  --sl-color-accent-low: #3d3100;
-  --sl-color-accent: #c9a200;
-  --sl-color-accent-high: #fff3c4;
+  --sl-font: 'Inter Variable', 'Inter', sans-serif;
 
-  /* Text colors */
+  --sl-color-accent-low: #1e293b;
+  --sl-color-accent: #475569;
+  --sl-color-accent-high: #cbd5e1;
+
   --sl-color-white: #ffffff;
   --sl-color-gray-1: #eceef2;
   --sl-color-gray-2: #c0c2c7;
@@ -18,11 +17,10 @@
   --sl-color-black: #17181c;
 }
 
-/* Light mode overrides */
 :root[data-theme='light'] {
-  --sl-color-accent-low: #fff8e1;
-  --sl-color-accent: #b8930a;
-  --sl-color-accent-high: #3d3100;
+  --sl-color-accent-low: #f1f5f9;
+  --sl-color-accent: #334155;
+  --sl-color-accent-high: #1e293b;
 
   --sl-color-white: #17181c;
   --sl-color-gray-1: #24272f;
@@ -45,15 +43,63 @@
   font-weight: 600;
   text-decoration: none;
   background: var(--sl-color-accent);
-  color: #17181c;
+  color: var(--sl-color-accent-high);
   transition: opacity 0.15s ease;
+}
+
+:root[data-theme='light'] .try-jjodel-btn {
+  color: #ffffff;
 }
 
 .try-jjodel-btn:hover {
   opacity: 0.85;
 }
 
-/* Slightly wider content area for readability */
-.sl-container {
-  max-width: 75rem;
+/* Admonitions — unified slate color scheme */
+.starlight-aside {
+  border-radius: 8px;
+}
+
+/* Note — slate light */
+.starlight-aside--note {
+  --sl-color-asides-text-accent: #334155;
+  border-color: #94a3b8;
+  background-color: #f1f5f9;
+}
+
+:root[data-theme='dark'] .starlight-aside--note {
+  --sl-color-asides-text-accent: #cbd5e1;
+  border-color: #475569;
+  background-color: #1e293b;
+}
+
+/* Tip — slate medium */
+.starlight-aside--tip {
+  --sl-color-asides-text-accent: #1e3a5f;
+  border-color: #64748b;
+  background-color: #e2e8f0;
+}
+
+:root[data-theme='dark'] .starlight-aside--tip {
+  --sl-color-asides-text-accent: #e2e8f0;
+  border-color: #64748b;
+  background-color: #1e293b;
+}
+
+/* Caution — warm slate */
+.starlight-aside--caution {
+  --sl-color-asides-text-accent: #78350f;
+  border-color: #d97706;
+  background-color: #fffbeb;
+}
+
+:root[data-theme='dark'] .starlight-aside--caution {
+  --sl-color-asides-text-accent: #fbbf24;
+  border-color: #d97706;
+  background-color: #292524;
+}
+
+/* Danger — keep distinct for visibility */
+.starlight-aside--danger {
+  border-radius: 8px;
 }

@@ -7,8 +7,10 @@ export default defineConfig({
     starlight({
       title: 'Jjodel',
       logo: {
-        src: './src/assets/jjodel-logo.png',
+        light: './src/assets/jjodel-logo-light.png',
+        dark: './src/assets/jjodel-logo-dark.png',
         alt: 'Jjodel',
+        replacesTitle: true,
       },
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/jjodel-modeling' },
@@ -52,6 +54,28 @@ export default defineConfig({
         },
       ],
       head: [
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preconnect',
+            href: 'https://fonts.googleapis.com',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preconnect',
+            href: 'https://fonts.gstatic.com',
+            crossorigin: true,
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap',
+          },
+        },
         {
           tag: 'link',
           attrs: {

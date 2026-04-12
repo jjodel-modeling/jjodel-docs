@@ -5,8 +5,6 @@ sidebar:
   order: 11
 ---
 
-# Video Tutorials
-
 This page collects short video introductions — "video pills" — that cover Jjodel's core concepts and features. Each video is self-contained and focuses on a single topic.
 
 ## Getting Started

@@ -6,8 +6,6 @@ sidebar:
   label: Viewpoints
 ---
 
-# Viewpoints
-
 Viewpoints are one of Jjodel's most powerful features. A viewpoint defines a **perspective** on a model — how elements look, how they behave, what constraints they must satisfy, and what artifacts they generate. The same model can have multiple viewpoints, each tailored to a different audience or purpose.
 
 ## Types of Viewpoints

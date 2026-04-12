@@ -5,8 +5,6 @@ sidebar:
   order: 4
 ---
 
-# Jjodel Definition Language
-
 The Jjodel Definition Language provides a textual notation for defining metamodels, viewpoints, and expressions. While Jjodel's graphical editors are the primary interface for most users, the definition language offers a compact, code-oriented alternative that is especially useful for advanced users, automation, and version control.
 
 ## Expression Languages

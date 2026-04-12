@@ -6,8 +6,6 @@ sidebar:
   label: Metamodel Editor
 ---
 
-# Metamodel Editor
-
 The Metamodel Editor is the core workspace for defining the **abstract syntax** of your modeling language. Here you create classes, define their attributes and operations, establish relationships (references), and set constraints that models must satisfy.
 
 ## Interface Overview

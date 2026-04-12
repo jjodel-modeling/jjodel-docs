@@ -6,8 +6,6 @@ sidebar:
   label: Dashboard
 ---
 
-# Dashboard
-
 The Dashboard is your personal hub in Jjodel. It is the first screen you see after logging in and provides an overview of all your projects, recent activity, and quick access to key actions.
 
 ## Overview

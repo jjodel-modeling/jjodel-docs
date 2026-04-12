@@ -5,8 +5,6 @@ sidebar:
   order: 1
 ---
 
-# Jjodel Object Model (JjOM)
-
 The Jjodel Object Model (JjOM) is the structured runtime framework at the heart of Jjodel. It represents all modeling components — models, metamodels, and viewpoints — in a unified, accessible structure.
 
 ## Core Modeling Constructs

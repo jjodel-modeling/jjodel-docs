@@ -5,8 +5,6 @@ sidebar:
   order: 1
 ---
 
-# Getting Started with Jjodel
-
 Jjodel is a cloud-native, collaborative metamodeling platform for defining, visualizing, and evolving Domain-Specific Modeling Languages (DSLs) directly in your browser. Whether you are a researcher, an educator, or a student, Jjodel lets you go from zero to your first working language workbench in minutes.
 
 ## What You Will Learn

@@ -5,8 +5,6 @@ sidebar:
   order: 1
 ---
 
-# Basic Notions
-
 This section introduces the fundamental concepts that underpin Jjodel. Understanding these notions will help you work effectively with the platform and appreciate its design philosophy.
 
 ## Models and Metamodels

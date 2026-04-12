@@ -5,8 +5,6 @@ sidebar:
   order: 3
 ---
 
-# Your First Project
-
 This guide walks you through creating a minimal but complete language workbench in Jjodel: a simple class diagram language with classes, attributes, and associations.
 
 ## Step 1 — Create a New Project

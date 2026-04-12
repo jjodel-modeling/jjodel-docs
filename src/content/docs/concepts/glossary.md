@@ -5,8 +5,6 @@ sidebar:
   order: 4
 ---
 
-# Glossary
-
 A reference of key terms used throughout the Jjodel documentation and in the broader field of Model-Driven Engineering (MDE).
 
 ---
