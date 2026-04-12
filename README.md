@@ -2,62 +2,103 @@
 
 Official documentation for [Jjodel](https://jjodel.io) — a cloud-native, collaborative metamodeling platform for research and education.
 
-## Structure
+Powered by [Astro](https://astro.build) + [Starlight](https://starlight.astro.build). Deployed at [docs.jjodel.io](https://docs.jjodel.io).
+
+## Quick Start
+
+```bash
+npm install
+npm run dev       # → http://localhost:4321
+npm run build     # → generates static site in dist/
+```
+
+## Project Structure
 
 ```
 jjodel-docs/
-├── index.mdx                    ← Landing page (Starlight splash)
-├── getting-started/             ← Quick start (3 pages)
-│   ├── index.md                 ← Overview
-│   ├── sign-in.md               ← Account creation & login
-│   └── first-project.md         ← Build your first language workbench
-├── user-guide/                  ← Feature documentation (6 pages)
-│   ├── dashboard.md
-│   ├── metamodel-editor.md
-│   ├── tree-views.md
-│   ├── viewpoints.md
-│   ├── nodes.md
-│   └── console.md
-├── concepts/                    ← Conceptual foundations (4 pages)
-│   ├── basic-notions.md
-│   ├── project-structure.md
-│   ├── modeling-language-anatomy.md
-│   └── glossary.md
-├── tutorials/                   ← Step-by-step exercises (2 pages)
-│   ├── tutorial-01-basic.md
-│   └── tutorial-02-viewpoint.md
-├── reference/                   ← Technical reference (4 pages)
-│   ├── jjom.md
-│   ├── jjom-api.md
-│   ├── jjodel-events.md
-│   └── jjodel-definition-language.md
-├── installation/                ← Local setup (1 page)
-│   └── install-jjodel.md
-├── faq.md                       ← Frequently Asked Questions
-└── video-pills.md               ← Video tutorial index
+├── astro.config.mjs              ← Starlight configuration
+├── package.json
+├── public/
+│   ├── CNAME                     ← custom domain for GitHub Pages
+│   └── favicon.png
+├── src/
+│   ├── assets/
+│   │   └── jjodel-logo.png
+│   ├── components/
+│   │   └── SiteTitle.astro       ← header with "Try Jjodel" button
+│   ├── content/
+│   │   └── docs/                 ← all documentation content
+│   │       ├── getting-started/
+│   │       ├── user-guide/
+│   │       ├── concepts/
+│   │       ├── tutorials/
+│   │       ├── reference/
+│   │       ├── installation/
+│   │       ├── faq.md
+│   │       ├── video-pills.md
+│   │       └── index.mdx
+│   └── styles/
+│       └── custom.css            ← Jjodel brand colors
+└── .github/
+    └── workflows/
+        └── deploy.yml            ← auto-deploy on push to main
 ```
 
-## Usage
+## Deployment
 
-This repository is the **single source of truth** for Jjodel documentation. It is consumed by:
+Deployment is **automatic**: every push to `main` triggers a GitHub Action that builds the site and deploys it to GitHub Pages.
 
-1. **jjodel-website** — rendered as the `/docs/` section via Astro + Starlight
-2. **Jjodel app** — used for in-app help and documentation
+### First-time setup
 
-## Contributing
+1. Go to the repo **Settings → Pages**
+2. Under "Build and deployment", select **GitHub Actions**
+3. In your DNS provider (Aruba), add a CNAME record:
+   - Host: `docs`
+   - Points to: `jjodel-modeling.github.io`
+4. In the repo **Settings → Pages → Custom domain**, enter `docs.jjodel.io`
+5. Enable "Enforce HTTPS"
 
-1. Fork the repository
-2. Create a branch for your changes
-3. Write or edit Markdown files following the existing conventions
-4. Submit a Pull Request
+After these steps, every push to `main` will automatically build and deploy the docs.
 
-### Conventions
+## Writing Documentation
 
-- Use [Starlight frontmatter](https://starlight.astro.build/reference/frontmatter/) for page metadata
-- Place screenshots in an `assets/` folder (not yet created — pending new UI screenshots)
-- Mark pending work with `<!-- TODO: description -->` comments
-- Write in English, using a direct and technically accessible tone
+All documentation lives in `src/content/docs/` as Markdown files with Starlight frontmatter:
+
+```markdown
+---
+title: Page Title
+description: A brief description for SEO and link previews.
+sidebar:
+  order: 1
+---
+
+# Page Title
+
+Your content here...
+```
+
+### Admonitions
+
+```markdown
+:::note
+Informational note.
+:::
+
+:::tip[Custom title]
+A helpful tip.
+:::
+
+:::caution
+Something to be careful about.
+:::
+```
+
+### Adding a new page
+
+1. Create a `.md` file in the appropriate directory under `src/content/docs/`
+2. Add frontmatter with `title`, `description`, and `sidebar.order`
+3. Commit and push — the site rebuilds automatically
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+MIT

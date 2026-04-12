@@ -1,0 +1,59 @@
+/* Jjodel Docs — Custom Starlight Theme */
+
+/* Color palette extracted from jjodel.io brand */
+:root {
+  /* Primary accent — Jjodel yellow/gold */
+  --sl-color-accent-low: #3d3100;
+  --sl-color-accent: #c9a200;
+  --sl-color-accent-high: #fff3c4;
+
+  /* Text colors */
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #eceef2;
+  --sl-color-gray-2: #c0c2c7;
+  --sl-color-gray-3: #888b96;
+  --sl-color-gray-4: #545861;
+  --sl-color-gray-5: #353841;
+  --sl-color-gray-6: #24272f;
+  --sl-color-black: #17181c;
+}
+
+/* Light mode overrides */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #fff8e1;
+  --sl-color-accent: #b8930a;
+  --sl-color-accent-high: #3d3100;
+
+  --sl-color-white: #17181c;
+  --sl-color-gray-1: #24272f;
+  --sl-color-gray-2: #353841;
+  --sl-color-gray-3: #545861;
+  --sl-color-gray-4: #888b96;
+  --sl-color-gray-5: #c0c2c7;
+  --sl-color-gray-6: #eceef2;
+  --sl-color-black: #ffffff;
+}
+
+/* Try Jjodel button in header */
+.try-jjodel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: var(--sl-color-accent);
+  color: #17181c;
+  transition: opacity 0.15s ease;
+}
+
+.try-jjodel-btn:hover {
+  opacity: 0.85;
+}
+
+/* Slightly wider content area for readability */
+.sl-container {
+  max-width: 75rem;
+}

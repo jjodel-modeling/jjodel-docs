@@ -1,0 +1,11 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/SiteTitle.astro';
+---
+
+<div style="display: flex; align-items: center; gap: 1rem;">
+  <Default {...Astro.props}><slot /></Default>
+  <a href="https://app.jjodel.io" class="try-jjodel-btn" target="_blank" rel="noopener">
+    Try Jjodel →
+  </a>
+</div>

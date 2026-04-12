@@ -1,12 +1,17 @@
 {
   "name": "jjodel-docs",
+  "type": "module",
   "version": "1.0.0",
+  "description": "Jjodel Documentation — powered by Astro + Starlight",
   "scripts": {
-    "dev": "vitepress dev",
-    "build": "vitepress build",
-    "preview": "vitepress preview"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
-  "devDependencies": {
-    "vitepress": "^1.0.0"
+  "dependencies": {
+    "@astrojs/starlight": "^0.38.3",
+    "astro": "^6.1.0",
+    "sharp": "^0.33.0"
   }
 }
