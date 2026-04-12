@@ -1,0 +1,43 @@
+---
+title: Jjodel Documentation
+description: The official documentation for Jjodel — a cloud-native, collaborative metamodeling platform.
+template: splash
+hero:
+  title: Jjodel Documentation
+  tagline: Design, visualize, and evolve Domain-Specific Languages — directly in your browser.
+  actions:
+    - text: Get Started
+      link: /docs/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: Try Jjodel
+      link: https://app.jjodel.io
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <Card title="Getting Started" icon="rocket">
+    Create your account, explore the workspace, and build your first language workbench in minutes.
+    [Start here →](/docs/getting-started/)
+  </Card>
+  <Card title="User Guide" icon="open-book">
+    Detailed documentation for every feature: Dashboard, Metamodel Editor, Tree Views, Viewpoints, Console.
+    [Read the guide →](/docs/user-guide/dashboard/)
+  </Card>
+  <Card title="Core Concepts" icon="puzzle">
+    Understand the foundations: models, metamodels, viewpoints, live co-evolution, and the JjOM.
+    [Learn concepts →](/docs/concepts/basic-notions/)
+  </Card>
+  <Card title="Tutorials" icon="laptop">
+    Step-by-step exercises: build a class diagram language, create custom viewpoints, generate code.
+    [Follow tutorials →](/docs/tutorials/tutorial-01-basic/)
+  </Card>
+  <Card title="Reference" icon="document">
+    JjOM API, Jjodel Events, Definition Language — technical reference for advanced users.
+    [Explore reference →](/docs/reference/jjom/)
+  </Card>
+
+</CardGrid>
