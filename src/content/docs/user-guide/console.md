@@ -6,7 +6,7 @@ sidebar:
   label: Console
 ---
 
-The Console is a built-in tool for interacting programmatically with your models and metamodels. You can execute expressions, query model elements, test constraints, and debug viewpoint configurations.
+The Console is a built-in tool for interacting programmatically with your models and metamodels. It provides direct access to the JjOM API, letting you execute expressions, query model elements, test constraints, and debug viewpoint configurations. The Console is particularly useful for formulating, testing, and validating complex navigational JjOM expressions before using them in viewpoint templates.
 
 ## Accessing the Console
 
@@ -73,13 +73,40 @@ You can also inspect the metamodel structure at runtime:
 
 ```javascript
 // Get the metaclass name of an element
-myElement.instanceof.name
+myElement.instanceOf.name
+
+// What type of JjOM construct is this?
+data.className    // returns "DClass" on a metamodel element, "DObject" on a model element
 
 // List all features defined by a metaclass
-myElement.instanceof.features.map(f => f.name)
+myElement.instanceOf.features.map(f => f.name)
 
 // Check if a metaclass is abstract
-myElement.instanceof.isAbstract
+myElement.instanceOf.isAbstract
+```
+
+### The `name` attribute shortcut
+
+When a metamodel class has a user-defined attribute called `name`, `data.name` returns the same value as `data.$name.value`. This shortcut is useful when exploring the model:
+
+```javascript
+// These two expressions return the same string
+data.$name.value   // → "User" (explicit path through DValue)
+data.name          // → "User" (shortcut via the special name attribute)
+```
+
+### Querying layout and view
+
+The Console also exposes the node and view submodels:
+
+```javascript
+// Read position and dimensions of the selected element
+node.x
+node.y
+
+// Check the OCL predicate of the current view
+view.oclCondition
+// → "context DObject inv: self.instanceof.name = 'Entity'"
 ```
 
 ## Practical Use Cases

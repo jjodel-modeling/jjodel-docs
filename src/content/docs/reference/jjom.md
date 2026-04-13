@@ -37,6 +37,48 @@ The JjOM sits at the center of Jjodel's architecture, connecting the front-end a
 
 The JjOM provides a unified API to query, edit, and synchronize models, their layout, and their visual representation. An analogy from the web domain: the JjOM plays a role similar to the Document Object Model (DOM), but for modeling artifacts instead of HTML documents.
 
+
+## Notation Architecture
+
+The JjOM connects metamodels to their visual representation through a Notation structure. A Notation is a named entity associated with exactly one metamodel through a `definedBy` relationship. The notation holds the complete specification of how model elements are rendered, validated, and behave.
+
+### Notation, Viewpoints, and Views
+
+The notation architecture follows a three-level hierarchy:
+
+A **Notation** (e.g., "State Machine Notation") is owned by a metamodel. It contains zero or more viewpoints.
+
+A **Viewpoint** groups a family of related views. Viewpoints can be exclusive (only one active at a time) or overlay (layered on top of the active exclusive viewpoint). See [Viewpoints](../user-guide/viewpoints) for the full explanation of exclusive vs overlay.
+
+A **View** targets instances of a specific metaclass. Each view has up to four components:
+
+| Component | Purpose | Technology |
+|-----------|---------|------------|
+| Predicate | Selects which instances the view applies to | OCL or JavaScript |
+| Template | Defines the visual structure | JSX |
+| Style | Controls appearance | SCSS |
+| Events | Defines reactive behavior | ECA rules (JavaScript) |
+
+### How Views Connect to Models
+
+A View's predicate **selects** model instances: the predicate evaluates against each instance and returns true for those the view should render. The selected instances become **Nodes** in the concrete syntax layer. Each Node carries its own layout and state information.
+
+The predicate is the mechanism that defines the syntactic mapping (σ) from the formal language definition. Given a model (abstract syntax) and a set of views with predicates, σ determines which instances get which visual representations.
+
+### Queries in Templates
+
+Templates can contain **queries** that navigate the model. Jjodel uses JavaScript expressions (not OCL) for in-template queries. A Query is `basedOn` a Metaclass and is `contained` in a Template. In practice, this means JSX expressions inside a template that access `data` properties to navigate references and filter instances.
+
+```jsx
+{/* Query: navigate ownedTransitions reference, filter by className */}
+{data.$ownedTransitions
+    .filter(t => t.$className === 'Transition')
+    .map(t => <text>{t.$name}</text>)}
+```
+
+This replaced OCL for model querying within templates, providing a more accessible syntax for web developers while maintaining the same expressive power for model navigation.
+
+
 ## Core Modeling Constructs
 
 These are the meta-elements in the Jjodel meta-metamodel.

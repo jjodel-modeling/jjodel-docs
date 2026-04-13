@@ -1,94 +1,83 @@
 ---
 title: Glossary
-description: Definitions of key concepts in Model-Driven Engineering and Jjodel.
+description: Definitions of key terms used throughout the Jjodel documentation.
 sidebar:
   order: 5
+  label: Glossary
 ---
 
-A reference of key terms used throughout the Jjodel documentation and in the broader field of Model-Driven Engineering (MDE).
+**Abstraction** -- The cognitive operation of removing irrelevant detail from a concept to focus on its essential properties. In metamodeling, abstraction produces metaclasses that capture only the domain-relevant aspects of real-world things.
 
----
+**Abstract Syntax** -- The set of valid model structures defined by a metamodel. The abstract syntax specifies what elements exist and how they relate, independent of any visual or textual representation. In the language tuple, this is A.
 
-**Abstract Syntax** — The formal structure of a modeling language, defining the valid element types, properties, and relationships independently of any visual or textual representation. In Jjodel, the abstract syntax is defined by the metamodel.
+**Classification** -- The cognitive operation of grouping individual things into categories based on shared properties. Classification produces metaclasses from observed instances. First formalized in Simula (1967).
 
-**Abstraction** — The process of reducing complexity by focusing on essential features and ignoring irrelevant details for a given purpose. Abstraction answers the question: "What matters about this thing for our purpose?"
+**Concrete Syntax** -- The visual or textual representation of model elements. Boxes, arrows, labels, and colors are concrete syntax. The same abstract syntax can have multiple concrete syntaxes (e.g., Chen vs crow's foot for ER diagrams). In the language tuple, this is C.
 
-**Blended Modeling** — An approach that combines visual (graphical) and textual representations of the same model, allowing users to switch between notations seamlessly.
+**Conformance** -- The relationship between a model (M1) and its metamodel (M2). A model conforms to a metamodel if every element is a valid instance of a metaclass and all constraints are satisfied.
 
-**Classification** — The act of identifying and grouping domain concepts into types (classes) based on shared properties, behavior, or roles. Classification answers the question: "What kinds of things exist here?"
+**DAttribute** -- A JjOM construct representing a typed property of a DClass. Attributes hold values of primitive data types (EString, EInt, EBoolean, etc.) or enumerations.
 
-**Code Generation** — The automatic production of source code, configuration files, or documentation from model elements using generation viewpoints.
+**DClass** -- A JjOM construct representing a metaclass. DClasses define the structure of model elements: their attributes, references, and containment relationships.
 
-**Concrete Syntax** — The visual or textual notation used to represent abstract syntax elements. Defined in Jjodel through syntax viewpoints.
+**Decoration View** -- A view in an overlay viewpoint that modifies the visual appearance of elements without replacing their template. Typically style-only: the overlay's style layers on top of the active exclusive viewpoint's rendering.
 
-**Constraint** — A rule or condition that model elements must satisfy. Constraints are defined using JjEL or JavaScript and enforced through validation viewpoints.
+**DEnumeration** -- A JjOM construct representing a fixed set of named values. Used for attributes with a closed set of options (e.g., Visibility: public, private, protected).
 
-**Containment Reference** — A reference between two classes where the target is *owned by* the source (composition semantics). Contained objects cannot exist independently of their container.
+**DModel** -- The top-level container in the JjOM. A DModel holds the complete state of a project, including all metamodels, models, notations, and viewpoints.
 
-**DAttribute** — A typed property of a class in the metamodel. Examples: `name: String`, `age: Integer`.
+**Domain** -- The area of knowledge a modeling language targets. The domain determines what concepts the metamodel captures. Examples: relational data modeling (ER diagrams), reactive behavior (state machines), software structure (class diagrams).
 
-**DClass** — A class definition in the Jjodel metamodel. Classes are the primary building blocks of any modeling language.
+**Domain Modeling** -- The process of analyzing a domain, identifying its concepts and relationships, and encoding them as a metamodel.
 
-**DEnumeration** — A named set of symbolic values in the metamodel. Examples: `Status = {ON, OFF, STANDBY}`, `Cardinality = {OneToOne, OneToMany, ManyToMany}`.
+**DReference** -- A JjOM construct representing a relationship between two DClasses. References have a name, a target type, and multiplicity bounds (lower and upper).
 
-**DModel** — The top-level container in the JjOM, holding packages or classes. Acts as the root of a model specification.
+**DSL** (Domain-Specific Language) -- A formal, machine-processable interface to domain knowledge. A DSL restricts its vocabulary to a specific domain, making it more expressive and less error-prone within that domain than a general-purpose language.
 
-**Domain** — The body of knowledge, activity, or expertise that a system addresses. Domains exist independently of software.
+**DValue** -- A JjOM construct representing a concrete value held by an attribute at the model level (M1). The runtime counterpart of a DAttribute definition.
 
-**Domain Modeling** — The activity of capturing the structure and semantics of a specific domain through classification and abstraction. Domain modeling produces a metamodel.
+**ECA** (Event-Condition-Action) -- The behavioral model used in Jjodel viewpoints. When an event occurs (e.g., `onDataUpdate`), a condition is evaluated, and if true, an action executes. Used for validation rules, computed attributes, and state machine simulation.
 
-**Domain-Specific Language (DSL)** — A formal, machine-processable interface to represent and manipulate domain knowledge. A DSL provides structure, enforces consistency, and enables automation within the context it models. Built using a meta-metamodel.
+**Exclusive Viewpoint** -- A viewpoint where the Is Exclusive flag is checked. Only one exclusive viewpoint can be active at a time. Syntax viewpoints are typically exclusive: activating one deactivates the previous. See also: Overlay Viewpoint.
 
-**DValue** — The concrete value assigned to an attribute or data field in the JjOM. Each DObject's DAttribute has one or more DValues (scalar or enumeration literal).
+**Instance** -- A model element (M1) that is an instanceOf a metaclass (M2). An instance has concrete attribute values and participates in references defined by its metaclass.
 
-**DObject** — A runtime instance of a DClass. DObjects hold actual attribute values and reference targets.
+**ISO/IEC/IEEE 42010** -- The international standard for architecture description. Defines viewpoints as specifications of concerns and views as their realization. Jjodel's multi-view modeling follows this framework.
 
-**DPackage** — A container that groups related classes in the metamodel, similar to a namespace or module.
+**JjOM** (Jjodel Object Model) -- The meta-metamodel (M3) that defines the constructs available for building metamodels in Jjodel. Consists of three submodels: data, node, and view.
 
-**DReference** — A relationship between two classes in the metamodel. Can be containment or non-containment, with configurable multiplicity.
+**Layout-Sensitive Notation** -- A notation where the spatial arrangement of elements carries semantic meaning. Changing the position or nesting of an element changes its meaning. Contrast with Topological Notation.
 
-**Edge** — A visual connection between two nodes in a diagram, typically representing a reference or association.
+**Meta-metamodel** -- The M3 level: the model that defines the constructs used to build metamodels. In Jjodel, this is the JjOM.
 
-**EMF (Eclipse Modeling Framework)** — A widely-used Java-based metamodeling framework. Jjodel provides a cloud-native, reactive alternative to EMF.
+**Metaclass** -- A class definition at the M2 level. Metaclasses specify the structure (attributes, references) that their instances must have. In Jjodel, metaclasses are defined using DClass.
 
-**JjEL (Jjodel Expression Language)** — Jjodel's expression language for navigating models, accessing properties, and defining computed values.
+**Metamodel** -- A model at the M2 level that defines the abstract syntax of a modeling language. It specifies metaclasses, their attributes, references, and constraints.
 
-**JjOM (Jjodel Object Model)** — The structured runtime framework that represents all modeling components in Jjodel, including models, metamodels, and viewpoints.
+**Model** -- A simplified representation of a system that captures relevant aspects for a given purpose. In Jjodel, models are instances (M1) that conform to a metamodel (M2).
 
-**JjTL (Jjodel Transformation Language)** — Jjodel's model-to-model transformation language for defining mappings between metamodels.
+**Node** -- The concrete syntax counterpart of a model instance. A node carries layout information (position, size) and state attributes (computed values, validation results). Nodes exist in the JjOM's node submodel.
 
-**Live Co-evolution** — Jjodel's ability to propagate metamodel changes instantly to all models, editors, and viewpoints without regeneration or redeployment.
+**Notation** -- A definition of how abstract syntax elements are visually represented. In Jjodel, a notation is associated with one metamodel and contains viewpoints. Each viewpoint defines a different perspective on the same abstract syntax.
 
-**Metamodel** — A "model of models" that defines the structure, constraints, and rules of a modeling language. The metamodel is the abstract syntax.
+**Overlay Viewpoint** -- A viewpoint where the Is Exclusive flag is unchecked. Overlay viewpoints can be active simultaneously with an exclusive viewpoint and with other overlays. They add features (decoration, validation, semantics, editor behavior) on top of the active exclusive viewpoint's rendering. See also: Exclusive Viewpoint.
 
-**Meta-metamodel** — The language for building metamodels. It defines the available building blocks (Class, Attribute, Reference, Enumeration, Package) that you use to construct a metamodel. Jjodel's meta-metamodel is based on Ecore. Sits at level M3 in the MDE meta-level hierarchy.
+**Predicate** -- A boolean expression in a view that selects which model instances the view applies to. Written in OCL or JavaScript. Predicates define the syntactic mapping (σ) between abstract and concrete syntax.
 
-**Model** — A structured representation of domain concepts, conforming to a metamodel.
+**Primitive Data Types** -- The basic value types available for metamodel attributes: EString, EInt, ELong, EFloat, EDouble, EBoolean, EChar, EByte, EShort, EDate. Aligned with the Ecore type system.
 
-**Model-Driven Engineering (MDE)** — A software development methodology that uses models as primary artifacts throughout the development lifecycle, emphasizing automation, abstraction, and separation of concerns.
+**Query** -- A model navigation expression inside a JSX template. Jjodel uses JavaScript expressions (accessing `data` properties) instead of OCL for querying models within templates.
 
-**Multi-View Modeling** — The ability to visualize the same model through multiple viewpoints, each offering a different perspective.
+**Separation of Concerns** (SoC) -- The design principle of dividing a system into distinct parts, each addressing a separate concern. In Jjodel, SoC is realized through multi-view modeling: structural, behavioral, and validation perspectives are defined in separate viewpoints.
 
-**Node** — The visual representation of a model element on the canvas. Nodes have shape, position, size, color, and labels.
+**State Attributes** -- Computed properties stored in `node.state`. Updated by ECA event rules, state attributes hold derived values like validation errors, aggregated counts, or simulation state. Analogous to attribute grammars in compiler theory.
 
-**Notation** — A formal language used to model domains. Examples: ER diagrams, UML class diagrams, BPMN. A notation is distinct from the domain it represents.
+**Syntactic Mapping** (σ) -- The function that maps concrete syntax representations to abstract syntax models. In Jjodel, σ is defined by the predicates in each view: they select which instances correspond to which visual representations. Part of the language tuple L = (A, C, S, σ, ⟦·⟧).
 
-**Primitive Data Types** — The built-in types provided by Jjodel's meta-metamodel for attribute values: EString, EInt, EBoolean, EDouble, EFloat, ELong, EShort, EByte, EChar, EDate. Inherited from the Ecore type system.
+**Topological Notation** -- A notation where only connections matter, not spatial positions. Moving a class diagram element on the canvas does not change the model's meaning. Contrast with Layout-Sensitive Notation.
 
-**Projectional Editing** — An editing paradigm where the user manipulates a projection (view) of the abstract syntax tree, rather than text that is parsed into an AST.
+**Validation View** -- A view in a validation overlay viewpoint. Contains an ECA rule that checks a constraint and writes error information to `node.state`. Does not need a template or style; validation feedback is rendered by the Generic error view.
 
-**Reactive Architecture** — Jjodel's design principle where changes propagate automatically across all connected components in real time.
+**View** -- A component of a viewpoint that targets instances of a specific metaclass. A view has up to four parts: predicate (which instances), template (JSX structure), style (SCSS appearance), and events (ECA behavior).
 
-**Reflective Architecture** — The ability of a system to observe and modify its own structure at runtime. Jjodel uses reflection to synchronize metamodels, models, and viewpoints.
-
-**State Attributes** — Computed states attached to JjOM nodes (data, node, view) that depend on the model structure and on other states. Analogous to synthesized and inherited attributes in classical attribute grammars. The Jjodel runtime evaluates them incrementally.
-
-**Topological Notation** — A visual notation where meaning is encoded in connectivity (which elements are connected by edges). Layout is irrelevant; moving or resizing elements does not change the model's meaning. ER diagrams and UML class diagrams are topological.
-
-**Layout-Sensitive Notation** — A visual notation where the spatial position of elements carries semantic meaning. Moving an element to a different position changes the model's semantics. Examples: railway track plans, PCB layouts, algebraic formulas. Jjodel supports these through its node submodel.
-
-**Event-Condition-Action (ECA)** — The rule-based execution model used in Jjodel viewpoints. An event triggers the rule, a condition checks whether it should fire, and an action executes when the condition holds. ECA rules are attached to events in views.
-
-**Viewpoint** — A configurable perspective on a model, defining how elements are rendered, validated, or transformed. Jjodel supports syntax, validation, and generation viewpoints.
-
-**Workbench** — A complete environment for defining and using a modeling language, typically comprising a metamodel, concrete syntax definitions, validators, and code generators.
+**Viewpoint** -- A perspective on a model, grouping related views. Viewpoints can be exclusive (syntax) or overlay (decoration, validation, semantics). In ISO 42010 terms, a viewpoint defines concerns; its views realize them.
