@@ -176,5 +176,5 @@ In this tutorial you:
 ## Next Steps
 
 - [Tutorial 2: Custom Viewpoints](./tutorial-02-viewpoint) — explore advanced viewpoint features
-- [Viewpoints Reference](../user-guide/viewpoints) — deep dive into viewpoint configuration
-- [Anatomy of a Modeling Language](../concepts/modeling-language-anatomy) — understand the theoretical foundations
+- [Viewpoints Reference](../../user-guide/viewpoints) — deep dive into viewpoint configuration
+- [Anatomy of a Modeling Language](../../concepts/modeling-language-anatomy) — understand the theoretical foundations

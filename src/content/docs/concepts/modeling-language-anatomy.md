@@ -28,7 +28,7 @@ In Jjodel, the abstract syntax is defined by the metamodel. The concrete syntax 
 
 The metamodel defines the abstract syntax: the legal structures a model can have. It specifies which metaclasses exist, what attributes they carry, how they relate through references, and what constraints they must satisfy.
 
-The meta-metamodel (M3 level) provides the building blocks for defining metamodels. In Jjodel, the meta-metamodel is the JjOM (Jjodel Object Model), which supplies constructs like DClass, DAttribute, DReference, and DEnumeration. See [JjOM Reference](../reference/jjom) for the complete specification.
+The meta-metamodel (M3 level) provides the building blocks for defining metamodels. In Jjodel, the meta-metamodel is the JjOM (Jjodel Object Model), which supplies constructs like DClass, DAttribute, DReference, and DEnumeration. See [JjOM Reference](../../reference/jjom) for the complete specification.
 
 The relationship between levels:
 
@@ -46,7 +46,7 @@ The notation architecture:
 
 A **Notation** is associated with exactly one metamodel (via `definedBy`). It owns zero or more viewpoints.
 
-A **Viewpoint** groups a family of views. It can be exclusive (only one active at a time, for concrete syntax) or overlay (layered on top, for decoration, validation, or semantics). See [Viewpoints](../user-guide/viewpoints) for details.
+A **Viewpoint** groups a family of views. It can be exclusive (only one active at a time, for concrete syntax) or overlay (layered on top, for decoration, validation, or semantics). See [Viewpoints](../../user-guide/viewpoints) for details.
 
 A **View** targets instances of a specific metaclass through its predicate. It defines how those instances render (template), look (style), and behave (events/ECA).
 

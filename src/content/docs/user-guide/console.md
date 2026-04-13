@@ -22,7 +22,7 @@ The Console lets you explore the Jjodel Object Model (JjOM) at runtime. Every mo
 
 To retrieve every element in the current model:
 
-```javascript
+```javascript title="Console"
 model.elements()
 ```
 
@@ -32,7 +32,7 @@ This returns an array of all DObject instances in the model, regardless of their
 
 To select only elements that are instances of a specific metaclass (e.g., `Entity`):
 
-```javascript
+```javascript title="Console"
 model.elements().filter(e => e.instanceof.name === 'Entity')
 ```
 
@@ -42,7 +42,7 @@ This uses the standard JavaScript `filter` function combined with the JjOM's `in
 
 To read the value of a user-defined attribute, use the `$` prefix:
 
-```javascript
+```javascript title="Console"
 // Get the name of the first Entity
 model.elements().filter(e => e.instanceof.name === 'Entity')[0].$name
 
@@ -56,7 +56,7 @@ The `$` prefix distinguishes user-defined features (from your metamodel) from bu
 
 References work the same way as attributes, with the `$` prefix:
 
-```javascript
+```javascript title="Console"
 // Get the left entity of a relationship
 myRelation.$left
 
@@ -71,7 +71,7 @@ myEntity.$ownedAttributes
 
 You can also inspect the metamodel structure at runtime:
 
-```javascript
+```javascript title="Console"
 // Get the metaclass name of an element
 myElement.instanceOf.name
 
@@ -89,7 +89,7 @@ myElement.instanceOf.isAbstract
 
 When a metamodel class has a user-defined attribute called `name`, `data.name` returns the same value as `data.$name.value`. This shortcut is useful when exploring the model:
 
-```javascript
+```javascript title="Console"
 // These two expressions return the same string
 data.$name.value   // → "User" (explicit path through DValue)
 data.name          // → "User" (shortcut via the special name attribute)
@@ -99,7 +99,7 @@ data.name          // → "User" (shortcut via the special name attribute)
 
 The Console also exposes the node and view submodels:
 
-```javascript
+```javascript title="Console"
 // Read position and dimensions of the selected element
 node.x
 node.y

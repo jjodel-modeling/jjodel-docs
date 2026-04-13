@@ -54,7 +54,7 @@ Overlay viewpoints serve several purposes:
 
 **Validation**: check constraints that the metamodel syntax alone cannot express. For example, enforcing that a state machine has exactly one Initial State.
 
-**Semantics and simulation**: attach runtime behavior to model elements. For state machines, a semantics overlay tracks which state is active, lets users fire events through buttons, and highlights the active state visually. The overlay uses state attributes as observed properties and custom event actions to implement the transition system semantics. See [Tutorial 4: State Machine Simulation](../tutorials/tutorial-04-simulation) for a complete walkthrough.
+**Semantics and simulation**: attach runtime behavior to model elements. For state machines, a semantics overlay tracks which state is active, lets users fire events through buttons, and highlights the active state visually. The overlay uses state attributes as observed properties and custom event actions to implement the transition system semantics. See [Tutorial 4: State Machine Simulation](../../tutorials/tutorial-04-simulation) for a complete walkthrough.
 
 **Editor behavior enhancement**: modify how the editor responds to user actions on specific elements.
 
@@ -89,7 +89,7 @@ A decoration overlay modifies the visual appearance of elements without replacin
 3. Leave the template empty (or remove it)
 4. Define only the **style**, for example:
 
-```scss
+```scss title="Style (SCSS)"
 &>.root {
     outline: 4px solid orange;
 }
@@ -139,7 +139,7 @@ Validation views rely entirely on the ECA rule. No template or style is needed; 
 
 A validation rule checks a condition and writes an error to `node.state`. The pattern:
 
-```javascript
+```javascript title="Validation Rule Pattern"
 if (condition) {
     node.state = {error_type: error_message}
 } else {
@@ -153,7 +153,7 @@ The `error_type` key identifies the kind of error (e.g., `error_lowerbound`, `er
 
 To enforce that a state machine has exactly one Initial State, create a validation view targeting the `Initial State` metaclass with this `onDataUpdate` rule:
 
-```javascript
+```javascript title="Single Initial State Validation"
 // Count all Initial State instances in the model
 let count = data.$parent.$children
     .filter(c => c.$className === 'Initial State').length;
@@ -203,7 +203,7 @@ A **silent view** is a view that makes its node invisible and renders only an Ed
 
 To create a silent view, set the style to zero dimensions:
 
-```scss
+```scss title="Silent View Style (SCSS)"
 &>.root {
     border: 0px solid var(--border-color-1)!important;
     width: 0px;
@@ -213,7 +213,7 @@ To create a silent view, set the style to zero dimensions:
 
 The template renders an `<Edge>` component conditionally, only when the required reference (e.g., `nextState`) is set:
 
-```jsx
+```jsx title="Template for Transition Edge"
 <div className={'root'}>
     {data.$nextState.value &&
         <Edge
@@ -234,7 +234,7 @@ Silent views are the mechanism behind all arrow-based notations in Jjodel: ER re
 
 ### Events (ECA)
 
-See [Jjodel Events](../reference/jjodel-events) for the full ECA model. In viewpoint context, the most common event is `onDataUpdate`, which fires whenever the model data changes and lets you update `node.state` with computed or validation results.
+See [Jjodel Events](../../reference/jjodel-events) for the full ECA model. In viewpoint context, the most common event is `onDataUpdate`, which fires whenever the model data changes and lets you update `node.state` with computed or validation results.
 
 ## Default Viewpoints
 
@@ -254,7 +254,7 @@ The Model view (the topmost view that contains all rendered elements) supports t
 
 `<Panel>` creates a floating titled panel with custom content. Panels appear on the canvas alongside the model elements. Common uses: simulation controls, legend, model statistics.
 
-```jsx
+```jsx title="Simulation Panel Template"
 <Panel title={'State Machine Simulation'}>
     <div className={'panel_content'}>
         <button onClick={resetStateMachine}>Reset</button>
@@ -271,7 +271,7 @@ This example creates a simulation panel with a Reset button and one button for e
 
 `<Control>` adds workbench-level controls that affect the editor behavior. Controls appear in a collapsible section and expose parameters like zoom level, grid, and snap.
 
-```jsx
+```jsx title="Workbench Control Template"
 <Control title={'Workbench'} payoff={'Options'}>
     <Slider name={'level'} title={'Detail level '} node={node} max={3} />
     <Toggle name={'grid'} title={'Grid'} node={node} />

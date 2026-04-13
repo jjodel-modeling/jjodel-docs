@@ -46,7 +46,7 @@ Events are defined per viewpoint view. To configure an event:
 
 ### Example: onClick Handler
 
-```javascript
+```javascript title="onClick"
 // When a class is clicked, log its name to the console
 (element) => {
   console.log("Clicked:", element.name);
@@ -57,7 +57,7 @@ Events are defined per viewpoint view. To configure an event:
 
 The `onDataUpdate` event is particularly useful for computing derived values. In an algebraic expression language, you can propagate computed results upward through the model tree:
 
-```javascript
+```javascript title="onDataUpdate"
 // When an operand changes, recompute the result
 (element, attribute, newValue) => {
   if (attribute.name === "name" && newValue.length === 0) {
@@ -74,7 +74,7 @@ Validation rules are a specific use of the ECA model within overlay viewpoints. 
 
 The standard pattern:
 
-```javascript
+```javascript title="Validation Rule Pattern"
 if (condition) {
     node.state = {error_type: error_message}
 } else {
@@ -88,7 +88,7 @@ The `error_type` key identifies the kind of error. Common conventions: `error_lo
 
 In a state machine metamodel, each model should have exactly one Initial State. This constraint cannot be expressed by the metamodel syntax alone (the metamodel allows zero or more Initial State instances). A validation rule enforces it:
 
-```javascript
+```javascript title="Single Initial State Validation"
 // onDataUpdate handler for the Initial State metaclass
 let count = data.$parent.$children
     .filter(c => c.$className === 'Initial State').length;
@@ -139,12 +139,12 @@ Beyond the built-in events (`onDataUpdate`, `whileDragging`, etc.), you can defi
 
 Custom actions are defined in the Events tab and referenced in the template by name:
 
-```jsx
+```jsx title="JSX Template"
 {/* In the template */}
 <button onClick={resetStateMachine}>Reset</button>
 ```
 
-```javascript
+```javascript title="resetStateMachine"
 // In the Events tab, as a custom action named "resetStateMachine"
 // 1. Deactivate all states
 let allStates = data.allSubObjects
@@ -173,7 +173,7 @@ This pattern separates the triggering mechanism (buttons in the template) from t
 
 Event buttons trigger transition firing. When clicked, the action finds the currently active state, looks for a transition owned by that state whose event matches the clicked button, and if found, deactivates the current state and activates the target:
 
-```javascript
+```javascript title="Firing Transitions"
 // Custom action for event firing (simplified)
 let activeState = data.allSubObjects
     .filter(o => o.instanceof.name === 'State')

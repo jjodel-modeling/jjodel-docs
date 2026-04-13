@@ -105,7 +105,7 @@ The JjOM API provides programmatic access to all elements in the Jjodel Object M
 
 ### Querying instances
 
-```javascript
+```javascript title="Querying Instances"
 // All instances of Person (including subclasses)
 Person.allInstances
 
@@ -118,7 +118,7 @@ Class.allInstances.length
 
 ### Navigating the model graph
 
-```javascript
+```javascript title="Navigating the Model Graph"
 // From instance to metaclass
 data.instanceOf.name                   // → "Entity"
 
@@ -140,7 +140,7 @@ Entity.extendedBy.map(c => c.name)     // → ["Person", "Organization"]
 
 ### Layout manipulation
 
-```javascript
+```javascript title="Layout and View Properties"
 // Read position
 node.x * node.y
 
@@ -150,7 +150,7 @@ view.oclCondition  // → "context DObject inv: self.instanceof.name = 'Entity'"
 
 ### Checking properties
 
-```javascript
+```javascript title="Checking Properties"
 // Is this class abstract?
 myClass.isAbstract  // → true/false
 

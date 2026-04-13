@@ -48,7 +48,7 @@ The separation between domain (abstract syntax) and notation (concrete syntax) i
 
 SoC is essential for managing complexity. In multi-view modeling, it translates into viewpoints that represent distinct abstractions: structural, behavioral, validation. Each viewpoint addresses one concern, and engineers focus on one concern at a time.
 
-This follows ISO/IEC/IEEE 42010:2011, which defines the architecture description framework: **viewpoints** define the concerns to be addressed; **views** realize those concerns for a specific system. In Jjodel, viewpoints can be exclusive (one active at a time, for concrete syntax) or overlay (layered, for validation and decoration). See [Viewpoints](../user-guide/viewpoints) for the full explanation.
+This follows ISO/IEC/IEEE 42010:2011, which defines the architecture description framework: **viewpoints** define the concerns to be addressed; **views** realize those concerns for a specific system. In Jjodel, viewpoints can be exclusive (one active at a time, for concrete syntax) or overlay (layered, for validation and decoration). See [Viewpoints](../../user-guide/viewpoints) for the full explanation.
 
 ## Topological vs Layout-Sensitive Notation
 
@@ -60,7 +60,7 @@ Modeling notations fall into two categories based on how they treat spatial arra
 
 Most diagrammatic languages (UML class diagrams, ER diagrams, state machines) are topological. Jjodel supports both kinds through its three-submodel architecture: the data submodel captures abstract syntax, the node submodel captures layout, and the view submodel captures rendering. For topological notations, the node submodel is purely presentational. For layout-sensitive notations, the node submodel carries semantic weight.
 
-See [JjOM Reference](../reference/jjom) for details on the three submodels.
+See [JjOM Reference](../../reference/jjom) for details on the three submodels.
 
 ## DSL: Domain-Specific Language
 

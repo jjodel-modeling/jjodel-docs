@@ -111,7 +111,7 @@ An important distinction: a **domain** is a real-world context or body of knowle
 
 This distinction matters when you work in Jjodel. If you build an ER diagram language, you are formalizing a *notation*, not a domain. The notation itself becomes your domain of analysis: Entity, Attribute, and Relationship are the concepts you classify and abstract. But when you later *use* that ER notation to model a hospital database, you are modeling a domain.
 
-In most practical scenarios, you build DSLs for domains, not for notations. The ER example in the [tutorials](../tutorials/tutorial-03-erd) uses a notation as a learning exercise precisely because students already know the concepts and can focus on the metamodeling process.
+In most practical scenarios, you build DSLs for domains, not for notations. The ER example in the [tutorials](../../tutorials/tutorial-03-erd) uses a notation as a learning exercise precisely because students already know the concepts and can focus on the metamodeling process.
 
 ## From Domain to Language
 
@@ -125,4 +125,4 @@ Concretely, your metamodel gives the DSL:
 
 A DSL is defined using Jjodel's meta-metamodel, which provides the building blocks: Class, Attribute, Reference, Enumeration, Package. Your metamodel is an instance of this meta-metamodel.
 
-The next step is to give this DSL a concrete syntax through viewpoints, so that domain experts can work with it visually rather than through the raw abstract syntax. See [Viewpoints](../user-guide/viewpoints) for details on how to define visual representations.
+The next step is to give this DSL a concrete syntax through viewpoints, so that domain experts can work with it visually rather than through the raw abstract syntax. See [Viewpoints](../../user-guide/viewpoints) for details on how to define visual representations.

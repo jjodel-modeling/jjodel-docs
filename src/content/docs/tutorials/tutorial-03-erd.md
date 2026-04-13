@@ -9,7 +9,7 @@ In this tutorial you build a complete Entity-Relationship diagram language. Unli
 
 The objective is to build a DSL that lets you describe ER diagrams by defining what Entities, Attributes, and Relationships mean at the metamodel level. You will create core classes, define relationships between them, and add enumerations for type safety.
 
-**Prerequisites:** Completed [Tutorial 1](./tutorial-01-basic) and familiarity with [Basic Notions](../concepts/basic-notions).
+**Prerequisites:** Completed [Tutorial 1](./tutorial-01-basic) and familiarity with [Basic Notions](../../concepts/basic-notions).
 
 **Time:** ~40 minutes
 
@@ -176,13 +176,13 @@ The abstract syntax view shows every element as an individual item with properti
 
 The **predicate** determines which model elements this view applies to. By default, it selects all instances of `Entity`. You can write this as an OCL predicate:
 
-```
+``` title="OCL Predicate"
 context DObject inv: self.instanceof.name = 'Entity'
 ```
 
 Or equivalently in JavaScript:
 
-```javascript
+```javascript title="Predicate (JavaScript)"
 data.instanceof.id === '<Entity-metaclass-id>'
 ```
 
@@ -192,7 +192,7 @@ Using the metaclass ID (instead of the name string) makes the predicate resilien
 
 The template defines the visual representation using JSX. Replace the default template with something like:
 
-```jsx
+```jsx title="Template for Entity"
 <div style={{padding: '8px', border: '2px solid #334155', borderRadius: '4px', background: '#f8fafc'}}>
   <strong>{data.$name}</strong>
   {data.$ownedAttributes.map(attr =>
@@ -216,7 +216,7 @@ Following the same process, add views for:
 
 For edges, use the `<Edge />` component in your template:
 
-```jsx
+```jsx title="Template for Relationship Edge"
 {data.$left && <Edge
   id={data.id + '_left'}
   source={node}
@@ -225,7 +225,7 @@ For edges, use the `<Edge />` component in your template:
 />}
 ```
 
-Edge specification requires navigating both the data submodel (to find the target element) and the node submodel (to find its visual position). See the [JjOM reference](../reference/jjom) for details on the data/node split.
+Edge specification requires navigating both the data submodel (to find the target element) and the node submodel (to find its visual position). See the [JjOM reference](../../reference/jjom) for details on the data/node split.
 
 <!-- TODO: screenshot — complete ER diagram with conceptual syntax (new UI) -->
 
@@ -244,6 +244,6 @@ In this tutorial you:
 
 ## Next Steps
 
-- [Domain Analysis](../concepts/domain-analysis) — apply this process to an unfamiliar domain
-- [Viewpoints Reference](../user-guide/viewpoints) — explore advanced viewpoint features (styling, events, options)
-- [JjOM Reference](../reference/jjom) — understand data vs node submodels for edge navigation
+- [Domain Analysis](../../concepts/domain-analysis) — apply this process to an unfamiliar domain
+- [Viewpoints Reference](../../user-guide/viewpoints) — explore advanced viewpoint features (styling, events, options)
+- [JjOM Reference](../../reference/jjom) — understand data vs node submodels for edge navigation

@@ -54,7 +54,7 @@ Attributes (`DAttribute`) represent typed properties of a class. To add an attri
 3. Click **Add Attribute**
 4. Specify the attribute name and type
 
-Supported types include primitive data types (`EString`, `EInt`, `EBoolean`, `EDouble`, and others) and custom enumerations. See the [JjOM reference](../reference/jjom#primitive-data-types) for the full list of primitives.
+Supported types include primitive data types (`EString`, `EInt`, `EBoolean`, `EDouble`, and others) and custom enumerations. See the [JjOM reference](../../reference/jjom#primitive-data-types) for the full list of primitives.
 
 ## Working with References
 
@@ -101,7 +101,7 @@ To use an enumeration as an attribute type:
 
 Because Jjodel is reflective, adding a new literal to an enumeration immediately makes it available in all existing model instances that use that enumeration. No regeneration step is required.
 
-See the [Primitive Data Types](../reference/jjom#primitive-data-types) in the JjOM reference for the complete list of built-in types.
+See the [Primitive Data Types](../../reference/jjom#primitive-data-types) in the JjOM reference for the complete list of built-in types.
 
 ## Working with Packages
 

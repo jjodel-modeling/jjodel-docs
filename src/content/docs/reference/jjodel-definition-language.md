@@ -15,7 +15,7 @@ Jjodel includes three specialized languages:
 
 JjEL is used for navigating models, accessing properties, and defining computed values. It appears in viewpoint templates, validation constraints, and the Console.
 
-```javascript
+```javascript title="JjEL Expressions"
 // Navigate from an object to its metaclass
 self.instanceOf.name
 
@@ -43,7 +43,7 @@ JjScript provides a scripting interface for programmatic manipulation of metamod
 
 Jjodel uses JSX-like expressions in viewpoint templates to define dynamic content. These expressions are evaluated at render time and can access the current model element, its properties, and its relationships.
 
-```jsx
+```jsx title="JSX Template"
 // A simple template for rendering a class
 <rect>
   <text>{self.name}</text>

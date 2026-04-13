@@ -76,7 +76,7 @@ Right-click on the `State` metaclass in the metamodel editor and select **Add Vi
 
 Open the view's **Template** tab. The default JSX template includes a header with `<Input>` components and a body with placeholder text. Simplify it to show only the state name:
 
-```jsx
+```jsx title="Template for State"
 <div className={'root'}>
     <div className={'header'}>
         <div className={'input-container mx-2'}>
@@ -98,7 +98,7 @@ Open the view's **Style** tab. The style editor has two sections: user-defined p
 
 Modify the SCSS to create rounded state boxes:
 
-```scss
+```scss title="Style for State (SCSS)"
 &>.root {
     border: 2px solid var(--border-color-1)!important;
     border-radius: 12px;
@@ -128,7 +128,7 @@ The view for Transition is a **silent view**: it does not render a visible box. 
 
 Right-click on the `Transition` metaclass and select **Add View**. Then customize the template:
 
-```jsx
+```jsx title="Template for Transition"
 <div className={'root'}>
     {data.$nextState.value &&
         <Edge
@@ -147,7 +147,7 @@ The template checks that `nextState` is set before rendering the edge. The `star
 
 Set the style to make the Transition node invisible:
 
-```scss
+```scss title="Style for Transition (SCSS)"
 &>.root {
     border: 0px solid var(--border-color-1)!important;
     width: 0px;
@@ -179,7 +179,7 @@ The Model view (the topmost view that contains all rendered elements) can includ
 
 The `<Panel>` component creates a titled panel with custom content:
 
-```jsx
+```jsx title="Simulation Panel"
 <Panel title={'State Machine Simulation'}>
     <div className={'panel_content'}>
         <button onClick={resetStateMachine}>Reset</button>
@@ -194,7 +194,7 @@ This panel shows a Reset button and one button for each Event instance in the mo
 
 The `<Control>` component adds workbench-level controls:
 
-```jsx
+```jsx title="Workbench Control"
 <Control title={'Workbench'} payoff={'Options'}>
     <Slider name={'level'} title={'Detail level '} node={node} max={3} />
     <Toggle name={'grid'} title={'Grid'} node={node} />
@@ -221,4 +221,4 @@ The State view's template reads the `active` state attribute and applies conditi
 
 ## Summary
 
-This tutorial covered the full lifecycle of a modeling language in Jjodel: metamodel definition (abstract syntax), viewpoint creation (concrete syntax), silent views for edges, simulation panels with Panel/Control components, state attributes as observed properties, and custom event actions for operational semantics. The same ECA mechanism that powers validation (see [Viewpoints](../user-guide/viewpoints)) also powers simulation; the difference is what the rules compute.
+This tutorial covered the full lifecycle of a modeling language in Jjodel: metamodel definition (abstract syntax), viewpoint creation (concrete syntax), silent views for edges, simulation panels with Panel/Control components, state attributes as observed properties, and custom event actions for operational semantics. The same ECA mechanism that powers validation (see [Viewpoints](../../user-guide/viewpoints)) also powers simulation; the difference is what the rules compute.

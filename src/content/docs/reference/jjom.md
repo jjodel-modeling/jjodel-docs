@@ -48,7 +48,7 @@ The notation architecture follows a three-level hierarchy:
 
 A **Notation** (e.g., "State Machine Notation") is owned by a metamodel. It contains zero or more viewpoints.
 
-A **Viewpoint** groups a family of related views. Viewpoints can be exclusive (only one active at a time) or overlay (layered on top of the active exclusive viewpoint). See [Viewpoints](../user-guide/viewpoints) for the full explanation of exclusive vs overlay.
+A **Viewpoint** groups a family of related views. Viewpoints can be exclusive (only one active at a time) or overlay (layered on top of the active exclusive viewpoint). See [Viewpoints](../../user-guide/viewpoints) for the full explanation of exclusive vs overlay.
 
 A **View** targets instances of a specific metaclass. Each view has up to four components:
 
@@ -69,7 +69,7 @@ The predicate is the mechanism that defines the syntactic mapping (σ) from the 
 
 Templates can contain **queries** that navigate the model. Jjodel uses JavaScript expressions (not OCL) for in-template queries. A Query is `basedOn` a Metaclass and is `contained` in a Template. In practice, this means JSX expressions inside a template that access `data` properties to navigate references and filter instances.
 
-```jsx
+```jsx title="Query in Template"
 {/* Query: navigate ownedTransitions reference, filter by className */}
 {data.$ownedTransitions
     .filter(t => t.$className === 'Transition')
@@ -193,7 +193,7 @@ In JSX templates and Console expressions, user-defined features (attributes and 
 
 Given a metamodel where `Entity` has an attribute `name`, a containment reference `ownedAttributes`, and an attribute `description`:
 
-```javascript
+```javascript title="The $ Prefix Convention"
 // Built-in JjOM property (no prefix)
 data.className             // returns "DClass" or "DObject"
 data.instanceOf.name       // returns "Entity"
@@ -218,7 +218,7 @@ A user-defined attribute called `name` has special status in Jjodel: its value o
 
 For enumeration values, the stored value is a symbolic identifier. To display it, access the value property:
 
-```javascript
+```javascript title="Enumeration Value Access"
 data.$cardinality.value    // returns e.g., "OneToMany"
 ```
 
@@ -226,7 +226,7 @@ data.$cardinality.value    // returns e.g., "OneToMany"
 
 JSX templates operate on three variables corresponding to the three submodels: `data` (the abstract syntax subgraph for the current element), `node` (the layout subgraph), and `view` (the rendering configuration). Most template logic uses `data`.
 
-```jsx
+```jsx title="JSX Template"
 // Display the name of the current element
 <span>{data.$name}</span>
 

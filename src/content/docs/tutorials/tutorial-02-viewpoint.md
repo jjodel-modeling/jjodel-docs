@@ -55,7 +55,7 @@ Validation viewpoints check that models satisfy specific rules and highlight vio
 Add the following rules:
 
 **Rule 1: Classes must have names**
-```javascript
+```javascript title="Rule: Name Must Not Be Empty"
 // Constraint: name must not be empty
 self.name !== null && self.name.trim().length > 0
 ```
@@ -63,7 +63,7 @@ self.name !== null && self.name.trim().length > 0
 - Message: `"Class name must not be empty"`
 
 **Rule 2: No duplicate class names**
-```javascript
+```javascript title="Rule: No Duplicate Class Names"
 // Constraint: name must be unique within the diagram
 Class.allInstances.filter(c => c.name === self.name).length === 1
 ```
@@ -71,7 +71,7 @@ Class.allInstances.filter(c => c.name === self.name).length === 1
 - Message: `"Duplicate class name: " + self.name`
 
 **Rule 3: Classes should have at least one attribute**
-```javascript
+```javascript title="Rule: At Least One Attribute"
 self.attributes.length > 0
 ```
 - Severity: **Warning**
@@ -101,7 +101,7 @@ Generation viewpoints transform model elements into text — source code, docume
 
 Create a template that generates Java class stubs from your model:
 
-```jsx
+```jsx title="JSX Template for Java Generation"
 {`public class ${self.name} {
 ${self.attributes.map(a => 
   `    private ${a.type} ${a.name};`
@@ -123,7 +123,7 @@ ${self.attributes.map(a =>
 
 Apply the generation viewpoint. For the `Person` class with attributes `name: String` and `age: Integer`, the output would be:
 
-```java
+```java title="Java (Generated Code)"
 public class Person {
     private String name;
     private Integer age;
@@ -161,6 +161,6 @@ In this tutorial you:
 
 ## Next Steps
 
-- [Viewpoints Reference](../user-guide/viewpoints) — full viewpoint configuration options
-- [JjOM API](../reference/jjom-api) — programmatic access for advanced expressions
-- [Jjodel Events](../reference/jjodel-events) — add interactive behaviors to your viewpoints
+- [Viewpoints Reference](../../user-guide/viewpoints) — full viewpoint configuration options
+- [JjOM API](../../reference/jjom-api) — programmatic access for advanced expressions
+- [Jjodel Events](../../reference/jjodel-events) — add interactive behaviors to your viewpoints
