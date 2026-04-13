@@ -1,11 +1,21 @@
 ---
 title: Jjodel Events
-description: Event-driven interactions — configuring custom behaviors for user actions.
+description: Event-driven interactions using the Event-Condition-Action model.
 sidebar:
   order: 3
 ---
 
 Jjodel supports an event-driven interaction model that allows you to define custom behaviors in response to user actions on model elements. Events are configured through the **Events** tab in the Viewpoint Properties Panel.
+
+## The Event-Condition-Action Model
+
+Rules in Jjodel follow the **Event-Condition-Action (ECA)** model. System behavior is defined through triples:
+
+- An **event** triggers the rule (e.g., the user clicks an element, an attribute value changes)
+- A **condition** checks whether the rule should fire (optional guard expression)
+- An **action** executes when the condition holds (JavaScript code that reads or modifies the JjOM)
+
+ECA rules let Jjodel react to changes, enforce constraints, and update state in a clear and predictable way. They are the mechanism through which viewpoints gain dynamic behavior beyond static rendering.
 
 ## Supported Events
 
@@ -45,14 +55,18 @@ Events are defined per viewpoint view. To configure an event:
 
 ### Example: onDataUpdate Handler
 
+The `onDataUpdate` event is particularly useful for computing derived values. In an algebraic expression language, you can propagate computed results upward through the model tree:
+
 ```javascript
-// When an attribute changes, validate the new value
+// When an operand changes, recompute the result
 (element, attribute, newValue) => {
   if (attribute.name === "name" && newValue.length === 0) {
     console.warn("Name cannot be empty");
   }
 }
 ```
+
+For an `Add` expression with `left` and `right` references: `val = left.val + right.val`. This rule fires whenever either operand changes, propagating the new result up the expression tree reactively.
 
 ## Custom DOM Events
 

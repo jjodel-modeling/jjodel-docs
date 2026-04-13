@@ -1,0 +1,280 @@
+diff --git a/src/content/docs/concepts/basic-notions.md b/src/content/docs/concepts/basic-notions.md
+index 4a82db8..50dca92 100644
+--- a/src/content/docs/concepts/basic-notions.md
++++ b/src/content/docs/concepts/basic-notions.md
+@@ -47,16 +47,20 @@ A model **conforms to** its metamodel, exactly as a program written in Java conf
+ 
+ ### Meta-levels
+ 
+-MDE organizes artifacts into four levels:
++MDE organizes artifacts into four levels, where each level conforms to the one above it:
+ 
+ | Level | Name | Example |
+ |-------|------|---------|
+ | **M3** | Meta-metamodel | Ecore, Jjodel meta-metamodel |
+-| **M2** | Metamodel | Your DSL definition (e.g., the ER metamodel) |
++| **M2** | Metamodel (DSL) | Your DSL definition (e.g., the ER metamodel) |
+ | **M1** | Model | A specific ER diagram (instances of your DSL) |
+ | **M0** | System | The real-world system being described |
+ 
+-Each level conforms to the one above it. Jjodel's meta-metamodel (M3) is based on Ecore and provides the constructs (classes, attributes, references, enumerations, packages) that you use to define your own metamodels (M2).
++The **meta-metamodel** (M3) defines the language for building metamodels. It provides the building blocks: Class, Attribute, Reference, Enumeration, Constraint, Package. Every user-defined metamodel is an instance of this meta-metamodel.
++
++Jjodel's meta-metamodel is built on top of Ecore, inheriting its core concepts but extending them to reduce accidental complexity. When you create a class in the Metamodel Editor and add attributes and references to it, you are using M3 constructs to define an M2 artifact. When someone later instantiates that class in a model, they produce M1 elements that conform to your M2 metamodel.
++
++The practical consequence: you never interact with M3 directly. Jjodel's editor UI exposes the meta-metamodel constructs as buttons and forms. See the [Primitive Data Types](../reference/jjom#primitive-data-types) in the JjOM reference for the complete list of built-in types available at the meta-metamodel level.
+ 
+ ## The Viewpoint System
+ 
+@@ -88,6 +92,8 @@ You can change how something looks (viewpoint) without changing what it is (mode
+ 
+ ## Accidental Complexity
+ 
++As Grady Booch put it: "The real challenge of software engineering is not writing code, but managing complexity." This applies directly to modeling tools.
++
+ **Accidental complexity** is complexity that does not come from the problem you are solving but from the tools you are using to solve it. If you spend more time fighting the tool than thinking about the domain, you are dealing with accidental complexity.
+ 
+ Traditional metamodeling tools introduce accidental complexity through multi-step workflows: edit the metamodel, regenerate Java code, recompile, redeploy the editor, then test. Each step is a potential source of errors and interrupts the modeling flow. Jjodel is designed to minimize accidental complexity by eliminating this cycle entirely.
+diff --git a/src/content/docs/concepts/domain-analysis.md b/src/content/docs/concepts/domain-analysis.md
+index 7f53460..c034721 100644
+--- a/src/content/docs/concepts/domain-analysis.md
++++ b/src/content/docs/concepts/domain-analysis.md
+@@ -21,8 +21,21 @@ The process follows two complementary activities:
+ 
+ **Classification** asks: "What kinds of things exist here, and how can we categorize them meaningfully?" You observe the real-world scenario, identify recurring entities, and group them into types. These types become classes in your metamodel. The actual things you observe become instances.
+ 
++The idea of classification is deeply embedded in object-oriented thinking. Simula, the first OO language, was called that because it was built for simulation. Its need to represent real-world "things" in software led directly to the concepts of classes and instances that underpin all modern metamodeling.
++
+ **Abstraction** asks: "What matters about this thing for our purpose?" You focus on the essential characteristics of each concept and ignore details that are not relevant at this stage. This reduces complexity and makes the metamodel manageable.
+ 
++### How They Relate
++
++Classification and abstraction are complementary strategies. Classification organizes individual domain entities into types by identifying shared properties, behavior, or roles. Abstraction then decides which aspects of those types are relevant for the modeling purpose and discards the rest.
++
++| Strategy | Role in Modeling | How It Relates to the Other |
++|----------|-----------------|----------------------------|
++| Classification | Organizes domain entities into types (e.g., Patient, Nurse, Sensor) | Enables abstraction by grouping individuals into categories with shared behavior |
++| Abstraction | Omits details to focus on essential characteristics | Determines which aspects of classified types are important across instances |
++
++When you do domain modeling, you are building a structural representation of a domain. This is where classification and abstraction meet: classification tells you what kinds of things exist, abstraction tells you what matters about them.
++
+ ## Example: Intensive Care Unit
+ 
+ Consider the domain of an Intensive Care Unit (ICU). Patients are monitored with medical devices, sensors trigger alerts when values exceed thresholds, and medical staff responds according to clinical protocols. This domain is distant from software, which makes it a good exercise for domain analysis.
+@@ -84,14 +97,28 @@ How abstract or concrete should your metamodel be? This depends on the questions
+ 
+ If you need to track which patient is in which bed and which devices are attached, you need concrete concepts like Bed and specific device types. If you need to analyze staffing patterns, you can stay at the abstract MedicalStaff level without distinguishing nurses from doctors.
+ 
++Consider the Sensor class from the ICU example. The basic metamodel captures `unit`, `currentValue`, and `timestamp`. But what if you also need an alerting system for sensor battery levels, especially for vital monitoring? Then you would add properties like `batteryLevel` (Integer %), `signalQuality` (Float), `lastCalibrated` (DateTime), and threshold values. These properties are irrelevant for a patient monitoring model but essential for a device maintenance model. Same domain, different purpose, different level of abstraction.
++
+ Start abstract. Add detail when the models cannot answer the questions you care about. Removing unnecessary detail later is harder than adding necessary detail incrementally.
+ 
++## Domain vs Notation
++
++An important distinction: a **domain** is a real-world context or body of knowledge (library management, hospital staffing, smart homes). A **notation** is a formal language used to represent domains (ER diagrams, UML class diagrams, BPMN).
++
++This distinction matters when you work in Jjodel. If you build an ER diagram language, you are formalizing a *notation*, not a domain. The notation itself becomes your domain of analysis: Entity, Attribute, and Relationship are the concepts you classify and abstract. But when you later *use* that ER notation to model a hospital database, you are modeling a domain.
++
++In most practical scenarios, you build DSLs for domains, not for notations. The ER example in the [tutorials](../tutorials/tutorial-03-erd) uses a notation as a learning exercise precisely because students already know the concepts and can focus on the metamodeling process.
++
+ ## From Domain to Language
+ 
+-The metamodel you build through domain analysis becomes the abstract syntax of a Domain-Specific Language (DSL). This DSL provides:
++The metamodel you build through domain analysis becomes the abstract syntax of a Domain-Specific Language (DSL). A DSL is a formal, machine-processable interface to represent and manipulate domain knowledge. It provides structure, enforces consistency, and enables automation within the context it models.
++
++Concretely, your metamodel gives the DSL:
+ 
+ - A **vocabulary** of domain concepts (the classes)
+ - **Rules** for how concepts relate (the references and constraints)
+ - A **structure** that enables automated processing (validation, transformation, code generation)
+ 
++A DSL is defined using Jjodel's meta-metamodel, which provides the building blocks: Class, Attribute, Reference, Enumeration, Package. Your metamodel is an instance of this meta-metamodel.
++
+ The next step is to give this DSL a concrete syntax through viewpoints, so that domain experts can work with it visually rather than through the raw abstract syntax. See [Viewpoints](../user-guide/viewpoints) for details on how to define visual representations.
+diff --git a/src/content/docs/concepts/glossary.md b/src/content/docs/concepts/glossary.md
+index f315fa8..d4f31e1 100644
+--- a/src/content/docs/concepts/glossary.md
++++ b/src/content/docs/concepts/glossary.md
+@@ -11,8 +11,12 @@ A reference of key terms used throughout the Jjodel documentation and in the bro
+ 
+ **Abstract Syntax** — The formal structure of a modeling language, defining the valid element types, properties, and relationships independently of any visual or textual representation. In Jjodel, the abstract syntax is defined by the metamodel.
+ 
++**Abstraction** — The process of reducing complexity by focusing on essential features and ignoring irrelevant details for a given purpose. Abstraction answers the question: "What matters about this thing for our purpose?"
++
+ **Blended Modeling** — An approach that combines visual (graphical) and textual representations of the same model, allowing users to switch between notations seamlessly.
+ 
++**Classification** — The act of identifying and grouping domain concepts into types (classes) based on shared properties, behavior, or roles. Classification answers the question: "What kinds of things exist here?"
++
+ **Code Generation** — The automatic production of source code, configuration files, or documentation from model elements using generation viewpoints.
+ 
+ **Concrete Syntax** — The visual or textual notation used to represent abstract syntax elements. Defined in Jjodel through syntax viewpoints.
+@@ -25,7 +29,13 @@ A reference of key terms used throughout the Jjodel documentation and in the bro
+ 
+ **DClass** — A class definition in the Jjodel metamodel. Classes are the primary building blocks of any modeling language.
+ 
+-**Domain-Specific Language (DSL)** — A specialized language tailored to a particular application domain, as opposed to a general-purpose language.
++**DEnumeration** — A named set of symbolic values in the metamodel. Examples: `Status = {ON, OFF, STANDBY}`, `Cardinality = {OneToOne, OneToMany, ManyToMany}`.
++
++**Domain** — The body of knowledge, activity, or expertise that a system addresses. Domains exist independently of software.
++
++**Domain Modeling** — The activity of capturing the structure and semantics of a specific domain through classification and abstraction. Domain modeling produces a metamodel.
++
++**Domain-Specific Language (DSL)** — A formal, machine-processable interface to represent and manipulate domain knowledge. A DSL provides structure, enforces consistency, and enables automation within the context it models. Built using a meta-metamodel.
+ 
+ **DObject** — A runtime instance of a DClass. DObjects hold actual attribute values and reference targets.
+ 
+@@ -47,6 +57,8 @@ A reference of key terms used throughout the Jjodel documentation and in the bro
+ 
+ **Metamodel** — A "model of models" that defines the structure, constraints, and rules of a modeling language. The metamodel is the abstract syntax.
+ 
++**Meta-metamodel** — The language for building metamodels. It defines the available building blocks (Class, Attribute, Reference, Enumeration, Package) that you use to construct a metamodel. Jjodel's meta-metamodel is based on Ecore. Sits at level M3 in the MDE meta-level hierarchy.
++
+ **Model** — A structured representation of domain concepts, conforming to a metamodel.
+ 
+ **Model-Driven Engineering (MDE)** — A software development methodology that uses models as primary artifacts throughout the development lifecycle, emphasizing automation, abstraction, and separation of concerns.
+@@ -55,6 +67,10 @@ A reference of key terms used throughout the Jjodel documentation and in the bro
+ 
+ **Node** — The visual representation of a model element on the canvas. Nodes have shape, position, size, color, and labels.
+ 
++**Notation** — A formal language used to model domains. Examples: ER diagrams, UML class diagrams, BPMN. A notation is distinct from the domain it represents.
++
++**Primitive Data Types** — The built-in types provided by Jjodel's meta-metamodel for attribute values: EString, EInt, EBoolean, EDouble, EFloat, ELong, EShort, EByte, EChar, EDate. Inherited from the Ecore type system.
++
+ **Projectional Editing** — An editing paradigm where the user manipulates a projection (view) of the abstract syntax tree, rather than text that is parsed into an AST.
+ 
+ **Reactive Architecture** — Jjodel's design principle where changes propagate automatically across all connected components in real time.
+diff --git a/src/content/docs/concepts/modeling-language-anatomy.md b/src/content/docs/concepts/modeling-language-anatomy.md
+index 591a7ec..1f86605 100644
+--- a/src/content/docs/concepts/modeling-language-anatomy.md
++++ b/src/content/docs/concepts/modeling-language-anatomy.md
+@@ -5,7 +5,9 @@ sidebar:
+   order: 4
+ ---
+ 
+-A modeling language is a structured system of notation, rules, and semantics that allows users to represent complex concepts, systems, or domains in visual, textual, or blended form. In Jjodel, a modeling language is composed of four interrelated components, each serving a distinct role.
++A modeling language is a structured system of notation, rules, and semantics that allows users to represent domain concepts in visual, textual, or blended form. A Domain-Specific Language (DSL) is a formal, machine-processable interface to represent and manipulate domain knowledge: it provides structure, enforces consistency, and enables automation within the context it models.
++
++A DSL is defined using a meta-metamodel, which supplies the building blocks (classes, attributes, references, enumerations) for creating its structure. The resulting DSL captures a fragment of the knowledge underlying a domain. In Jjodel, a modeling language is composed of four interrelated components, each serving a distinct role.
+ 
+ <!-- TODO: illustration — Jjodel conceptual model diagram (from WordPress) -->
+ 
+@@ -69,3 +71,9 @@ These four components form a layered architecture:
+ 4. **Generation viewpoints** define what it produces (pragmatics)
+ 
+ Together, they constitute a complete language workbench. Jjodel's reactive architecture ensures that all four layers remain synchronized as you evolve any one of them.
++
++## The Path from Domain to Language
++
++Building a modeling language starts with [domain analysis](./domain-analysis): you observe a domain, classify its concepts, and abstract away irrelevant details. The result is a metamodel (the abstract syntax). You then add concrete syntax through viewpoints, validation through constraints, and optionally code generation templates.
++
++Modeling tools are fundamental enablers for this process. They provide the environment for creating, manipulating, transforming, and managing domain-specific notations. In education, they facilitate experimenting with abstraction, guiding students from concrete thinking to higher-level modeling across meta-levels.
+diff --git a/src/content/docs/reference/jjom.md b/src/content/docs/reference/jjom.md
+index e917839..efe1155 100644
+--- a/src/content/docs/reference/jjom.md
++++ b/src/content/docs/reference/jjom.md
+@@ -56,7 +56,36 @@ A typed property belonging to a class.
+ 
+ **Key properties:**
+ - `name: String`
+-- `type` (String, Integer, Boolean, Float, or a user-defined enumeration)
++- `type` (one of the primitive data types below, or a user-defined enumeration)
++
++### DEnumeration
++
++A named set of symbolic values. Enumerations define closed value sets for attributes where only specific options are valid (e.g., `Status = {ON, OFF, STANDBY}`, `Cardinality = {OneToOne, OneToMany, ManyToMany}`).
++
++**Key properties:**
++- `name: String`
++- `literals: Array<DEnumerationLiteral>` (the set of valid values)
++
++Each literal has a `name` and an optional `value`. In templates and Console expressions, read an enumeration attribute with `data.$myEnum.value`.
++
++## Primitive Data Types
++
++Jjodel provides the following primitive types, inherited from the Ecore type system:
++
++| Type | Description | Example |
++|------|-------------|---------|
++| `EString` | A sequence of characters | `"Cardiology"` |
++| `EInt` | 32-bit integer | `42` |
++| `EBoolean` | True or false | `true` |
++| `EDouble` | 64-bit floating point | `3.14159` |
++| `EFloat` | 32-bit floating point | `2.71` |
++| `ELong` | 64-bit integer | `123456789L` |
++| `EShort` | 16-bit integer | `32767` |
++| `EByte` | 8-bit integer | `127` |
++| `EChar` | A single character | `'A'` |
++| `EDate` | Date and time | `2025-06-20T10:00` |
++
++In practice, `EString`, `EInt`, `EBoolean`, and `EDouble` cover the vast majority of use cases. The full set is available for interoperability with Ecore-based metamodels and for domains that require precise numeric types.
+ 
+ ### DReference
+ 
+diff --git a/src/content/docs/tutorials/tutorial-03-erd.md b/src/content/docs/tutorials/tutorial-03-erd.md
+index cd37575..d37ebbb 100644
+--- a/src/content/docs/tutorials/tutorial-03-erd.md
++++ b/src/content/docs/tutorials/tutorial-03-erd.md
+@@ -7,6 +7,8 @@ sidebar:
+ 
+ In this tutorial you build a complete Entity-Relationship diagram language. Unlike the first two tutorials, this one follows a realistic workflow: you start with a known notation, formalize it as a metamodel, discover problems along the way, and solve them using composition, enumerations, and validation.
+ 
++The objective is to build a DSL that lets you describe ER diagrams by defining what Entities, Attributes, and Relationships mean at the metamodel level. You will create core classes, define relationships between them, and add enumerations for type safety.
++
+ **Prerequisites:** Completed [Tutorial 1](./tutorial-01-basic) and familiarity with [Basic Notions](../concepts/basic-notions).
+ 
+ **Time:** ~40 minutes
+@@ -17,6 +19,14 @@ In this tutorial you build a complete Entity-Relationship diagram language. Unli
+ 
+ ER diagrams are a notation you already know from database courses. This is intentional: because the domain is familiar, you can focus on the metamodeling process rather than domain analysis. The reduced cognitive load makes this an ideal exercise for learning abstract syntax, references, enumerations, and later concrete syntax.
+ 
++ER diagrams are particularly suited as a first DSL because they introduce several key metamodeling concepts at once: references between classes (an Entity having Relationships), enumerations (cardinalities), semantic rules (no duplicate entity names), and later, different concrete syntaxes (conceptual vs logical views of the same model).
++
++### Domain vs Notation
++
++A subtle but important point: ER diagrams are not themselves a domain to be analyzed. They are a *notation* used to model other domains (library management, hospital staffing, e-commerce). In this tutorial, the ER notation itself becomes the subject of our metamodeling exercise. Entity, Attribute, and Relationship are the concepts we classify and formalize.
++
++In most real-world scenarios, you build DSLs for domains, not for notations. You would model a hospital, not the ER diagram format. We use ERD here because it is a notation you already understand, so you can concentrate entirely on the metamodeling mechanics.
++
+ ---
+ 
+ ## Part 1: The Metamodel
+diff --git a/src/content/docs/user-guide/metamodel-editor.md b/src/content/docs/user-guide/metamodel-editor.md
+index 3e2a558..dfc41ed 100644
+--- a/src/content/docs/user-guide/metamodel-editor.md
++++ b/src/content/docs/user-guide/metamodel-editor.md
+@@ -54,7 +54,7 @@ Attributes (`DAttribute`) represent typed properties of a class. To add an attri
+ 3. Click **Add Attribute**
+ 4. Specify the attribute name and type
+ 
+-Supported primitive types include `String`, `Integer`, `Boolean`, `Float`, and custom enumerations.
++Supported types include primitive data types (`EString`, `EInt`, `EBoolean`, `EDouble`, and others) and custom enumerations. See the [JjOM reference](../reference/jjom#primitive-data-types) for the full list of primitives.
+ 
+ ## Working with References
+ 
+@@ -83,6 +83,26 @@ References have configurable multiplicity bounds:
+ 
+ Operations (`DOperation`) define behaviors associated with a class. They can be used for model transformations, computed properties, or custom logic.
+ 
++## Working with Enumerations
++
++Enumerations define closed sets of symbolic values. Use them for attributes where only specific options are valid: data types (`String`, `Integer`, `Boolean`), cardinalities (`OneToOne`, `OneToMany`), statuses (`Active`, `Inactive`), or any domain-specific value set.
++
++To create an enumeration:
++
++1. Click the **Add Enumeration** button in the toolbar (or use the context menu)
++2. Enter a name for the enumeration (e.g., `Cardinality`)
++3. Add **literals**: each literal represents one valid value (e.g., `OneToOne`, `OneToMany`, `ManyToMany`)
++
++To use an enumeration as an attribute type:
++
++1. Select a class and add (or edit) an attribute
++2. Set the attribute type to the enumeration name instead of a primitive type
++3. When users create instances of this class, the attribute appears as a dropdown with the enumeration literals
++
++Because Jjodel is reflective, adding a new literal to an enumeration immediately makes it available in all existing model instances that use that enumeration. No regeneration step is required.
++
++See the [Primitive Data Types](../reference/jjom#primitive-data-types) in the JjOM reference for the complete list of built-in types.
++
+ ## Working with Packages
+ 
+ Packages (`DPackage`) organize classes into logical groups, similar to namespaces. A package can contain classes or other packages, enabling hierarchical organization of large metamodels.

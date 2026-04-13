@@ -5,7 +5,15 @@ sidebar:
   order: 2
 ---
 
-The JjOM API provides programmatic access to all elements in the Jjodel Object Model. You can use the API from the Console, within JjEL expressions, in viewpoint templates, and in event handlers.
+The JjOM API provides programmatic access to all elements in the Jjodel Object Model. You can use the API from the Console, within JjEL expressions, in viewpoint templates, and in event handlers. Models can be queried and manipulated through JavaScript/JSX expressions directly; no code generation is needed.
+
+## DModel API
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `name` | `String` | Model name |
+| `packages` | `Array<DPackage>` | Top-level packages |
+| `objects` | `Array<DObject>` | Top-level elements |
 
 ## DClass API
 
@@ -35,16 +43,17 @@ The JjOM API provides programmatic access to all elements in the Jjodel Object M
 | Property | Type | Description |
 |----------|------|-------------|
 | `id` | `Pointer` | Unique identifier |
-| `className` | `String` | Name of the instantiated class |
+| `className` | `String` | Name of the instantiated class (returns `"DObject"` for model-level elements, `"DClass"` for metamodel-level) |
 | `instanceOf` | `DClass` | The metaclass |
 | `parent` | `*` | Containing element |
+| `name` | `String` | Display name (aliased to `$name.value` when a user-defined `name` attribute exists) |
 
 ## DAttribute API
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | `String` | Attribute name |
-| `type` | `String` | Data type |
+| `type` | `String` | Data type (primitive or enumeration name) |
 
 ## DReference API
 
@@ -53,6 +62,21 @@ The JjOM API provides programmatic access to all elements in the Jjodel Object M
 | `name` | `String` | Reference name |
 | `target` | `DClass` | Target class |
 | `containment` | `Boolean` | Whether this is a containment reference |
+| `multiplicity` | `Object` | Lower and upper bounds |
+
+## DEnumeration API
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `name` | `String` | Enumeration name |
+| `literals` | `Array<DEnumerationLiteral>` | Valid values |
+
+## DValue API
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `value` | `*` | The concrete scalar value (string, integer, boolean, or enumeration literal) |
+| `name` | `String` | For enumeration values, the literal name |
 
 ## DPackage API
 
@@ -61,6 +85,21 @@ The JjOM API provides programmatic access to all elements in the Jjodel Object M
 | `name` | `String` | Package name |
 | `packages` | `Array<DPackage>` | Nested packages |
 | `objects` | `Array<DObject>` | Contained elements |
+
+## Layout API (Node Submodel)
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `node.x` | `Number` | Horizontal position |
+| `node.y` | `Number` | Vertical position |
+| `node.w` | `Number` | Width |
+| `node.h` | `Number` | Height |
+
+## View API
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `view.oclCondition` | `String` | The OCL predicate that determines which elements this view applies to |
 
 ## Usage Examples
 
@@ -81,13 +120,32 @@ Class.allInstances.length
 
 ```javascript
 // From instance to metaclass
-myObject.instanceOf.name
+data.instanceOf.name                   // → "Entity"
 
-// From class to its features
-Person.attributes.map(a => a.name)  // → ["name", "age"]
+// Retrieve a user-defined attribute value
+data.$name.value                       // → "User"
+data.$description.value                // → "This entity is essential for..."
+
+// List all attribute names of an entity
+data.$ownedAttributes.values.map(a => a.name)  // → ["id", "name", "surname"]
+
+// List only String attributes
+data.$ownedAttributes.values
+  .filter(s => s.$type.value.name === 'String')
+  .map(a => a.name)                    // → ["name", "surname"]
 
 // From class to its subclasses
-Entity.extendedBy.map(c => c.name)  // → ["Person", "Organization"]
+Entity.extendedBy.map(c => c.name)     // → ["Person", "Organization"]
+```
+
+### Layout manipulation
+
+```javascript
+// Read position
+node.x * node.y
+
+// Check view predicate
+view.oclCondition  // → "context DObject inv: self.instanceof.name = 'Entity'"
 ```
 
 ### Checking properties
@@ -98,6 +156,9 @@ myClass.isAbstract  // → true/false
 
 // Can this class be used as a model root?
 myClass.isRootable  // → true/false
+
+// What type of JjOM element is this?
+data.className      // → "DClass" (metamodel) or "DObject" (model)
 ```
 
 :::caution[Temporary IDs]

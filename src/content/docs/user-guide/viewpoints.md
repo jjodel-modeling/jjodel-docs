@@ -208,16 +208,6 @@ Default viewpoints have a special role: they serve as the fallback rendering whe
 
 When you create a new custom viewpoint and activate it, it takes precedence over the defaults. Any metaclass without a view in the active viewpoint falls back to the default rendering.
 
-## Multi-View Modeling
-
-The same model can be visualized through multiple viewpoints. For example, an ER diagram might have:
-
-- A **conceptual syntax** using ovals, diamonds, and rectangles (Chen notation)
-- A **logical syntax** using boxes with lines and crow's foot notation
-- A **validation viewpoint** highlighting missing attributes or invalid cardinalities
-
-Each viewpoint presents a different perspective. Switching between them is instant, and the underlying model data is never affected.
-
 :::caution
 Viewpoints define *how* to render models. They do not contain model data. Modifying a viewpoint changes the visualization, not the model structure. Deleting a viewpoint does not delete any model elements.
 :::

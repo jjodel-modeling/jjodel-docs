@@ -47,16 +47,20 @@ A model **conforms to** its metamodel, exactly as a program written in Java conf
 
 ### Meta-levels
 
-MDE organizes artifacts into four levels:
+MDE organizes artifacts into four levels, where each level conforms to the one above it:
 
 | Level | Name | Example |
 |-------|------|---------|
 | **M3** | Meta-metamodel | Ecore, Jjodel meta-metamodel |
-| **M2** | Metamodel | Your DSL definition (e.g., the ER metamodel) |
+| **M2** | Metamodel (DSL) | Your DSL definition (e.g., the ER metamodel) |
 | **M1** | Model | A specific ER diagram (instances of your DSL) |
 | **M0** | System | The real-world system being described |
 
-Each level conforms to the one above it. Jjodel's meta-metamodel (M3) is based on Ecore and provides the constructs (classes, attributes, references, enumerations, packages) that you use to define your own metamodels (M2).
+The **meta-metamodel** (M3) defines the language for building metamodels. It provides the building blocks: Class, Attribute, Reference, Enumeration, Constraint, Package. Every user-defined metamodel is an instance of this meta-metamodel.
+
+Jjodel's meta-metamodel is built on top of Ecore, inheriting its core concepts but extending them to reduce accidental complexity. When you create a class in the Metamodel Editor and add attributes and references to it, you are using M3 constructs to define an M2 artifact. When someone later instantiates that class in a model, they produce M1 elements that conform to your M2 metamodel.
+
+The practical consequence: you never interact with M3 directly. Jjodel's editor UI exposes the meta-metamodel constructs as buttons and forms. See the [Primitive Data Types](../reference/jjom#primitive-data-types) in the JjOM reference for the complete list of built-in types available at the meta-metamodel level.
 
 ## The Viewpoint System
 
@@ -86,7 +90,17 @@ Jjodel distinguishes between the abstract and the visual:
 
 You can change how something looks (viewpoint) without changing what it is (model).
 
+## Topological vs Layout-Sensitive Notations
+
+Most visual notations in software engineering are **topological**: meaning is encoded in connectivity (which elements are connected by edges). You can move, resize, and rearrange elements freely without changing the model's meaning. ER diagrams and UML class diagrams are topological.
+
+Some engineering domains use **layout-sensitive** notations where the spatial position of elements carries meaning. Railway track plans, PCB layouts, power cabinet schematics, and algebraic formulas all fall in this category. Moving an element to a different position changes the model's semantics.
+
+Traditional modeling tools treat layout as decoration and ignore it semantically. Jjodel treats layout as a first-class concern through the node submodel of the [JjOM](../reference/jjom), ensuring that layout-sensitive notations preserve their semantic integrity.
+
 ## Accidental Complexity
+
+As Grady Booch put it: "The real challenge of software engineering is not writing code, but managing complexity." This applies directly to modeling tools.
 
 **Accidental complexity** is complexity that does not come from the problem you are solving but from the tools you are using to solve it. If you spend more time fighting the tool than thinking about the domain, you are dealing with accidental complexity.
 

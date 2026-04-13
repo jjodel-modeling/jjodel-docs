@@ -54,7 +54,7 @@ Attributes (`DAttribute`) represent typed properties of a class. To add an attri
 3. Click **Add Attribute**
 4. Specify the attribute name and type
 
-Supported primitive types include `String`, `Integer`, `Boolean`, `Float`, and custom enumerations.
+Supported types include primitive data types (`EString`, `EInt`, `EBoolean`, `EDouble`, and others) and custom enumerations. See the [JjOM reference](../reference/jjom#primitive-data-types) for the full list of primitives.
 
 ## Working with References
 
@@ -82,6 +82,26 @@ References have configurable multiplicity bounds:
 ## Working with Operations
 
 Operations (`DOperation`) define behaviors associated with a class. They can be used for model transformations, computed properties, or custom logic.
+
+## Working with Enumerations
+
+Enumerations define closed sets of symbolic values. Use them for attributes where only specific options are valid: data types (`String`, `Integer`, `Boolean`), cardinalities (`OneToOne`, `OneToMany`), statuses (`Active`, `Inactive`), or any domain-specific value set.
+
+To create an enumeration:
+
+1. Click the **Add Enumeration** button in the toolbar (or use the context menu)
+2. Enter a name for the enumeration (e.g., `Cardinality`)
+3. Add **literals**: each literal represents one valid value (e.g., `OneToOne`, `OneToMany`, `ManyToMany`)
+
+To use an enumeration as an attribute type:
+
+1. Select a class and add (or edit) an attribute
+2. Set the attribute type to the enumeration name instead of a primitive type
+3. When users create instances of this class, the attribute appears as a dropdown with the enumeration literals
+
+Because Jjodel is reflective, adding a new literal to an enumeration immediately makes it available in all existing model instances that use that enumeration. No regeneration step is required.
+
+See the [Primitive Data Types](../reference/jjom#primitive-data-types) in the JjOM reference for the complete list of built-in types.
 
 ## Working with Packages
 

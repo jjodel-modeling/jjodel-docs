@@ -5,23 +5,49 @@ sidebar:
   order: 1
 ---
 
-The Jjodel Object Model (JjOM) is the structured runtime framework at the heart of Jjodel. It represents all modeling components in a unified, reflective structure that can be inspected and manipulated at runtime.
+The Jjodel Object Model (JjOM) is the reflective runtime representation of all modeling artifacts within Jjodel. It is a formal and runtime representation of the elements that make up a model, including their types, relationships, and values. The JjOM is structured according to the metamodel defined by the user, is JSON-serializable, and can be inspected and edited at runtime.
 
-## Two Submodels: Data and Node
+The JjOM serves as the semantic backbone of any model and is the unifying substrate across all viewpoints. Jjodel interprets it for rendering views, applying validation rules, and driving simulation logic.
 
-The JjOM is split into two complementary submodels:
+## Three Submodels: Data, Node, View
+
+The JjOM organizes data across three interconnected submodels:
+
+| Submodel | Purpose | Examples |
+|----------|---------|----------|
+| **Data** | Represents core modeling artifacts (classes, attributes, references, instances) | DClass, DObject, DAttribute, DReference |
+| **Node** | Manages layout and positional data | Coordinates, geometry, visual state |
+| **View** | Defines visual syntax and rendering | JSX-based view templates |
 
 **Data** encodes the abstract syntax of a model: the elements, their attribute values, and their references. This is the semantic content of your model. When you create an Entity with attributes in an ER diagram, the data submodel stores those elements and their properties.
 
 **Node** encodes all layout information: position, dimensions, edge routing, and visual state. This is the presentation layer. When you drag an element on the canvas, only the node submodel changes; the data remains untouched.
 
-This separation is architecturally significant. It enables positional notations where the layout contributes to the meaning of the model (e.g., elements placed inside a container imply containment), while keeping the semantic content independent of any specific visual arrangement.
+**View** defines how model elements are rendered visually. It contains the JSX-based templates, predicates, and styling rules that map abstract syntax to concrete syntax. Each viewpoint produces a view submodel that determines what the user sees on the canvas.
+
+The separation of data, node, and view is architecturally significant. It enables layout-sensitive notations where the spatial position of elements contributes to meaning (e.g., railway track plans, PCB layouts), while keeping the semantic content independent of any specific visual arrangement. In Jjodel, layout is not decoration; it is a first-class dimension of meaning that can carry semantic weight.
+
+## Architectural Context
+
+The JjOM sits at the center of Jjodel's architecture, connecting the front-end and back-end:
+
+- **Front-end**: React/TypeScript + Redux (object store)
+- **Back-end**: ASP.NET + PostgreSQL
+- **Reflective Bus and Object Store**: the communication backbone that synchronizes changes across all clients
+
+The JjOM provides a unified API to query, edit, and synchronize models, their layout, and their visual representation. An analogy from the web domain: the JjOM plays a role similar to the Document Object Model (DOM), but for modeling artifacts instead of HTML documents.
 
 ## Core Modeling Constructs
 
+These are the meta-elements in the Jjodel meta-metamodel.
+
+### DModel
+
+The top-level container holding packages or classes. DModel acts as the root of a model specification. Every project has at least one DModel.
+
 ### DPackage
 
-A logical container for grouping related classes. Packages can be nested to create hierarchical namespaces.
+A logical grouping or namespace for related classes.
 
 **Key properties:**
 - `name: String`
@@ -30,7 +56,7 @@ A logical container for grouping related classes. Packages can be nested to crea
 
 ### DClass
 
-The fundamental building block of metamodels. A DClass defines an element type with its properties and relationships.
+Represents a class in the metamodel. It can extend from another class and declares attributes, references, and operations.
 
 **Key properties:**
 - `name: String` (unique within its package)
@@ -52,15 +78,25 @@ The fundamental building block of metamodels. A DClass defines an element type w
 
 ### DAttribute
 
-A typed property belonging to a class.
+Represents a field or characteristic that holds an intrinsic value. The type can be a primitive (integer, string, boolean, etc.) or a user-defined enumeration.
 
 **Key properties:**
 - `name: String`
-- `type` (String, Integer, Boolean, Float, or a user-defined enumeration)
+- `type` (one of the primitive data types below, or a user-defined enumeration)
+
+### DEnumeration
+
+A named set of symbolic values. Enumerations define closed value sets for attributes where only specific options are valid (e.g., `Status = {ON, OFF, STANDBY}`, `Cardinality = {OneToOne, OneToMany, ManyToMany}`).
+
+**Key properties:**
+- `name: String`
+- `literals: Array<DEnumerationLiteral>` (the set of valid values)
+
+Each literal has a `name` and an optional `value`. In templates and Console expressions, read an enumeration attribute with `data.$myEnum.value`.
 
 ### DReference
 
-A relationship between two classes.
+A relationship between two classes. DReferences may include multiplicity constraints (one-to-one, one-to-many) and can be containment or non-containment relationships.
 
 **Key properties:**
 - `name: String`
@@ -76,7 +112,7 @@ A behavioral feature belonging to a class.
 
 ### DObject
 
-A runtime instance of a DClass. DObjects hold actual attribute values and reference targets.
+An instance of a DClass. DObjects store runtime values for each DAttribute and links pointing to other objects.
 
 **Key properties:**
 - `id: Pointer` (unique identifier; IDs from `DObject.new()` are temporary)
@@ -84,26 +120,59 @@ A runtime instance of a DClass. DObjects hold actual attribute values and refere
 - `instanceOf: DClass` (the metaclass)
 - `parent: *` (containing element, if any)
 
+A concrete example: an ERD Entity metaclass becomes a DClass; a specific entity "User" is a DObject; its "id" attribute is a DAttribute with a DValue.
+
+### DValue
+
+The concrete value assigned to an attribute or data field. Each DObject's DAttribute has one or more DValues, which can be a scalar (string, integer, boolean) or an enumeration literal.
+
+## Primitive Data Types
+
+Jjodel provides the following primitive types, inherited from the Ecore type system:
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `EString` | A sequence of characters | `"Cardiology"` |
+| `EInt` | 32-bit integer | `42` |
+| `EBoolean` | True or false | `true` |
+| `EDouble` | 64-bit floating point | `3.14159` |
+| `EFloat` | 32-bit floating point | `2.71` |
+| `ELong` | 64-bit integer | `123456789L` |
+| `EShort` | 16-bit integer | `32767` |
+| `EByte` | 8-bit integer | `127` |
+| `EChar` | A single character | `'A'` |
+| `EDate` | Date and time | `2025-06-20T10:00` |
+
+In practice, `EString`, `EInt`, `EBoolean`, and `EDouble` cover the vast majority of use cases. The full set is available for interoperability with Ecore-based metamodels and for domains that require precise numeric types.
+
 ## The $ Prefix Convention
 
 In JSX templates and Console expressions, user-defined features (attributes and references from your metamodel) are accessed with the `$` prefix. This distinguishes them from built-in JjOM properties.
 
-Given a metamodel where `Entity` has an attribute `name` and a containment reference `ownedAttributes`:
+Given a metamodel where `Entity` has an attribute `name`, a containment reference `ownedAttributes`, and an attribute `description`:
 
 ```javascript
 // Built-in JjOM property (no prefix)
-data.instanceof.name       // returns "Entity"
+data.className             // returns "DClass" or "DObject"
+data.instanceOf.name       // returns "Entity"
 data.id                    // returns the element ID
 
 // User-defined attribute ($ prefix)
-data.$name                 // returns the value of the "name" attribute
+data.$name                 // returns the DValue object for the "name" attribute
+data.$name.value           // returns the string value, e.g., "User"
+data.$description.value    // returns the description text
 
 // User-defined reference ($ prefix)
-data.$ownedAttributes      // returns the array of contained Attribute instances
+data.$ownedAttributes      // returns the reference to contained Attribute instances
+data.$ownedAttributes.values  // returns the array of actual instances
 
 // Check if a reference is set
 data.$left !== undefined   // true if the "left" reference points to something
 ```
+
+### The Special `name` Attribute
+
+A user-defined attribute called `name` has special status in Jjodel: its value overrides the display name of the instance. This means `data.name` returns the same string as `data.$name.value`. The built-in `data.name` property is effectively aliased to the user-defined `$name` attribute when one exists.
 
 For enumeration values, the stored value is a symbolic identifier. To display it, access the value property:
 
@@ -113,7 +182,7 @@ data.$cardinality.value    // returns e.g., "OneToMany"
 
 ## Navigating the JjOM in Templates
 
-JSX templates operate on two variables: `data` (the abstract syntax subgraph for the current element) and `node` (the layout subgraph). Most template logic uses `data`.
+JSX templates operate on three variables corresponding to the three submodels: `data` (the abstract syntax subgraph for the current element), `node` (the layout subgraph), and `view` (the rendering configuration). Most template logic uses `data`.
 
 ```jsx
 // Display the name of the current element
@@ -124,14 +193,38 @@ JSX templates operate on two variables: `data` (the abstract syntax subgraph for
   <div>{attr.$name}: {attr.$type.value}</div>
 )}
 
-// Filter attributes by type
-{data.$ownedAttributes
-  .filter(attr => attr.$type.value === 'String')
-  .map(attr => <div>{attr.$name}</div>)
+// List names of all String attributes
+{data.$ownedAttributes.values
+  .filter(s => s.$type.value.name === 'String')
+  .map(a => a.name)
 }
 ```
 
 The navigational structure of these expressions depends entirely on your metamodel. If your metamodel defines a reference `left` from `Relation` to `Entity`, then `data.$left` navigates that reference. The JjOM mirrors the metamodel structure at runtime.
+
+## Layout-Sensitive Notation
+
+Most visual notations in software engineering are **topological**: meaning is encoded in connectivity (which elements are connected by edges). In these notations, layout is irrelevant; you can move, resize, and rearrange elements without changing the model's meaning. ER diagrams and UML class diagrams are topological.
+
+Some engineering domains use **layout-sensitive** notations: railway track plans, power cabinet schematics, PCB layouts, algebraic formulas. In these notations, the spatial order of elements changes their meaning. The expression `5 - 3` and `3 - 5` have the same topology (a subtraction with two operands) but opposite semantics determined by the left-right position of the operands.
+
+Mainstream modeling tools (GMF, Sirius) treat layout as decoration, storing it in diagram files that are ignored semantically. This creates semantic ambiguity: two visually different diagrams may share the same abstract syntax even when their layout encodes different meanings.
+
+Jjodel solves this by making layout a first-class semantic submodel. The node submodel captures positional information that viewpoint rules can read and react to, ensuring that each distinct layout maps to a unique abstract model. No layout data pollutes the metamodel; the node submodel handles it transparently.
+
+| Tool | Layout treated as | Semantic Impact | Live Co-evolution |
+|------|-------------------|-----------------|-------------------|
+| GMF | rendering | ignored | no |
+| Sirius | decorative | partial | limited |
+| Jjodel | semantic submodel | preserved | yes |
+
+## State Attributes
+
+In Jjodel, every JjOM node (data, node, view) can carry a set of **computed states** that depend on the structure of the model and on other states. This mechanism is analogous to synthesized and inherited attributes in classical attribute grammars: synthesized attributes flow upward from children to parents, and inherited attributes flow downward from parents to children.
+
+State attributes serve two purposes. On the abstract syntax side, they capture semantic or derived information: computed values, validity flags, types, derived names. On the concrete syntax side, they describe how the model should appear or behave in the editor: layout values, visibility, styling, or interactive state.
+
+The Jjodel runtime evaluates state dependencies incrementally. When the model changes, all affected states update automatically, keeping views consistent without manual intervention.
 
 ## JjOM and the LModel Proxy
 

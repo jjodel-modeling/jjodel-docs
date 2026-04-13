@@ -5,7 +5,9 @@ sidebar:
   order: 4
 ---
 
-A modeling language is a structured system of notation, rules, and semantics that allows users to represent complex concepts, systems, or domains in visual, textual, or blended form. In Jjodel, a modeling language is composed of four interrelated components, each serving a distinct role.
+A modeling language is a structured system of notation, rules, and semantics that allows users to represent domain concepts in visual, textual, or blended form. A Domain-Specific Language (DSL) is a formal, machine-processable interface to represent and manipulate domain knowledge: it provides structure, enforces consistency, and enables automation within the context it models.
+
+A DSL is defined using a meta-metamodel, which supplies the building blocks (classes, attributes, references, enumerations) for creating its structure. The resulting DSL captures a fragment of the knowledge underlying a domain. In Jjodel, a modeling language is composed of four interrelated components, each serving a distinct role.
 
 <!-- TODO: illustration — Jjodel conceptual model diagram (from WordPress) -->
 
@@ -69,3 +71,9 @@ These four components form a layered architecture:
 4. **Generation viewpoints** define what it produces (pragmatics)
 
 Together, they constitute a complete language workbench. Jjodel's reactive architecture ensures that all four layers remain synchronized as you evolve any one of them.
+
+## The Path from Domain to Language
+
+Building a modeling language starts with [domain analysis](./domain-analysis): you observe a domain, classify its concepts, and abstract away irrelevant details. The result is a metamodel (the abstract syntax). You then add concrete syntax through viewpoints, validation through constraints, and optionally code generation templates.
+
+Modeling tools are fundamental enablers for this process. They provide the environment for creating, manipulating, transforming, and managing domain-specific notations. In education, they facilitate experimenting with abstraction, guiding students from concrete thinking to higher-level modeling across meta-levels.

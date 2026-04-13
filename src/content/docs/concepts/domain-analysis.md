@@ -21,7 +21,20 @@ The process follows two complementary activities:
 
 **Classification** asks: "What kinds of things exist here, and how can we categorize them meaningfully?" You observe the real-world scenario, identify recurring entities, and group them into types. These types become classes in your metamodel. The actual things you observe become instances.
 
+The idea of classification is deeply embedded in object-oriented thinking. Simula, the first OO language, was called that because it was built for simulation. Its need to represent real-world "things" in software led directly to the concepts of classes and instances that underpin all modern metamodeling.
+
 **Abstraction** asks: "What matters about this thing for our purpose?" You focus on the essential characteristics of each concept and ignore details that are not relevant at this stage. This reduces complexity and makes the metamodel manageable.
+
+### How They Relate
+
+Classification and abstraction are complementary strategies. Classification organizes individual domain entities into types by identifying shared properties, behavior, or roles. Abstraction then decides which aspects of those types are relevant for the modeling purpose and discards the rest.
+
+| Strategy | Role in Modeling | How It Relates to the Other |
+|----------|-----------------|----------------------------|
+| Classification | Organizes domain entities into types (e.g., Patient, Nurse, Sensor) | Enables abstraction by grouping individuals into categories with shared behavior |
+| Abstraction | Omits details to focus on essential characteristics | Determines which aspects of classified types are important across instances |
+
+When you do domain modeling, you are building a structural representation of a domain. This is where classification and abstraction meet: classification tells you what kinds of things exist, abstraction tells you what matters about them.
 
 ## Example: Intensive Care Unit
 
@@ -84,14 +97,28 @@ How abstract or concrete should your metamodel be? This depends on the questions
 
 If you need to track which patient is in which bed and which devices are attached, you need concrete concepts like Bed and specific device types. If you need to analyze staffing patterns, you can stay at the abstract MedicalStaff level without distinguishing nurses from doctors.
 
+Consider the Sensor class from the ICU example. The basic metamodel captures `unit`, `currentValue`, and `timestamp`. But what if you also need an alerting system for sensor battery levels, especially for vital monitoring? Then you would add properties like `batteryLevel` (Integer %), `signalQuality` (Float), `lastCalibrated` (DateTime), and threshold values. These properties are irrelevant for a patient monitoring model but essential for a device maintenance model. Same domain, different purpose, different level of abstraction.
+
 Start abstract. Add detail when the models cannot answer the questions you care about. Removing unnecessary detail later is harder than adding necessary detail incrementally.
+
+## Domain vs Notation
+
+An important distinction: a **domain** is a real-world context or body of knowledge (library management, hospital staffing, smart homes). A **notation** is a formal language used to represent domains (ER diagrams, UML class diagrams, BPMN).
+
+This distinction matters when you work in Jjodel. If you build an ER diagram language, you are formalizing a *notation*, not a domain. The notation itself becomes your domain of analysis: Entity, Attribute, and Relationship are the concepts you classify and abstract. But when you later *use* that ER notation to model a hospital database, you are modeling a domain.
+
+In most practical scenarios, you build DSLs for domains, not for notations. The ER example in the [tutorials](../tutorials/tutorial-03-erd) uses a notation as a learning exercise precisely because students already know the concepts and can focus on the metamodeling process.
 
 ## From Domain to Language
 
-The metamodel you build through domain analysis becomes the abstract syntax of a Domain-Specific Language (DSL). This DSL provides:
+The metamodel you build through domain analysis becomes the abstract syntax of a Domain-Specific Language (DSL). A DSL is a formal, machine-processable interface to represent and manipulate domain knowledge. It provides structure, enforces consistency, and enables automation within the context it models.
+
+Concretely, your metamodel gives the DSL:
 
 - A **vocabulary** of domain concepts (the classes)
 - **Rules** for how concepts relate (the references and constraints)
 - A **structure** that enables automated processing (validation, transformation, code generation)
+
+A DSL is defined using Jjodel's meta-metamodel, which provides the building blocks: Class, Attribute, Reference, Enumeration, Package. Your metamodel is an instance of this meta-metamodel.
 
 The next step is to give this DSL a concrete syntax through viewpoints, so that domain experts can work with it visually rather than through the raw abstract syntax. See [Viewpoints](../user-guide/viewpoints) for details on how to define visual representations.

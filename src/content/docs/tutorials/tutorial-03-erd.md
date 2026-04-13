@@ -7,6 +7,8 @@ sidebar:
 
 In this tutorial you build a complete Entity-Relationship diagram language. Unlike the first two tutorials, this one follows a realistic workflow: you start with a known notation, formalize it as a metamodel, discover problems along the way, and solve them using composition, enumerations, and validation.
 
+The objective is to build a DSL that lets you describe ER diagrams by defining what Entities, Attributes, and Relationships mean at the metamodel level. You will create core classes, define relationships between them, and add enumerations for type safety.
+
 **Prerequisites:** Completed [Tutorial 1](./tutorial-01-basic) and familiarity with [Basic Notions](../concepts/basic-notions).
 
 **Time:** ~40 minutes
@@ -16,6 +18,14 @@ In this tutorial you build a complete Entity-Relationship diagram language. Unli
 ## Why ER Diagrams?
 
 ER diagrams are a notation you already know from database courses. This is intentional: because the domain is familiar, you can focus on the metamodeling process rather than domain analysis. The reduced cognitive load makes this an ideal exercise for learning abstract syntax, references, enumerations, and later concrete syntax.
+
+ER diagrams are particularly suited as a first DSL because they introduce several key metamodeling concepts at once: references between classes (an Entity having Relationships), enumerations (cardinalities), semantic rules (no duplicate entity names), and later, different concrete syntaxes (conceptual vs logical views of the same model).
+
+### Domain vs Notation
+
+A subtle but important point: ER diagrams are not themselves a domain to be analyzed. They are a *notation* used to model other domains (library management, hospital staffing, e-commerce). In this tutorial, the ER notation itself becomes the subject of our metamodeling exercise. Entity, Attribute, and Relationship are the concepts we classify and formalize.
+
+In most real-world scenarios, you build DSLs for domains, not for notations. You would model a hospital, not the ER diagram format. We use ERD here because it is a notation you already understand, so you can concentrate entirely on the metamodeling mechanics.
 
 ---
 
