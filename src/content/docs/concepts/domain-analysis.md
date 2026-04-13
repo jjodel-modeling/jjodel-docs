@@ -83,13 +83,17 @@ These details emerge from conversations with domain experts. You would not know 
 
 ## Why Build the Metamodel Yourself
 
-It might seem efficient to generate a metamodel automatically from a domain description. But the process of building it manually serves a deeper purpose.
+With the advent of LLMs and generative AI, it can seem efficient to produce a metamodel automatically from a natural language description of a domain. Tools like ChatGPT or Claude can generate class hierarchies, attributes, and references in seconds.
+
+But this misses the point.
 
 Consider the difference between reading a book and writing one. Reading gives you second-hand knowledge: you learn what someone else has formalized. Writing gives you first-hand knowledge: you are the person who identifies the concepts, makes the trade-offs, and decides what matters.
 
 Building a metamodel is like writing a book about the domain. By the time you finish, after multiple iterations with domain experts, experiments, and revisions, you have developed a deep understanding of the domain. You are approaching the level of a domain expert yourself.
 
-An automatically generated metamodel skips this learning process. You receive a structure you did not build, and you must then spend time understanding what it represents and why it was structured that way.
+An automatically generated metamodel skips this learning process. You receive a structure you did not build, and you must then spend time understanding what it represents and why it was structured that way. The effort you saved in construction, you spend in comprehension, without gaining the design intuition that comes from having made the decisions yourself.
+
+AI can be valuable as a sparring partner during domain analysis: suggesting concepts you might have overlooked, proposing alternative decompositions, or checking consistency. But the decisions must remain yours.
 
 ## Choosing the Right Level of Abstraction
 
