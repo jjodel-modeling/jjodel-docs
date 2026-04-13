@@ -2,7 +2,7 @@
 title: Anatomy of a Modeling Language
 description: Understanding the components of a modeling language — abstract syntax, concrete syntax, validation, and generation.
 sidebar:
-  order: 3
+  order: 4
 ---
 
 A modeling language is a structured system of notation, rules, and semantics that allows users to represent complex concepts, systems, or domains in visual, textual, or blended form. In Jjodel, a modeling language is composed of four interrelated components, each serving a distinct role.

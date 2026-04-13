@@ -2,7 +2,7 @@
 title: Glossary
 description: Definitions of key concepts in Model-Driven Engineering and Jjodel.
 sidebar:
-  order: 4
+  order: 5
 ---
 
 A reference of key terms used throughout the Jjodel documentation and in the broader field of Model-Driven Engineering (MDE).

@@ -6,83 +6,218 @@ sidebar:
   label: Viewpoints
 ---
 
-Viewpoints are one of Jjodel's most powerful features. A viewpoint defines a **perspective** on a model — how elements look, how they behave, what constraints they must satisfy, and what artifacts they generate. The same model can have multiple viewpoints, each tailored to a different audience or purpose.
+A viewpoint defines a perspective on a model. It controls how elements look, what constraints they must satisfy, and what artifacts they produce. The same model can have multiple viewpoints, each tailored to a different audience or purpose.
 
 ## Types of Viewpoints
 
-Jjodel supports four categories of viewpoints:
+Jjodel supports three categories of viewpoints:
 
-### Syntax Viewpoints (Concrete Syntax)
+**Syntax viewpoints** define the visual or textual representation of model elements. They map abstract metamodel concepts to concrete graphical or textual forms. This is the most commonly used type.
 
-Syntax viewpoints define the **visual or textual representation** of model elements. They map abstract metamodel concepts to concrete graphical or textual forms.
+**Validation viewpoints** enforce constraints and rules that model instances must satisfy. They produce notifications (information, warning, error) that guide the modeler toward restoring validity.
 
-#### Visual Viewpoints
+**Code generation viewpoints** transform model elements into executable artifacts: source code, configuration files, documentation, or any textual output.
 
-Visual viewpoints use shapes, colors, icons, and connectors to render model elements as diagrams. For each metamodel class, you define a **view** that specifies:
+Each viewpoint is an orthogonal description of one aspect of the language. You can have a syntax viewpoint for visual rendering, a validation viewpoint for constraint checking, and a generation viewpoint for code output, all operating on the same model independently.
 
-- **Shape** — rectangle, ellipse, diamond, custom SVG, etc.
-- **Label** — which attribute(s) to display as text
-- **Color and style** — fill, border, font, opacity
-- **Compartments** — subdivisions within a shape (e.g., showing attributes inside a class box)
-- **Edge style** — for references: line type, arrowheads, routing (Manhattan or direct)
+## Creating a Viewpoint
 
-<!-- TODO: screenshot — visual viewpoint configuration (new UI) -->
+To create a new viewpoint:
 
-#### Textual Viewpoints
+1. Open the metamodel
+2. Create a new **Viewpoint** from the toolbar or menu
+3. Give it a name (e.g., `ConceptualERD`)
+4. **Activate** the viewpoint so it becomes the active rendering perspective
 
-Textual viewpoints define a text-based syntax for model elements. Instead of graphical shapes, elements are rendered as structured text following a grammar you define. This enables blended modeling — switching between graphical and textual representations of the same model.
+<!-- TODO: screenshot — creating and activating a viewpoint (new UI) -->
 
-### Validation Viewpoints
+A viewpoint starts empty. You populate it by adding **views**, one for each metaclass you want to render.
 
-Validation viewpoints enforce **constraints and rules** that model instances must satisfy. They are used to check model consistency, enforce naming conventions, verify structural integrity, and apply domain-specific business rules.
+## Views
 
-Validation rules produce notifications that guide the modeler toward restoring model validity. Notifications can be informational, warnings, or errors.
+A view defines how instances of a specific metaclass are rendered. Each view consists of four parts:
 
-### Code Generation Viewpoints
+1. **Predicate** that selects which model elements this view applies to
+2. **Template** that defines the visual structure (JSX)
+3. **Style** that controls the appearance (CSS)
+4. **Events** that define interactive behavior (optional)
 
-Code generation viewpoints transform model elements into **executable artifacts** — source code, configuration files, documentation, or any textual output. You define templates that map metamodel classes to code patterns, enabling automated generation from your models.
+### Adding a View
 
-## Viewpoint Configuration
+To add a view for a metaclass (e.g., `Entity`):
 
-Each viewpoint is configured through a set of tabs in the Properties Panel:
+1. Right-click on the metaclass in the metamodel editor
+2. Select **Add View**
+3. Choose the viewpoint this view belongs to
+4. A default view is created with a basic template
 
-### Applied To
+<!-- TODO: screenshot — adding a view to a metaclass (new UI) -->
 
-Defines which metamodel classes and model elements the viewpoint applies to. You can use OCL or JavaScript constraints to filter which instances should be rendered by this viewpoint.
+## Predicates
 
-### Template
+The predicate determines which model elements a view applies to. Every instance in the model is tested against the predicate; those that match are rendered using this view's template and style.
 
-Specifies the visual template for the view — the shape, layout, and content of each rendered element. Templates use JSX-like expressions for dynamic content.
+### OCL Predicates
 
-<!-- TODO: screenshot — template tab (new UI) -->
+The standard way to write a predicate is in OCL:
 
-### Style
+```
+context DObject inv: self.instanceof.name = 'Entity'
+```
 
-Controls the appearance properties: colors, borders, fonts, sizes, spacing, and opacity. Styles can be static or computed dynamically based on element properties.
+This selects all instances whose metaclass is named `Entity`.
 
-### Events
+### JavaScript Predicates
 
-Defines interactive behavior: what happens when the user clicks, drags, resizes, or hovers over a model element. Events enable custom interaction logic through JavaScript handlers.
+You can also write predicates in JavaScript:
 
-### Options
+```javascript
+data.instanceof.id === '3f2a...c7b1'
+```
 
-Additional configuration for layout, alignment, connection routing, and rendering behavior.
+This uses the metaclass **ID** instead of the name string.
+
+### OCL vs JavaScript: When to Use Which
+
+Jjodel uses OCL.js, a JavaScript implementation of OCL. It works well for simple predicates but does not fully implement the OCL standard, and the library has intermittent maintenance.
+
+Using the metaclass ID (JavaScript predicate) instead of the name string (OCL predicate) has one practical advantage: if you rename the metaclass, the ID-based predicate continues to work. A name-based predicate would break silently.
+
+For most use cases, either approach works. If your predicate is simple (selecting instances by metaclass), both are equivalent.
+
+## Templates
+
+Templates define the visual structure of a view. They are written in **JSX** (JavaScript XML), a declarative notation from the React framework that combines HTML-like markup with JavaScript expressions.
+
+### Basic Template Structure
+
+A template receives two variables:
+
+- **`data`** contains the abstract syntax subgraph for the current element (attributes, references, values)
+- **`node`** contains the layout subgraph (position, dimensions)
+
+Most template logic uses `data`.
+
+### Example: Entity Template
+
+```jsx
+<div style={{
+  padding: '8px',
+  border: '2px solid #334155',
+  borderRadius: '4px',
+  background: '#f8fafc'
+}}>
+  <strong>{data.$name}</strong>
+  {data.$ownedAttributes.map(attr =>
+    <div key={attr.id} style={{fontSize: '12px', color: '#64748b'}}>
+      {attr.$name}: {attr.$type.value}
+    </div>
+  )}
+</div>
+```
+
+This renders an Entity as a box with its name in bold and a list of its attributes below.
+
+Key expressions in this template:
+
+- `data.$name` reads the user-defined attribute `name` (the `$` prefix accesses metamodel-defined features)
+- `data.$ownedAttributes` navigates the containment reference to get all child Attribute instances
+- `.map(attr => ...)` iterates over the attributes (standard JavaScript)
+- `attr.$type.value` reads the enumeration value of the attribute's type
+
+### The `<Input />` Component
+
+Jjodel provides a library of predefined components (JjDL). The `<Input />` component enables **projectional editing**: the user can edit an attribute value directly in the rendered view, and the abstract syntax updates automatically.
+
+```jsx
+<Input value={data.$name} />
+```
+
+This renders an editable text field bound to the `name` attribute. Changes made by the user in the diagram propagate immediately to the model.
+
+### Conditional Rendering
+
+You can conditionally render parts of a template based on model data:
+
+```jsx
+{data.$left && <Edge
+  id={data.id + '_left'}
+  source={node}
+  target={/* target node */}
+/>}
+```
+
+The expression `data.$left &&` checks whether the `left` reference is set before rendering the edge. This prevents errors when the reference is not yet assigned.
+
+## Edges
+
+Edges are visual connections between nodes. They represent references in the metamodel and are specified using the `<Edge />` component inside a view template.
+
+### Edge Component Properties
+
+```jsx
+<Edge
+  id={data.id + '_edge'}
+  source={node}
+  target={/* target node */}
+  label="relates to"
+/>
+```
+
+- **`id`**: a unique identifier for this edge. A common pattern is to append a suffix to the element's ID (e.g., `data.id + '_left'`)
+- **`source`**: the source node (typically `node`, which refers to the current element's layout node)
+- **`target`**: the target node, obtained by navigating the JjOM to find the referenced element's layout information
+- **`label`**: optional text displayed on the edge
+
+### Edge Views
+
+An Edge View defines the styling of edges: line style, arrowheads, color, thickness. Unlike regular views, edge views do not need a predicate because they are explicitly invoked from within another template.
+
+To create an edge view, duplicate an existing view and modify its styling. This is often easier than creating one from scratch.
+
+<!-- TODO: screenshot — edge configuration (new UI) -->
+
+### Source and Target Navigation
+
+Finding the target node requires navigating both the **data** submodel (to find the referenced element) and the **node** submodel (to find its visual position). The JjOM splits these two concerns, so you need to traverse both. See the [JjOM reference](../reference/jjom) for details on the data/node split.
+
+## Styling
+
+The Style tab controls visual properties: colors, borders, fonts, sizes, and spacing. Styles can be static CSS or computed dynamically based on element properties.
+
+### User-Defined Styling Parameters
+
+Jjodel supports user-defined styling parameters that make your viewpoints configurable. Instead of hardcoding a border color, you can define a parameter that the user can adjust through a visual tool.
+
+Parameter types include:
+
+- **Color palettes**: define a color scheme with multiple colors
+- **Measures**: numeric values like border width or padding
+- **Free text**: custom string values
+- **SVG paths**: define custom shapes
+
+<!-- TODO: screenshot — user-defined styling parameters (new UI) -->
+
+These parameters appear as interactive widgets in the view configuration panel, allowing visual customization without editing CSS directly.
 
 ## Default Viewpoints
 
-When you create a new metamodel, Jjodel automatically generates **default viewpoints** that provide a basic visual representation for each class. These defaults use simple rectangles with the class name as a label. You can customize or replace them with your own viewpoint definitions.
+When you create a new metamodel, Jjodel automatically generates **default viewpoints** that provide a basic visual representation for each class. Default views use simple rectangles with the class name as a label.
+
+Default viewpoints have a special role: they serve as the fallback rendering when no custom viewpoint is active. You can customize them, but they cannot be deleted.
+
+When you create a new custom viewpoint and activate it, it takes precedence over the defaults. Any metaclass without a view in the active viewpoint falls back to the default rendering.
 
 ## Multi-View Modeling
 
-Jjodel's viewpoint system enables true multi-view modeling: the same underlying model can be visualized through multiple viewpoints simultaneously. For example, a software architecture model might have:
+The same model can be visualized through multiple viewpoints. For example, an ER diagram might have:
 
-- A **structural viewpoint** showing classes and relationships
-- A **deployment viewpoint** showing servers and connections
-- A **validation viewpoint** highlighting constraint violations
-- A **documentation viewpoint** generating API documentation
+- A **conceptual syntax** using ovals, diamonds, and rectangles (Chen notation)
+- A **logical syntax** using boxes with lines and crow's foot notation
+- A **validation viewpoint** highlighting missing attributes or invalid cardinalities
 
-Each viewpoint presents a different perspective without modifying the underlying model data.
+Each viewpoint presents a different perspective. Switching between them is instant, and the underlying model data is never affected.
 
-:::caution[Viewpoints are not models]
-Viewpoints define *how* to render models — they do not contain model data themselves. Modifying a viewpoint changes the visualization, not the model structure.
+:::caution
+Viewpoints define *how* to render models. They do not contain model data. Modifying a viewpoint changes the visualization, not the model structure. Deleting a viewpoint does not delete any model elements.
 :::

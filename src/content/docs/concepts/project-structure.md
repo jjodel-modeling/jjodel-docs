@@ -2,7 +2,7 @@
 title: Project Structure
 description: How projects, metamodels, models, and viewpoints are organized in Jjodel.
 sidebar:
-  order: 2
+  order: 3
 ---
 
 In Jjodel, a **project** is the top-level container that organizes all the resources needed to define, visualize, and work with your modeling languages. Understanding the project structure helps you manage complexity as your languages grow.
