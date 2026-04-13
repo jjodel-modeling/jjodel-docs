@@ -16,6 +16,10 @@ sidebar:
 
 **Conformance** -- The relationship between a model (M1) and its metamodel (M2). A model conforms to a metamodel if every element is a valid instance of a metaclass and all constraints are satisfied.
 
+**Control** -- A JSX component available in the Model view template. Controls create workbench-level parameter panels with Slider and Toggle widgets. Control values are stored in the node and accessible to templates and ECA rules.
+
+**Custom Event Action** -- A named JavaScript function defined in a view's Events tab. Custom actions can be called from template elements (e.g., button onClick handlers). They enable model manipulation logic triggered by user interaction, such as simulation step execution.
+
 **DAttribute** -- A JjOM construct representing a typed property of a DClass. Attributes hold values of primitive data types (EString, EInt, EBoolean, etc.) or enumerations.
 
 **DClass** -- A JjOM construct representing a metaclass. DClasses define the structure of model elements: their attributes, references, and containment relationships.
@@ -46,6 +50,8 @@ sidebar:
 
 **JjOM** (Jjodel Object Model) -- The meta-metamodel (M3) that defines the constructs available for building metamodels in Jjodel. Consists of three submodels: data, node, and view.
 
+**Labeled Transition System** (LTS) -- The formal semantics model implied by a state machine metamodel. States correspond to graph nodes, transitions to labeled edges, and events to labels. Jjodel realizes LTS semantics through overlay viewpoints with state attributes and custom event actions.
+
 **Layout-Sensitive Notation** -- A notation where the spatial arrangement of elements carries semantic meaning. Changing the position or nesting of an element changes its meaning. Contrast with Topological Notation.
 
 **Meta-metamodel** -- The M3 level: the model that defines the constructs used to build metamodels. In Jjodel, this is the JjOM.
@@ -60,7 +66,13 @@ sidebar:
 
 **Notation** -- A definition of how abstract syntax elements are visually represented. In Jjodel, a notation is associated with one metamodel and contains viewpoints. Each viewpoint defines a different perspective on the same abstract syntax.
 
+**Observed Properties** -- State attributes explicitly declared in a view configuration so that changes to their values trigger the `onDataUpdate` event. Without declaration, writing to a state attribute stores the value but does not fire reactive updates. Analogous to synthesized and inherited attributes in attribute grammars.
+
+**Operational Semantics** -- The meaning of a language defined by how its constructs execute step by step. In Jjodel, operational semantics can be implemented through overlay viewpoints that use ECA rules and state attributes to simulate execution (e.g., state machine firing transitions).
+
 **Overlay Viewpoint** -- A viewpoint where the Is Exclusive flag is unchecked. Overlay viewpoints can be active simultaneously with an exclusive viewpoint and with other overlays. They add features (decoration, validation, semantics, editor behavior) on top of the active exclusive viewpoint's rendering. See also: Exclusive Viewpoint.
+
+**Panel** -- A JSX component available in the Model view template. Panels create floating titled containers on the canvas with custom content (buttons, text, dynamic queries). Used for simulation controls, legends, and model-level tools.
 
 **Predicate** -- A boolean expression in a view that selects which model instances the view applies to. Written in OCL or JavaScript. Predicates define the syntactic mapping (σ) between abstract and concrete syntax.
 
@@ -69,6 +81,8 @@ sidebar:
 **Query** -- A model navigation expression inside a JSX template. Jjodel uses JavaScript expressions (accessing `data` properties) instead of OCL for querying models within templates.
 
 **Separation of Concerns** (SoC) -- The design principle of dividing a system into distinct parts, each addressing a separate concern. In Jjodel, SoC is realized through multi-view modeling: structural, behavioral, and validation perspectives are defined in separate viewpoints.
+
+**Silent View** -- A view whose node is invisible (width: 0, height: 0). The view renders only an Edge component, drawing an arrow between two other nodes. Used for Transition-like metaclasses where the element itself should not appear as a box.
 
 **State Attributes** -- Computed properties stored in `node.state`. Updated by ECA event rules, state attributes hold derived values like validation errors, aggregated counts, or simulation state. Analogous to attribute grammars in compiler theory.
 

@@ -54,7 +54,7 @@ Overlay viewpoints serve several purposes:
 
 **Validation**: check constraints that the metamodel syntax alone cannot express. For example, enforcing that a state machine has exactly one Initial State.
 
-**Semantics and simulation**: attach runtime behavior to model elements, such as state machine execution.
+**Semantics and simulation**: attach runtime behavior to model elements. For state machines, a semantics overlay tracks which state is active, lets users fire events through buttons, and highlights the active state visually. The overlay uses state attributes as observed properties and custom event actions to implement the transition system semantics. See [Tutorial 4: State Machine Simulation](../tutorials/tutorial-04-simulation) for a complete walkthrough.
 
 **Editor behavior enhancement**: modify how the editor responds to user actions on specific elements.
 
@@ -197,6 +197,41 @@ Templates can contain **queries** that navigate the model. Jjodel replaced OCL w
 
 Styles use SCSS, scoped to the view. The root selector `&>.root` targets the outermost container of the rendered node. Overlay styles are applied after exclusive viewpoint styles, so they can override or extend properties.
 
+### Silent views
+
+A **silent view** is a view that makes its node invisible and renders only an Edge component. This is the standard pattern for Transition-like metaclasses where the element itself should not appear as a box; only the arrow between source and target is visible.
+
+To create a silent view, set the style to zero dimensions:
+
+```scss
+&>.root {
+    border: 0px solid var(--border-color-1)!important;
+    width: 0px;
+    height: 0px;
+}
+```
+
+The template renders an `<Edge>` component conditionally, only when the required reference (e.g., `nextState`) is set:
+
+```jsx
+<div className={'root'}>
+    {data.$nextState.value &&
+        <Edge
+            view={'EdgeAssociation'}
+            key={data.id + '_edge'}
+            start={data.parent.parent.node}
+            end={data.$nextState.value.node}
+            label={data.$event && data.$event.value && data.$event.value.name}
+        />
+    }
+    {decorators}
+</div>
+```
+
+The `start` property navigates from the Transition instance to its parent State (via `data.parent`) and then to the State's parent container, accessing the node submodel. The `end` property navigates to the target State's node. The `label` shows the associated event's name if one exists.
+
+Silent views are the mechanism behind all arrow-based notations in Jjodel: ER relationships, UML associations, state machine transitions, and any other edge between two node-rendered elements.
+
 ### Events (ECA)
 
 See [Jjodel Events](../reference/jjodel-events) for the full ECA model. In viewpoint context, the most common event is `onDataUpdate`, which fires whenever the model data changes and lets you update `node.state` with computed or validation results.
@@ -210,6 +245,43 @@ Every metamodel starts with two built-in viewpoints:
 **Default Validation** is an overlay viewpoint with built-in views for generic errors, lowerbound checks, and naming conformance. It is active by default and can be toggled off.
 
 When you create a custom exclusive viewpoint (e.g., "State Machine Visual Syntax"), it takes precedence over the Default viewpoint. Any metaclass not covered by a view in the custom viewpoint falls back to the Default viewpoint's rendering.
+
+## Panel and Control Components
+
+The Model view (the topmost view that contains all rendered elements) supports two special components for adding interactive panels to the canvas.
+
+### Panel
+
+`<Panel>` creates a floating titled panel with custom content. Panels appear on the canvas alongside the model elements. Common uses: simulation controls, legend, model statistics.
+
+```jsx
+<Panel title={'State Machine Simulation'}>
+    <div className={'panel_content'}>
+        <button onClick={resetStateMachine}>Reset</button>
+        {data.allSubObjects.filter(o => o.instanceof.name === 'Event').map(e =>
+            <button>{e.name}</button>
+        )}
+    </div>
+</Panel>
+```
+
+This example creates a simulation panel with a Reset button and one button for each Event instance in the model. The buttons are generated dynamically by querying `data.allSubObjects`.
+
+### Control
+
+`<Control>` adds workbench-level controls that affect the editor behavior. Controls appear in a collapsible section and expose parameters like zoom level, grid, and snap.
+
+```jsx
+<Control title={'Workbench'} payoff={'Options'}>
+    <Slider name={'level'} title={'Detail level '} node={node} max={3} />
+    <Toggle name={'grid'} title={'Grid'} node={node} />
+    <Toggle name={'snap'} title={'Snap'} node={node} />
+</Control>
+```
+
+`<Slider>` creates a numeric slider bound to a node property. `<Toggle>` creates an on/off switch. Both write their values to the node, making them available to templates and ECA rules.
+
+<!-- TODO: screenshot -- simulation panel with Reset and event buttons (new UI) -->
 
 :::caution
 Viewpoints are part of the notation definition, not the model data. Modifying a viewpoint changes the visualization, not the model structure. Deleting a viewpoint does not delete any model elements.

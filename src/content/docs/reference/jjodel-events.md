@@ -66,6 +66,7 @@ The `onDataUpdate` event is particularly useful for computing derived values. In
 }
 ```
 
+For an `Add` expression with `left` and `right` references: `val = left.val + right.val`. This rule fires whenever either operand changes, propagating the new result up the expression tree reactively.
 
 ## Validation Rule Pattern
 
@@ -113,11 +114,82 @@ The Default Validation viewpoint includes three pre-configured rules:
 
 **Generic error view**: does not contain a rule itself but provides the template and style used to render all validation errors uniformly. It reads error keys from `node.state` and displays them as tooltips or inline notifications.
 
+## Observed Properties
 
+State attributes can be associated with model elements (data) or with syntax nodes. When you need a state attribute to trigger reactive updates, you must declare it as an **observed property** in the view configuration.
 
+Observed properties work like attribute grammars: they store synthesized or inherited values computed from the model. The key difference from classical attribute grammars is that Jjodel requires these attributes to be explicitly declared. When an observed property changes value, it triggers the `onDataUpdate` event, which lets other ECA rules react to the change.
 
+Declaring an observed property means the system watches that specific key in `node.state` (or in the data model) for changes. Without the declaration, writing to a state attribute still stores the value, but no `onDataUpdate` fires and no dependent rules execute.
 
-For an `Add` expression with `left` and `right` references: `val = left.val + right.val`. This rule fires whenever either operand changes, propagating the new result up the expression tree reactively.
+### Example: active state for simulation
+
+For state machine simulation, each State instance needs an `active` boolean attribute. When declared as an observed property on the State view:
+
+1. The `resetStateMachine` action sets `active = true` on the initial state and `active = false` on all others
+2. The change triggers `onDataUpdate` on each affected State node
+3. The State template reads `node.state.active` and applies conditional styling (e.g., green background for the active state)
+4. Other rules that depend on the active state can react accordingly
+
+This creates a chain: button click → custom action → state attribute write → observed property change → onDataUpdate → template re-render.
+
+## Custom Event Actions
+
+Beyond the built-in events (`onDataUpdate`, `whileDragging`, etc.), you can define **custom event actions** in the Events tab of a view. A custom action is a named JavaScript function that can be called from template elements like buttons.
+
+Custom actions are defined in the Events tab and referenced in the template by name:
+
+```jsx
+{/* In the template */}
+<button onClick={resetStateMachine}>Reset</button>
+```
+
+```javascript
+// In the Events tab, as a custom action named "resetStateMachine"
+// 1. Deactivate all states
+let allStates = data.allSubObjects
+    .filter(o => o.instanceof.name === 'State');
+allStates.forEach(s => {
+    s.node.state = {active: false};
+});
+
+// 2. Find the initial state (no incoming transitions)
+let initialState = allStates.find(s => {
+    let isTarget = data.allSubObjects
+        .filter(o => o.instanceof.name === 'Transition')
+        .some(t => t.$nextState && t.$nextState.value === s);
+    return !isTarget;
+});
+
+// 3. Activate the initial state
+if (initialState) {
+    initialState.node.state = {active: true};
+}
+```
+
+This pattern separates the triggering mechanism (buttons in the template) from the execution logic (actions in the Events tab). The template handles presentation; the action handles model manipulation.
+
+### Firing transitions
+
+Event buttons trigger transition firing. When clicked, the action finds the currently active state, looks for a transition owned by that state whose event matches the clicked button, and if found, deactivates the current state and activates the target:
+
+```javascript
+// Custom action for event firing (simplified)
+let activeState = data.allSubObjects
+    .filter(o => o.instanceof.name === 'State')
+    .find(s => s.node.state.active);
+
+if (activeState) {
+    let transition = activeState.$ownedTransitions
+        .find(t => t.$event && t.$event.value && t.$event.value.name === eventName);
+    if (transition && transition.$nextState && transition.$nextState.value) {
+        activeState.node.state = {active: false};
+        transition.$nextState.value.node.state = {active: true};
+    }
+}
+```
+
+This implements the step semantics of a Labeled Transition System (LTS): given the current state and an event, fire the matching transition and move to the next state.
 
 ## Custom DOM Events
 
