@@ -33,12 +33,16 @@ export default defineConfig({
           autogenerate: { directory: 'concepts' },
         },
         {
-          label: 'Tutorials',
-          autogenerate: { directory: 'tutorials' },
+          label: 'Languages',
+          autogenerate: { directory: 'languages' },
         },
         {
           label: 'Reference',
           autogenerate: { directory: 'reference' },
+        },
+        {
+          label: 'Tutorials',
+          autogenerate: { directory: 'tutorials' },
         },
         {
           label: 'Installation',

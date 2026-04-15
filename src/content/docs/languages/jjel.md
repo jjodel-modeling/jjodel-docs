@@ -1,8 +1,8 @@
 ---
 title: JjEL Reference
-description: Syntax, operators, and usage of the Jjodel Expression Language.
+description: Complete reference for the Jjodel Expression Language.
 sidebar:
-  order: 5
+  order: 2
 ---
 
 JjEL (Jjodel Expression Language) is a declarative language for navigating models, querying elements, and computing values. You use it in the Console, in JjTL guards and mappings, and inside JjScript expressions.
