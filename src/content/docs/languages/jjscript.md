@@ -180,7 +180,7 @@ validate all
 
 ## Grammar summary
 
-```
+```text title="EBNF"
 Command    = CreateCmd | DeleteCmd | RenameCmd | SetCmd
            | AddCmd | RemoveCmd | MoveCmd | CopyCmd
            | ExtendsCmd | ListCmd | ShowCmd | ValidateCmd

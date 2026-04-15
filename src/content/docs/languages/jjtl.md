@@ -258,7 +258,7 @@ Transition -> Transition {
 
 ## Grammar summary
 
-```
+```text title="EBNF"
 transformation = 'transformation' IDENT
                  'from' IDENT
                  'to'   IDENT
