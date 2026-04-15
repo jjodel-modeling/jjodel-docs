@@ -36,9 +36,20 @@ State, namedElement, Transition, Event
 
 ## Property access
 
-Use dot notation to access properties of a single element:
+Use dot notation to access properties of a single element. User-defined attributes and references are accessed directly, without any prefix:
 
+```jjel title="JjEL"
+// Given p is an instance of a Person class
+p.name               // returns "Alice"
+p.age                // returns 25
+p.sex                // returns "Male" (enum as string)
+p.instanceof         // returns Person (the class)
+p.instanceof.name    // returns "Person"
 ```
+
+Metamodel elements are navigated the same way:
+
+```jjel title="JjEL"
 > myClass.name
 "State"
 
@@ -57,15 +68,7 @@ ERROR — cannot access property 'name' on a collection.
 Use 'forall c in classes : c.name'
 ```
 
-### The $ prefix
-
-User-defined features (attributes and references from your metamodel) use the `$` prefix to distinguish them from built-in JjOM properties:
-
-```
-data.$name.value          // user-defined attribute "name"
-data.$ownedAttributes     // user-defined reference "ownedAttributes"
-data.instanceOf           // built-in JjOM property (no $)
-```
+When a user-defined feature has the same name as a built-in JjOM property, the user feature takes priority. To access the built-in property explicitly, use `data.id` or `data.className`.
 
 ## Iteration: forall
 
@@ -80,7 +83,7 @@ forall <variable> in <collection> such that <filter>
 
 **Examples:**
 
-```
+```jjel title="JjEL"
 // Project: get all class names
 forall c in classes : c.name
 
@@ -109,7 +112,7 @@ exists <variable> in <collection> such that <predicate>
 
 **Examples:**
 
-```
+```jjel title="JjEL"
 // Does any class have attributes?
 exists c in classes : c.attributes.size > 0
 
@@ -155,15 +158,15 @@ exists c in classes such that c.name == "Person"
 |----------|---------|
 | `??` | Null coalescing: returns left side if not null, otherwise right side |
 
-```
-data.$description.value ?? "No description"
+```jjel title="JjEL"
+c.description ?? "No description"
 ```
 
 ## Lambdas
 
 Anonymous functions for use with collection methods:
 
-```
+```jjel title="JjEL"
 // Single parameter
 a => a.name
 
@@ -194,7 +197,7 @@ These methods are available on any collection (array) value:
 | `.filter(predicate)` | Collection | Elements matching the predicate |
 | `.map(projection)` | Collection | Transformed elements |
 
-```
+```jjel title="JjEL"
 classes.filter(c => c.isAbstract).map(c => c.name)
 classes.size
 classes.isEmpty
@@ -209,7 +212,7 @@ classes.isEmpty
 | `.pascalCase()` | String | PascalCase conversion |
 | `.length` | Number | Character count |
 
-```
+```jjel title="JjEL"
 forall c in classes : c.name.toUpper()
 forall c in classes : c.name.pascalCase()
 ```
@@ -262,7 +265,7 @@ When JjEL encounters an unqualified identifier, it resolves in this order:
 
 The Console is the primary place to write and test JjEL expressions interactively. The evaluation context depends on which artifact is active:
 
-```
+```jjel title="JjEL Console"
 // With metamodel active:
 > classes
 [State, namedElement, Transition, Event]

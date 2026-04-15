@@ -11,7 +11,7 @@ JjTL is a declarative, rule-based Model-to-Model transformation language. It use
 
 A JjTL transformation declares its name, source metamodel, target metamodel, and a set of class mappings:
 
-```jjtl
+```jjtl title="JjTL"
 transformation StateMachine2PetriNet
 
 from StateMachineMM
@@ -227,7 +227,7 @@ Each rule is processed atomically (match, create, bind). There is no two-phase e
 
 State Machine to Petri Net:
 
-```jjtl
+```jjtl title="JjTL"
 transformation StateMachine2PetriNet
 
 from StateMachineMM

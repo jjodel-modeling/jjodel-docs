@@ -11,7 +11,7 @@ JjScript is an imperative, command-based scripting language for direct metamodel
 
 Every JjScript statement begins with a verb followed by its arguments:
 
-```jjscript
+```jjscript title="JjScript"
 create class Person
 create attribute name in Person type EString [1]
 rename class Person to Customer
@@ -42,7 +42,7 @@ JjScript supports 15 element types: `class`, `abstract class`, `interface`, `att
 
 The `create` command accepts element-specific options:
 
-```jjscript
+```jjscript title="JjScript"
 create class Person
 create abstract class BaseEntity
 create interface Nameable
@@ -149,7 +149,7 @@ JjScript is the execution target for the Jjodie AI assistant. When you type a na
 
 Building a metamodel from scratch:
 
-```jjscript
+```jjscript title="JjScript"
 # Create types
 create class Person
 create abstract class BaseEntity
