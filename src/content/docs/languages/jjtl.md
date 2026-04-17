@@ -141,6 +141,151 @@ The `forall` construct iterates over collections to create multiple target objec
 }
 ```
 
+## Execution model
+
+JjTL uses a two-pass execution strategy. This design eliminates dependency on rule declaration order: you can write rules in any order and cross-type references will resolve correctly.
+
+### Pass 1: create and trace
+
+The executor processes each class mapping rule in sequence:
+
+1. Find all source model instances that match the rule's source type
+2. Evaluate the `where` guard (if present) using only source element features
+3. For each matching instance, create an empty target element of the specified target type
+4. Record a trace entry: `(rule, sourceElement) → targetElement`
+
+After Pass 1 completes, all target elements exist and the trace model is fully populated. No attribute values have been set yet.
+
+### Pass 2: bind
+
+The executor iterates through the trace model:
+
+1. For each `(rule, source, target)` triple, evaluate all attribute bindings (`:=`)
+2. Each binding's right-hand side is evaluated in the context of the source element
+3. If the RHS value is a source element, cross-type resolution kicks in (see below)
+4. The resolved value is assigned to the target element's feature
+
+Because all target elements already exist when Pass 2 runs, cross-type references always resolve. A `State -> Place` rule and a `Transition -> Transition` rule work regardless of which is declared first.
+
+### Guard evaluation
+
+Guards are evaluated during Pass 1. This means they can only access features of the source element, not values computed by bindings. This is a deliberate constraint: guards filter source elements before any target element exists.
+
+```jjtl
+State -> Place where isInitial {
+    tokens := 1
+}
+
+State -> Place where not isInitial {
+    tokens := 0
+}
+```
+
+You can write the same logic more concisely with a conditional expression in the binding:
+
+```jjtl
+State -> Place {
+    tokens := if isInitial then 1 else 0
+}
+```
+
+## Cross-type resolution
+
+When a binding's RHS evaluates to a source element (not a primitive value), the executor automatically resolves it to the corresponding target element via the trace model. This is called cross-type resolution.
+
+### Implicit resolution
+
+If the source type has exactly one class mapping rule, resolution is automatic:
+
+```jjtl
+State -> Place {
+    tokens := if isInitial then 1 else 0
+}
+
+Transition -> Transition {
+    outputPlace := nextState
+}
+```
+
+Here `nextState` is a reference to a `State` instance. Since there is exactly one rule mapping `State` to `Place`, the executor resolves `nextState` to the corresponding `Place` instance automatically.
+
+The resolution works element-wise on collections too. If `nextState` were a collection of States, each would be resolved to its corresponding Place.
+
+### Ambiguity error
+
+If the source type has multiple rules (for example, two rules mapping `State` to different target types), implicit resolution fails with a clear error message. In this case, use explicit resolution.
+
+### Explicit resolution with `resolve`
+
+The `resolve` keyword disambiguates when multiple rules map the same source type:
+
+```jjtl
+State -> Place { ... }
+State -> Node  { ... }
+
+Transition -> Edge {
+    source := resolve(fromState, Place)
+    target := resolve(toState, Node)
+}
+```
+
+`resolve(expr, TargetType)` looks up the trace for a rule that maps the source element to the specified target type. If no such rule exists, it raises a runtime error.
+
+Without the second argument, `resolve(expr)` behaves like implicit resolution (fails on ambiguity).
+
+## The `parent` keyword
+
+`parent` accesses the containing element (eContainer) of a source instance. In metamodeling terms, if element B is contained inside element A via a composition reference, then `B.parent` returns `A`.
+
+```jjtl
+Transition -> Transition {
+    inputPlace := parent
+}
+```
+
+In a state machine metamodel where Transitions are contained inside their source State, `parent` returns that State. Because cross-type resolution applies to `parent` like any other value, the State is automatically resolved to the corresponding Place (if a `State -> Place` rule exists).
+
+`parent` returns `null` for root elements (elements not contained in any other element). You can chain `parent` navigation: `parent.parent` returns the grandparent.
+
+`parent` is available both in JjTL bindings and in JjEL expressions (`data.parent`, `data.parent.name`).
+
+:::caution
+`parent` requires a stored `_containerId` field on each element. Existing projects created before this feature may need to be re-saved to populate containment information.
+:::
+
+## Trace model
+
+The trace model is a map from `(ruleName, sourceElementId)` to `targetElement`. It is populated during Pass 1 and read during Pass 2.
+
+The trace model enables:
+- Cross-type resolution (looking up which target element corresponds to a source element)
+- Debugging (inspecting which source element produced which target element)
+- Future: bidirectional transformations and incremental updates
+
+The trace model is currently not persisted. It exists only during transformation execution.
+
+### Invertibility
+
+JjTL automatically classifies each attribute mapping:
+
+- Direct mappings (`b := a`): always invertible
+- Value mappings (`true=1, false=0`): invertible if the mapping is injective
+- Expression mappings: invertible only for simple property references; function calls are marked non-invertible
+
+The Trace View in the Transformation Editor displays this information for each mapping.
+
+## Known limitations
+
+The following limitations apply to the current implementation. They are tracked as bugs or planned features.
+
+**Reference materialization**: references between target instances (for example, `outputPlace` pointing from a Transition to a Place) are created in the executor but may not always be correctly materialized in the target model's persistence layer. This is being fixed.
+
+**Duplicate reference values**: in some cases, a reference binding produces duplicate copies of the target element instead of a single reference. The root cause is in the `extractAttributeValues` function reading the same value at multiple nesting levels. This is being fixed.
+
+**`name := name` binding**: assigning the source element's `name` to the target element's `name` feature currently does not update the target element's display name (the `DObject.name` property). The user-defined feature `name` and the internal `DObject.name` may be separate concepts. Under investigation.
+
+**No `resolve` for collections**: `resolve(collection, Type)` is not yet supported as a single call. Use `forall` to resolve each element individually.
+
 ## Helper functions
 
 Helpers are named, reusable JjEL expressions:
@@ -152,23 +297,6 @@ helper formatLabel(name: String, prefix: String) -> String {
 ```
 
 Helpers are registered in the evaluation context and callable from any expression within the transformation.
-
-## Trace model
-
-JjTL automatically records a trace model during execution, linking each source element to its target element(s):
-
-- **Rule-level trace**: which class mapping produced which target instance
-- **Binding-level trace**: for each attribute mapping, the source value, target value, expression used, and whether the mapping is invertible
-
-### Invertibility
-
-JjTL automatically classifies each attribute mapping:
-
-- Direct mappings (`b := a`): always invertible
-- Value mappings (`true=1, false=0`): invertible if the mapping is injective
-- Expression mappings: invertible only for simple property references; function calls are marked non-invertible
-
-The Trace View in the Transformation Editor displays this information for each mapping.
 
 ## Interactive features
 
@@ -210,18 +338,6 @@ let $prefix = prompt('Prefix', EString, 'tbl_'),
     name := $prefix + name.snakeCase() + $suffix
 }
 ```
-
-## Execution model
-
-The JjTL executor follows a pipeline for each class mapping:
-
-1. **Match**: find all source instances of the matching type
-2. **Guard**: filter through the `where` condition
-3. **Create**: instantiate target elements
-4. **Bind**: evaluate attribute mappings and assign values
-5. **Trace**: record the trace link with invertibility information
-
-Each rule is processed atomically (match, create, bind). There is no two-phase execution like ATL.
 
 ## Complete example
 

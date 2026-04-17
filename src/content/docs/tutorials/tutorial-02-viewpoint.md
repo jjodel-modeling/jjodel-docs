@@ -7,7 +7,7 @@ sidebar:
 
 In this tutorial you will extend the class diagram language from Tutorial 1 by creating multiple viewpoints that offer different perspectives on the same model.
 
-**Prerequisites:** Completed [Tutorial 1](./tutorial-01-basic).
+**Prerequisites:** Completed [Tutorial 1](../tutorial-01-basic).
 
 **Time:** ~25 minutes
 

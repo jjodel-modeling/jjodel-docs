@@ -7,7 +7,7 @@ sidebar:
 
 In this tutorial you will build a simple UML class diagram language from scratch. By the end, you will have a working language workbench that lets you create class diagrams with classes, attributes, and associations.
 
-**Prerequisites:** A Jjodel account and familiarity with the [Getting Started](../getting-started/) guide.
+**Prerequisites:** A Jjodel account and familiarity with the [Getting Started](../../getting-started/) guide.
 
 **Time:** ~20 minutes
 
@@ -175,6 +175,6 @@ In this tutorial you:
 
 ## Next Steps
 
-- [Tutorial 2: Custom Viewpoints](./tutorial-02-viewpoint) — explore advanced viewpoint features
+- [Tutorial 2: Custom Viewpoints](../tutorial-02-viewpoint) — explore advanced viewpoint features
 - [Viewpoints Reference](../../user-guide/viewpoints) — deep dive into viewpoint configuration
 - [Anatomy of a Modeling Language](../../concepts/modeling-language-anatomy) — understand the theoretical foundations

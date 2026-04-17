@@ -33,7 +33,7 @@ from SourceMetamodel
 to   TargetMetamodel
 ```
 
-Then add class mappings and attribute bindings. See the [JjTL Reference](../languages/jjtl) for the full syntax.
+Then add class mappings and attribute bindings. See the [JjTL Reference](../../languages/jjtl) for the full syntax.
 
 ## Validation and execution
 

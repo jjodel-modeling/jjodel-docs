@@ -39,6 +39,6 @@ Use **JjScript** in the Console to create and modify metamodel elements, either 
 
 ## Next steps
 
-- [JjEL Reference](../languages/jjel) for expression syntax and built-in methods
-- [JjTL Reference](../languages/jjtl) for transformation rules
-- [JjScript Reference](../languages/jjscript) for scripting commands
+- [JjEL Reference](../jjel) for expression syntax and built-in methods
+- [JjTL Reference](../jjtl) for transformation rules
+- [JjScript Reference](../jjscript) for scripting commands

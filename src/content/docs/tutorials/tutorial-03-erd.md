@@ -9,7 +9,7 @@ In this tutorial you build a complete Entity-Relationship diagram language. Unli
 
 The objective is to build a DSL that lets you describe ER diagrams by defining what Entities, Attributes, and Relationships mean at the metamodel level. You will create core classes, define relationships between them, and add enumerations for type safety.
 
-**Prerequisites:** Completed [Tutorial 1](./tutorial-01-basic) and familiarity with [Basic Notions](../../concepts/basic-notions).
+**Prerequisites:** Completed [Tutorial 1](../tutorial-01-basic) and familiarity with [Basic Notions](../../concepts/basic-notions).
 
 **Time:** ~40 minutes
 

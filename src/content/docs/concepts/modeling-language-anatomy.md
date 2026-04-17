@@ -56,7 +56,7 @@ A **Node** is the concrete representation of an instance that satisfies a view's
 
 Building a modeling language starts from the domain. The process follows a sequence:
 
-**Domain analysis** identifies the relevant concepts, their properties, and relationships. See [Domain Analysis](./domain-analysis) for the methodology.
+**Domain analysis** identifies the relevant concepts, their properties, and relationships. See [Domain Analysis](../domain-analysis) for the methodology.
 
 **Abstract syntax definition** encodes those concepts as a metamodel: metaclasses for domain concepts, attributes for properties, references for relationships.
 

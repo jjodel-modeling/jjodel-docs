@@ -14,7 +14,7 @@ By the end of this tutorial you will have a working state machine editor where s
 
 ## Prerequisites
 
-Complete [Tutorial 1: Basic Metamodel](./tutorial-01-basic) before starting. You should know how to create metaclasses, attributes, and references.
+Complete [Tutorial 1: Basic Metamodel](../tutorial-01-basic) before starting. You should know how to create metaclasses, attributes, and references.
 
 ## The State Machine Metamodel
 

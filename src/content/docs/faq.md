@@ -35,7 +35,7 @@ Visit [app.jjodel.io](https://app.jjodel.io) in your browser. Registration is fr
 
 ### Do I need to install anything?
 
-No. Jjodel runs entirely in the browser. For local development or offline use, you can optionally install Jjodel via Docker or build from source — see [Installation](./installation/install-jjodel).
+No. Jjodel runs entirely in the browser. For local development or offline use, you can optionally install Jjodel via Docker or build from source — see [Installation](../installation/install-jjodel).
 
 ### Can I use Jjodel offline?
 
@@ -83,7 +83,7 @@ Yes — this is one of Jjodel's core strengths. Metamodel changes are propagated
 
 ### Where can I find tutorials?
 
-See the [Tutorials](./tutorials/tutorial-01-basic) section for step-by-step guides, and the [Video Pills](./video-pills) page for recorded introductions and demonstrations.
+See the [Tutorials](../tutorials/tutorial-01-basic) section for step-by-step guides, and the [Video Pills](../video-pills) page for recorded introductions and demonstrations.
 
 ### Is Jjodel used in teaching or research?
 

@@ -88,7 +88,7 @@ This is the fundamental workflow in Jjodel. From here you can extend your langua
 
 ## Next Steps
 
-- [Dashboard](../user-guide/dashboard) — manage your projects
-- [Metamodel Editor](../user-guide/metamodel-editor) — explore advanced metamodeling features
-- [Viewpoints](../user-guide/viewpoints) — learn about visual, textual, and validation viewpoints
-- [Basic Notions](../concepts/basic-notions) — understand the conceptual foundations
+- [Dashboard](../../user-guide/dashboard) — manage your projects
+- [Metamodel Editor](../../user-guide/metamodel-editor) — explore advanced metamodeling features
+- [Viewpoints](../../user-guide/viewpoints) — learn about visual, textual, and validation viewpoints
+- [Basic Notions](../../concepts/basic-notions) — understand the conceptual foundations
