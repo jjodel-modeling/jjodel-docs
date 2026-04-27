@@ -246,9 +246,16 @@ Every metamodel starts with two built-in viewpoints:
 
 When you create a custom exclusive viewpoint (e.g., "State Machine Visual Syntax"), it takes precedence over the Default viewpoint. Any metaclass not covered by a view in the custom viewpoint falls back to the Default viewpoint's rendering.
 
+:::note[Default views are read-only in normal mode]
+The views that belong to built-in default viewpoints (including **Default → Model**) are **read-only** in normal mode and cannot be edited directly. Two workflows are available:
+
+- **Recommended — clone-and-own:** Create a new custom viewpoint and add your own views there. This keeps the defaults intact and is the standard approach for building notation layers and simulation overlays.
+- **Debug Mode:** Enable Debug Mode from the workbench settings to unlock editing of default views. Use this only for quick experimentation; changes made this way are not preserved across sessions in the same way as custom viewpoints.
+:::
+
 ## Panel and Control Components
 
-The Model view (the topmost view that contains all rendered elements) supports two special components for adding interactive panels to the canvas.
+The Model view in a **custom viewpoint** supports two special components for adding interactive panels to the canvas. These components are not available in the read-only default views; add them in a custom overlay or syntax viewpoint.
 
 ### Panel
 
