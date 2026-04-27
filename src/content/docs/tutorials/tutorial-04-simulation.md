@@ -159,6 +159,14 @@ Set the style to make the Transition node invisible:
 
 ## Adding Simulation
 
+:::caution[Default views are read-only — use a custom viewpoint]
+The built-in **Default → Model** view is read-only in normal mode. You cannot add `<Panel>`, `<Control>`, or custom event actions to it directly.
+
+To follow this tutorial you must create a dedicated **simulation viewpoint** and add a custom Model view inside it (as described in the next section). This is the recommended **clone-and-own** workflow: your custom viewpoint owns the simulation layer independently of the default views.
+
+If you need to edit a default view for quick experimentation you can enable **Debug Mode** from the workbench settings, but changes made that way are not the standard authoring path and are not covered here.
+:::
+
 ### The simulation viewpoint
 
 The simulation layer is built as an **overlay viewpoint** (non-exclusive). It adds behavior on top of the visual syntax without replacing it. The approach uses three mechanisms:
@@ -175,7 +183,7 @@ For simulation, the `active` attribute is a boolean state attribute on State ins
 
 ### Panel and Control components
 
-The Model view (the topmost view that contains all rendered elements) can include `<Panel>` and `<Control>` components. These render as floating panels on the canvas.
+The Model view in your **custom simulation viewpoint** (the topmost view that contains all rendered elements) can include `<Panel>` and `<Control>` components. These render as floating panels on the canvas.
 
 The `<Panel>` component creates a titled panel with custom content:
 
@@ -206,7 +214,7 @@ The `<Control>` component adds workbench-level controls:
 
 ### Implementing resetStateMachine
 
-The `resetStateMachine` function is defined as a custom event action in the Model view's **Events** tab. It performs two steps:
+The `resetStateMachine` function is defined as a custom event action in the **Events** tab of the Model view inside your simulation viewpoint. It performs two steps:
 
 1. Select all State instances and set their `active` attribute to `false`
 2. Find the initial state (the state with no incoming transitions, i.e., no Transition has it as `nextState`) and set its `active` attribute to `true`
