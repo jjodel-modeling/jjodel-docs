@@ -35,11 +35,25 @@ to   TargetMetamodel
 
 Then add class mappings and attribute bindings. See the [JjTL Reference](../../languages/jjtl) for the full syntax.
 
+Transformation names use letters, digits, and underscores (`Class2Table`, `uml_to_rdbms`). Hyphens are not valid in transformation names.
+
+## Mapping view
+
+The editor draws the correspondences declared in your rules as arrows between the source and target metamodel structures. Arrows use Manhattan routing: nearly horizontal connections render as straight lines, the others bend at right angles. This keeps dense mappings readable when several rules target the same class.
+
+The mapping view updates as you type: adding a class mapping or an attribute binding adds the corresponding arrow.
+
+<!-- TODO: screenshot — mapping arrows between source and target metamodels (new UI) -->
+
 ## Validation and execution
 
 Click **Validate** to check the transformation for syntax errors. The Problems panel at the bottom shows errors and warnings.
 
 Click **Execute** to run the transformation. Jjodel creates a new target model containing the transformation result. The Output panel shows execution details, timing, and any warnings.
+
+### Interactive execution
+
+If the transformation uses `prompt` or `confirm` (see [Interactive features](../../languages/jjtl#interactive-features)), execution pauses at each call and opens a dialog. The value you enter flows into the binding being evaluated; canceling a prompt yields `null`. Combined with `let`, one answer can drive several bindings without repeated dialogs.
 
 ## Trace view
 

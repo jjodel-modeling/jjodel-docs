@@ -5,16 +5,36 @@ sidebar:
   order: 2
 ---
 
-:::caution[In Development]
-This release is not yet available. Features listed below are subject to change.
+:::caution[Beta]
+Jjodel 3.0 is available as a public beta at [beta.jjodel.io](https://beta.jjodel.io). It is in active development: features listed below may still change before the final release.
 :::
 
-## v3.0 -- Coming Soon
+## v3.0 Beta
 
-- Complete UI redesign with progressive disclosure (Basic and Advanced modes).
-- JjTL (Jjodel Transformation Language) with trace model and MappingTraceView for debugging transformations.
-- Integrated AI assistant "Jjodie", configurable with OpenAI, Anthropic, or Ollama backends.
-- Redesigned side panels to reduce cognitive load.
+**Languages**
+
+- JjTL (Jjodel Transformation Language): declarative model-to-model transformations with two-pass execution, automatic trace model, cross-type resolution, interactive `prompt`/`confirm` commands, and a hardened write-back pipeline (inherited attributes, reference-only transformations, arrays, enumeration literals).
+- JjEL (Jjodel Expression Language) completed: `forall`/`exists` with set-theoretic semantics, `with...do` context binding, `implies`, null-safe navigation (`?.`, `??`), type checks with `is`, and a built-in library of more than one hundred methods for strings, numbers, collections, and dates.
+- JjScript: imperative metamodel editing with structural commands, `validate`, `undo`/`redo`, `forall` bulk edits, and interactive `let` bindings.
+
+**Console**
+
+- Multi-language Console: a single input with three modes (Jjodie assistant, JjScript, JjEL), a mode chip with picker, keyboard cycling, and `/jjel`, `/js`, `/ask`, `/help` meta-commands.
+
+**Modeling environment**
+
+- Complete UI redesign with progressive disclosure (Basic and Advanced modes) and redesigned side panels to reduce cognitive load.
+- Megamodel view: a project-level overview of metamodels, models, viewpoints, and transformations with their relations.
+- Edge rendering: Manhattan routing, per-edge labels with overlap avoidance, segment dragging, and edge markers.
+- Improved tree views and Ecore/XMI round-trip (including EDataType export).
+
+**AI assistance**
+
+- Jjodie assistant integrated in the Console: natural-language requests are translated to JjScript and executed. Configurable providers: OpenAI, Anthropic, DeepSeek, Mistral, Gemini, Groq, Kimi, Ollama, or local.
+
+**In progress**
+
+- Conformance validation feedback in the editor (per-model indicator, per-node badges) and user-defined invariants in JjEL.
 
 ## v2.0
 

@@ -13,20 +13,34 @@ JjEL is side-effect-free: expressions read data but never modify it. If you need
 
 | Context | Example |
 |---------|---------|
-| Console | `forall c in classes : c.name` |
-| JjTL guards | `when self.isAbstract` |
-| JjTL mappings | `self.attributes.filter(a => a.type.name == "String")` |
-| JjScript | Embedded in scripting commands for querying |
+| Console (JjEL mode) | `forall c in classes : c.name` |
+| JjTL guards | `where { not isAbstract and attributes.isNotEmpty }` |
+| JjTL mappings | `tableName := name.snakeCase()` |
+| JjScript | `eval forall c in classes such that c.isAbstract : c.name` |
 
-## Built-in collections
+Line comments start with `--`:
 
-These identifiers are available in any JjEL context and return collections of metamodel elements:
+```jjel title="JjEL"
+-- names of all abstract classes
+forall c in classes such that c.isAbstract : c.name
+```
+
+## Context identifiers
+
+The identifiers available to an expression depend on where it runs. In the Console, the evaluation context binds the active metamodel and model:
 
 | Identifier | Returns |
 |------------|---------|
 | `classes` | All classes in the active metamodel |
+| `attributes` | All attributes in the active metamodel |
+| `references` | All references in the active metamodel |
 | `enumerations` | All enumerations in the active metamodel |
-| `metamodels` | All metamodels in the current project |
+| `packages` | All packages in the active metamodel |
+| `instances` | All instances in the active model(s) |
+| `metamodel`, `project` | The active metamodel and the current project |
+| `data`, `node` | The selected element and its layout node |
+
+Classes are also bound by name (`Person.attributes`), and instance names resolve directly when unambiguous. In JjTL rules, the matched source element is the implicit context instead: its properties are accessed unqualified.
 
 ```
 > classes
@@ -72,14 +86,20 @@ When a user-defined feature has the same name as a built-in JjOM property, the u
 
 ## Iteration: forall
 
-`forall` iterates over a collection, optionally filters, and projects each element.
+`forall` is the fundamental construct of JjEL. It has set-theoretic semantics: it selects and optionally transforms elements from a collection.
 
 **Syntax:**
 ```
-forall <variable> in <collection> : <projection>
-forall <variable> in <collection> such that <filter> : <projection>
-forall <variable> in <collection> such that <filter>
+forall <variable> in <collection> [such that <filter>] [: <projection>]
 ```
+
+The two separators have distinct roles: `such that` introduces a boolean filter, `:` introduces a value projection. They are not synonyms.
+
+| Form | Returns |
+|------|---------|
+| `forall x in S such that P` | The elements where P is true |
+| `forall x in S : expr` | Each element transformed by expr |
+| `forall x in S such that P : expr` | Filter, then transform |
 
 **Examples:**
 
@@ -96,9 +116,11 @@ forall c in classes such that c.isAbstract
 // Nested: all attribute names across all classes
 forall c in classes : forall a in c.attributes : a.name
 
-// Cross-metamodel navigation
-forall m in metamodels : {metamodel: m.name, classCount: m.classes.size}
+// Chain collection methods on the result
+(forall a in attributes such that a.isPublic : a.salary).sum()
 ```
+
+In JjTL context, `forall` also accepts a `do` clause that executes an imperative action per element. The `do` form does not exist in pure JjEL.
 
 ## Existence: exists
 
@@ -106,21 +128,71 @@ forall m in metamodels : {metamodel: m.name, classCount: m.classes.size}
 
 **Syntax:**
 ```
-exists <variable> in <collection> : <predicate>
 exists <variable> in <collection> such that <predicate>
+exists <variable> in <collection> | <predicate>
 ```
 
-**Examples:**
+`|` is a shorthand for `such that`. The `:` separator is not accepted for `exists`; it is reserved for `forall` projections, which keeps nested expressions unambiguous:
 
 ```jjel title="JjEL"
 // Does any class have attributes?
-exists c in classes : c.attributes.size > 0
+exists c in classes | c.attributes.size > 0
 
 // Is there a class named "Person"?
 exists c in classes such that c.name == "Person"
+
+// Nested inside a forall
+forall c in classes | (exists a in c.attributes | a.isPublic) : c.name
 ```
 
-`exists` has no projection form; it always returns `true` or `false`.
+`exists x in S | P` is equivalent to `(forall x in S such that P).isNotEmpty`.
+
+## Context binding: with...do
+
+`with...do` establishes a context object whose properties are directly accessible in the body. It is the standard way to give a Console expression an explicit subject:
+
+```jjel title="JjEL"
+with data do name.pascalCase()
+
+with data do forall a in attributes such that a.isPublic : a.name
+
+-- nested
+with data do
+  with attributes.first do name + ": " + type
+```
+
+Property lookup in the body checks the `with` context first, then the enclosing scope.
+
+## Conditional expressions
+
+```
+if <condition> then <value1> [else <value2>]
+```
+
+If `else` is omitted, the expression returns `null` when the condition is false.
+
+```jjel title="JjEL"
+if c.isAbstract then "abstract" else "concrete"
+(if attributes.size > 5 then "tbl_" else "") + name.snakeCase()
+```
+
+## Lambdas
+
+Anonymous functions, used with collection methods that need a function argument (`sortBy`, `groupBy`, `filter`, ...):
+
+```jjel title="JjEL"
+classes.filter(c => c.isAbstract)
+classes.sortBy(c => c.name)
+(forall a in attributes : a.type).groupBy(t => t)
+```
+
+The lambda body extends to the end of the expression:
+```
+a => a.name == "test" and a.isPublic
+// Parses as: a => (a.name == "test" and a.isPublic)
+```
+
+For plain filtering and mapping, `forall` usually reads better than `filter`/`map`; the methods remain available for chaining.
 
 ## Operators
 
@@ -128,7 +200,7 @@ exists c in classes such that c.name == "Person"
 
 | Operator | Meaning |
 |----------|---------|
-| `==` | Equal |
+| `==` | Equal (deep equality for arrays and objects) |
 | `!=` | Not equal |
 | `<`, `>` | Less than, greater than |
 | `<=`, `>=` | Less or equal, greater or equal |
@@ -138,96 +210,134 @@ exists c in classes such that c.name == "Person"
 
 | Operator | Meaning |
 |----------|---------|
-| `and` | Logical AND |
-| `or` | Logical OR |
+| `and` | Logical AND (short-circuit) |
+| `or` | Logical OR (short-circuit) |
 | `not` | Logical NOT |
-| `implies` | Logical implication (A implies B = not A or B) |
+| `implies` | Logical implication (`P implies Q` = `not P or Q`) |
+
+`implies` reads like natural language and is the idiomatic form for constraints:
+
+```jjel title="JjEL"
+isAbstract implies subClasses.isNotEmpty
+a.isPublic implies a.type != null
+```
 
 ### Arithmetic
 
 | Operator | Meaning |
 |----------|---------|
-| `+` | Addition (numbers) or concatenation (strings) |
+| `+` | Addition, string concatenation, or array concatenation |
 | `-` | Subtraction |
-| `*` | Multiplication |
-| `/` | Division |
+| `*` | Multiplication, or string repetition (`"ab" * 3` is `"ababab"`) |
+| `/` | Division (`null` on division by zero) |
+| `%` | Modulo |
 
-### Null handling
+### Null-safe navigation
 
-| Operator | Meaning |
-|----------|---------|
-| `??` | Null coalescing: returns left side if not null, otherwise right side |
-
-```jjel title="JjEL"
-c.description ?? "No description"
-```
-
-## Lambdas
-
-Anonymous functions for use with collection methods:
+| Operator | Behavior |
+|----------|----------|
+| `?.` | Returns `null` if the left side is null, instead of raising an error |
+| `??` | Returns the right side if the left side is null |
 
 ```jjel title="JjEL"
-// Single parameter
-a => a.name
-
-// In a filter
-classes.filter(c => c.isAbstract)
-
-// In a map
-classes.map(c => c.name.toUpper())
+parent?.name                     -- null if parent is null
+parent?.name ?? "no parent"
+element?.container?.package?.name ?? "default"
 ```
 
-The lambda body extends to the end of the expression:
-```
-a => a.name == "test" and a.isPublic
-// Parses as: a => (a.name == "test" and a.isPublic)
-```
-
-## Collection methods
-
-These methods are available on any collection (array) value:
-
-| Method | Returns | Description |
-|--------|---------|-------------|
-| `.size` | Number | Number of elements |
-| `.length` | Number | Same as `.size` |
-| `.isEmpty` | Boolean | True if collection has no elements |
-| `.first` | Element | First element |
-| `.last` | Element | Last element |
-| `.filter(predicate)` | Collection | Elements matching the predicate |
-| `.map(projection)` | Collection | Transformed elements |
+### Type checking
 
 ```jjel title="JjEL"
-classes.filter(c => c.isAbstract).map(c => c.name)
-classes.size
-classes.isEmpty
+element is DClass
+value is String
 ```
 
-## String methods
+`is` checks type membership including subtypes. Primitive aliases are accepted (`EString`/`String`, `EInt`/`Integer`, `EBoolean`/`Boolean`, `Array`/`List`/`Collection`).
 
-| Method | Returns | Description |
-|--------|---------|-------------|
-| `.toUpper()` | String | Uppercase |
-| `.toLower()` | String | Lowercase |
-| `.pascalCase()` | String | PascalCase conversion |
-| `.length` | Number | Character count |
+### Index access
 
 ```jjel title="JjEL"
-forall c in classes : c.name.toUpper()
-forall c in classes : c.name.pascalCase()
+attributes[0]                    -- first attribute
+attributes[attributes.size - 1]  -- last attribute
 ```
 
-## Conditional expressions
+Equivalent to `.at(index)`.
 
-```
-if <condition> then <value1> else <value2>
+## Evaluation rules
+
+**Truthiness.** `null`, `false`, `0`, `""`, and `[]` are falsy; everything else is truthy.
+
+**Identifier resolution order:** built-in functions, then `with` context properties, then the implicit source (in JjTL), then scope variables. An undefined identifier evaluates to `null`.
+
+**Error handling:**
+
+| Situation | Behavior |
+|-----------|----------|
+| Undefined variable | `null` (silent) |
+| Property not found | `null`, with a console warning and typo suggestions |
+| Method not found | Error with suggestions |
+| `.property` on `null` | Error (use `?.` instead) |
+| `?.property` on `null` | `null` (silent) |
+| Division by zero, type mismatch | `null` (silent) |
+
+## Built-in method library
+
+JjEL ships with more than one hundred built-in methods, organized in four groups. Autocompletion in the Console and in the editors shows signatures inline.
+
+### Collection methods
+
+| Group | Methods |
+|-------|---------|
+| Aggregation | `sum()`, `avg()`, `min()`, `max()`, `count()` |
+| Access | `first`, `last`, `at(i)`, `indexOf(item)` |
+| Info | `size`, `length`, `isEmpty`, `isNotEmpty`, `contains(item)` |
+| Structure | `distinct()`, `distinctBy(fn)`, `sortBy(fn)`, `sortByDescending(fn)`, `reverse()`, `flatten()`, `flatMap(fn)`, `groupBy(fn)` |
+| Slicing | `take(n)`, `skip(n)`, `takeWhile(fn)`, `skipWhile(fn)` |
+| Boolean | `all(fn)`, `any(fn)`, `none(fn)` |
+| Other | `join(separator)`, `filter(fn)`, `map(fn)` |
+
+```jjel title="JjEL"
+(forall c in classes : c.name).distinct().size == classes.size
+(forall c in classes : c.attributes.size).avg()
+classes.sortBy(c => c.name).take(5)
 ```
 
-```
-if c.isAbstract then "abstract" else "concrete"
-```
+### String methods
 
-## Object literals
+| Group | Methods |
+|-------|---------|
+| Case | `toUpper()`, `toLower()`, `capitalize()`, `uncapitalize()` |
+| Naming | `camelCase()`, `pascalCase()`, `snakeCase()`, `kebabCase()` |
+| Whitespace | `trim()`, `trimStart()`, `trimEnd()`, `padStart(n, ch)`, `padEnd(n, ch)` |
+| Search | `contains(s)`, `startsWith(s)`, `endsWith(s)`, `indexOf(s)`, `lastIndexOf(s)`, `matches(regex)` |
+| Transform | `replace(a, b)`, `replaceAll(a, b)`, `substring(i, j?)`, `slice(i, j?)`, `split(sep)`, `repeat(n)`, `reverse()` |
+| Info | `length`, `isEmpty`, `isNotEmpty`, `isBlank`, `isNotBlank`, `charAt(i)` |
+| Conversion | `toNumber()`, `toInt()`, `quote()`, `format(pattern)` |
+
+### Number methods
+
+| Group | Methods |
+|-------|---------|
+| Math | `abs()`, `round()`, `floor()`, `ceil()`, `trunc()`, `sign()`, `sqrt()`, `pow(e)`, `exp()`, `log()`, `log10()`, `log2()` |
+| Trigonometry | `sin()`, `cos()`, `tan()`, `asin()`, `acos()`, `atan()` |
+| Format | `toFixed(d)`, `toPrecision(d)`, `toExponential(d)`, `toString()`, `toHex()`, `toBinary()`, `toOctal()` |
+| Check | `isInteger()`, `isFinite()`, `isNaN()`, `isPositive()`, `isNegative()`, `isZero()` |
+| Range | `clamp(min, max)`, `between(min, max)`, `mod(d)`, `div(d)` |
+
+### Date methods
+
+Dates are ISO 8601 strings. Constructors: `now()`, `today()`, `date(y, m, d)`, `datetime(y, m, d, h, min, s)`, `parseDate(str)`.
+
+| Group | Methods |
+|-------|---------|
+| Accessors | `year()`, `month()`, `day()`, `hour()`, `minute()`, `second()`, `dayOfWeek()`, `dayOfYear()`, `weekOfYear()`, `quarter()` |
+| Predicates | `isLeapYear()`, `daysInMonth()`, `isBefore(d)`, `isAfter(d)`, `isSameDay(d)` |
+| Arithmetic | `addDays(n)`, `addMonths(n)`, `addYears(n)`, `addHours(n)`, `addMinutes(n)`, `addSeconds(n)` |
+| Boundaries | `startOfDay()`, `endOfDay()`, `startOfMonth()`, `endOfMonth()`, `startOfYear()`, `endOfYear()` |
+| Differences | `diffDays(d)`, `diffMonths(d)`, `diffYears(d)` |
+| Format | `timestamp()`, `toISOString()`, `toDateString()`, `toTimeString()`, `format(pattern)` |
+
+## Object and array literals
 
 JjEL supports inline object construction for projections:
 
@@ -242,15 +352,6 @@ Array literals are also supported:
 ["a", "b", "c"]
 ```
 
-## Name resolution order
-
-When JjEL encounters an unqualified identifier, it resolves in this order:
-
-1. **Local variables** bound by `forall`, `exists`, or lambda parameters
-2. **Implicit context properties** of the selected element (in Console: the active metamodel/model)
-3. **Helper functions** registered in the evaluation context (in JjTL mode)
-4. **Error** with suggestions for similar names
-
 ## Literals
 
 | Type | Syntax | Example |
@@ -263,7 +364,7 @@ When JjEL encounters an unqualified identifier, it resolves in this order:
 
 ## Console usage
 
-The Console is the primary place to write and test JjEL expressions interactively. The evaluation context depends on which artifact is active:
+The Console's JjEL mode is the primary place to write and test expressions interactively (see [Console](../../user-guide/console) for modes and switching). The evaluation context follows the active artifact:
 
 ```jjel title="JjEL Console"
 // With metamodel active:
@@ -274,8 +375,6 @@ The Console is the primary place to write and test JjEL expressions interactivel
 > classes
 [Entity, Attribute, Relationship]
 ```
-
-The Console respects the active metamodel/model. Switching artifacts changes what `classes`, `enumerations`, and other built-in identifiers return.
 
 :::tip[Testing expressions]
 Use the Console to prototype JjEL expressions before using them in JjTL guards or JjScript. The immediate feedback loop makes it the fastest way to explore your model structure.

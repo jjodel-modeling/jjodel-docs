@@ -1,124 +1,120 @@
 ---
 title: Console
-description: The built-in console for executing expressions, inspecting models, and debugging.
+description: One input, three languages. The Console runs Jjodie, JjScript, and JjEL from a single prompt, plus raw JavaScript over the JjOM.
 sidebar:
   order: 6
   label: Console
 ---
 
-The Console is a built-in tool for interacting programmatically with your models and metamodels. It provides direct access to the JjOM API, letting you execute expressions, query model elements, test constraints, and debug viewpoint configurations. The Console is particularly useful for formulating, testing, and validating complex navigational JjOM expressions before using them in viewpoint templates.
+The Console is the interactive surface of Jjodel: a single input that speaks three languages. You can talk to the Jjodie AI assistant in natural language, execute [JjScript](../../languages/jjscript) commands, or evaluate [JjEL](../../languages/jjel) expressions, switching mode at any time. A JavaScript flavor is also available for direct access to the JjOM API.
 
 ## Accessing the Console
 
 The Console is available from the bottom panel of the workspace. Click on the **Console** tab to open it.
 
-<!-- TODO: screenshot — console panel (new UI) -->
+<!-- TODO: screenshot — console panel with mode chip (new UI) -->
 
-## Inspecting Models
+## Console modes
 
-The Console lets you explore the Jjodel Object Model (JjOM) at runtime. Every model element, its attributes, references, and metadata are accessible through JavaScript expressions.
+| Mode | Language | Typical input |
+|------|----------|---------------|
+| **Jjodie** | Natural language | "add a name attribute of type String to Person" |
+| **JjScript** | Imperative commands | `create class Person` |
+| **JjEL** | Pure expressions | `forall c in classes : c.name` |
 
-### Select all model elements
+The active mode is shown as a **chip** in the console header. Three ways to switch:
 
-To retrieve every element in the current model:
+- **Click the chip** and pick a mode from the list
+- **Cmd+J** (Ctrl+J on Windows/Linux) cycles through the modes
+- **Meta-commands** typed directly in the input: `/jjel`, `/js`, `/ask` (back to Jjodie), `/help`
 
-```javascript title="Console"
+Input history (arrow up/down) is shared between Jjodie and JjScript; the expression modes keep their own history. `/clear` empties the console.
+
+### Jjodie mode
+
+Jjodie is the AI assistant. It answers questions about your models and, for editing requests, generates JjScript commands and executes them. The AI backend is configurable in Settings under Providers (OpenAI, Anthropic, Ollama, and others).
+
+### JjScript mode
+
+Inputs run directly as JjScript commands, with autocompletion for commands, class names, and types:
+
+```jjscript title="Console (JjScript mode)"
+create class Person
+create attribute name in Person type EString [1]
+show Person full
+validate all
+```
+
+See the [JjScript Reference](../../languages/jjscript) for the full command set.
+
+### JjEL mode
+
+Inputs are evaluated as JjEL expressions against the active metamodel and model. These identifiers are bound in the console context:
+
+| Identifier | Returns |
+|------------|---------|
+| `classes` | All classes in the active metamodel |
+| `attributes` | All attributes in the active metamodel |
+| `references` | All references in the active metamodel |
+| `enumerations` | All enumerations in the active metamodel |
+| `packages` | All packages in the active metamodel |
+| `instances` | All instances in the active model(s) |
+| `metamodel`, `project` | The active metamodel and the current project |
+| `data`, `node` | The selected element and its layout node (require a selection) |
+
+Classes are also bound by name: `Person.name`, `Person.attributes`. Instance names resolve directly when unambiguous.
+
+```jjel title="Console (JjEL mode)"
+> forall c in classes such that c.isAbstract : c.name
+["NamedElement"]
+
+> exists a in Person.attributes | a.type == "EString"
+true
+
+> with data do name.pascalCase()
+"CustomerOrder"
+```
+
+JjEL is side-effect-free: expressions read the model but never modify it. See the [JjEL Reference](../../languages/jjel) for the full language.
+
+## JavaScript and the JjOM
+
+The `/js` flavor evaluates plain JavaScript with direct access to the Jjodel Object Model. This is the lowest-level surface, useful for debugging viewpoints and exploring the runtime object graph.
+
+```javascript title="Console (JS)"
+// All elements of the current model
 model.elements()
-```
 
-This returns an array of all DObject instances in the model, regardless of their metaclass.
-
-### Filter by metaclass
-
-To select only elements that are instances of a specific metaclass (e.g., `Entity`):
-
-```javascript title="Console"
+// Only instances of a specific metaclass
 model.elements().filter(e => e.instanceof.name === 'Entity')
-```
 
-This uses the standard JavaScript `filter` function combined with the JjOM's `instanceof` property, which returns the metaclass of each element.
-
-### Access attribute values
-
-To read the value of a user-defined attribute, use the `$` prefix:
-
-```javascript title="Console"
-// Get the name of the first Entity
-model.elements().filter(e => e.instanceof.name === 'Entity')[0].$name
-
-// List all attribute names of an entity
+// User-defined features use the $ prefix
 myEntity.$ownedAttributes.map(a => a.$name)
-```
 
-The `$` prefix distinguishes user-defined features (from your metamodel) from built-in JjOM properties.
-
-### Navigate references
-
-References work the same way as attributes, with the `$` prefix:
-
-```javascript title="Console"
-// Get the left entity of a relationship
-myRelation.$left
-
-// Check if a reference is set
-myRelation.$left !== undefined
-
-// Get all attributes owned by an entity (containment reference)
-myEntity.$ownedAttributes
-```
-
-### Inspect metaclass information
-
-You can also inspect the metamodel structure at runtime:
-
-```javascript title="Console"
-// Get the metaclass name of an element
-myElement.instanceOf.name
-
-// What type of JjOM construct is this?
-data.className    // returns "DClass" on a metamodel element, "DObject" on a model element
-
-// List all features defined by a metaclass
-myElement.instanceOf.features.map(f => f.name)
-
-// Check if a metaclass is abstract
+// Metaclass information
 myElement.instanceOf.isAbstract
+data.className    // "DClass" on a metamodel element, "DObject" on a model element
 ```
 
-### The `name` attribute shortcut
+When a metamodel class has a user-defined attribute called `name`, `data.name` returns the same value as `data.$name.value`.
 
-When a metamodel class has a user-defined attribute called `name`, `data.name` returns the same value as `data.$name.value`. This shortcut is useful when exploring the model:
+The node and view submodels are exposed too:
 
-```javascript title="Console"
-// These two expressions return the same string
-data.$name.value   // → "User" (explicit path through DValue)
-data.name          // → "User" (shortcut via the special name attribute)
-```
-
-### Querying layout and view
-
-The Console also exposes the node and view submodels:
-
-```javascript title="Console"
-// Read position and dimensions of the selected element
+```javascript title="Console (JS)"
 node.x
 node.y
-
-// Check the OCL predicate of the current view
 view.oclCondition
 // → "context DObject inv: self.instanceof.name = 'Entity'"
 ```
 
-## Practical Use Cases
+## Practical use cases
 
-The Console is especially useful for:
+- **Testing predicates** before using them in viewpoint definitions: write the predicate in the Console, verify it selects the right elements, then copy it into the view configuration.
+- **Prototyping JjEL expressions** before using them in JjTL guards and mappings.
+- **Exploring the JjOM structure** to understand how your metamodel maps to the runtime object graph; essential when writing JSX templates that navigate references.
+- **Bulk edits** through JjScript (`forall a in attributes such that a.isDerived do delete a`).
 
-- **Testing OCL/JS predicates** before using them in viewpoint definitions. Write the predicate in the Console, verify it selects the right elements, then copy it into the view configuration.
-- **Debugging viewpoints** by checking which elements a predicate matches and why.
-- **Exploring the JjOM structure** to understand how your metamodel maps to the runtime object graph. This is essential when writing JSX templates that navigate references.
-- **Verifying model conformance** by querying for elements that violate expected constraints.
-
-## Log Messages
+## Log messages
 
 The Console also serves as a log viewer, displaying messages generated by validation rules, event handlers, and system operations (save, load, synchronization). Log entries are timestamped and color-coded by severity.
 

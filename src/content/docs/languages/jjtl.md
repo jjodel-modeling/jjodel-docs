@@ -278,13 +278,11 @@ The Trace View in the Transformation Editor displays this information for each m
 
 The following limitations apply to the current implementation. They are tracked as bugs or planned features.
 
-**Reference materialization**: references between target instances (for example, `outputPlace` pointing from a Transition to a Place) are created in the executor but may not always be correctly materialized in the target model's persistence layer. This is being fixed.
-
-**Duplicate reference values**: in some cases, a reference binding produces duplicate copies of the target element instead of a single reference. The root cause is in the `extractAttributeValues` function reading the same value at multiple nesting levels. This is being fixed.
-
 **`name := name` binding**: assigning the source element's `name` to the target element's `name` feature currently does not update the target element's display name (the `DObject.name` property). The user-defined feature `name` and the internal `DObject.name` may be separate concepts. Under investigation.
 
 **No `resolve` for collections**: `resolve(collection, Type)` is not yet supported as a single call. Use `forall` to resolve each element individually.
+
+**Dotted source attributes in `forall`**: `a.name -> targetAttr` does not parse inside a `forall` block. Use the conversion syntax instead: `-> targetAttr : a.name`.
 
 ## Helper functions
 
