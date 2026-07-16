@@ -1,6 +1,9 @@
 # build output
 dist/
 
+# generated at build time (scripts/generate-changelog.mjs)
+src/content/docs/changelog.md
+
 # dependencies
 node_modules/
 

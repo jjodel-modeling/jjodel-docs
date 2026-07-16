@@ -61,6 +61,10 @@ export default defineConfig({
           label: "What's New",
           link: '/whats-new/',
         },
+        {
+          label: 'Changelog',
+          link: '/changelog/',
+        },
       ],
       head: [
         {
