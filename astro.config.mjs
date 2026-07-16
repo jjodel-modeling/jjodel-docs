@@ -18,6 +18,7 @@ export default defineConfig({
       editLink: {
         baseUrl: 'https://github.com/jjodel-modeling/jjodel-docs/edit/main/src/content/docs/',
       },
+      lastUpdated: true,
       customCss: ['./src/styles/custom.css'],
       sidebar: [
         {

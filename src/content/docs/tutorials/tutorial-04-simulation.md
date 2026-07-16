@@ -81,7 +81,7 @@ Open the view's **Template** tab. The default JSX template includes a header wit
     <div className={'header'}>
         <div className={'input-container mx-2'}>
             {data.$name ?
-                <Input data={data.$name} field={'value'} hidden={true} autosize={true} placeholder={'...'} />
+                <Input data={data.$name} field={'value'} hidden={true} autosize={true} placeholder={'...'} /> :
                 <Input data={data} field={'name'} hidden={true} autosize={true} placeholder={'Name'} />
             }
         </div>
