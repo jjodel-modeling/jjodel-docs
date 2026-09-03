@@ -184,6 +184,34 @@
   color: #0f172a;
 }
 
+/* Current-page row: Starlight inverts the link colors, so the badges
+   take the palette of the opposite theme. */
+a[aria-current="page"] .sl-badge[class*="version-"],
+a[aria-current="page"] .sl-badge.since-1-5::before {
+  border-color: #475569;
+  color: #94a3b8;
+  background-color: transparent;
+}
+
+a[aria-current="page"] .sl-badge.version-3-0 {
+  border-color: #0ea5e9;
+  color: #7dd3fc;
+  background-color: rgba(14, 165, 233, 0.12);
+}
+
+:root[data-theme='dark'] a[aria-current="page"] .sl-badge[class*="version-"],
+:root[data-theme='dark'] a[aria-current="page"] .sl-badge.since-1-5::before {
+  border-color: #cbd5e1;
+  color: #475569;
+  background-color: transparent;
+}
+
+:root[data-theme='dark'] a[aria-current="page"] .sl-badge.version-3-0 {
+  border-color: #0ea5e9;
+  color: #0369a1;
+  background-color: #f0f9ff;
+}
+
 /* Screenshots: rounded corners and a hairline border on every content image */
 .sl-markdown-content img {
   border-radius: 8px;
