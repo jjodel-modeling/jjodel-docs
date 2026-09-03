@@ -31,9 +31,9 @@ The separation of data, node, and view is architecturally significant. It enable
 
 The JjOM sits at the center of Jjodel's architecture, connecting the front-end and back-end:
 
-- **Front-end**: React/TypeScript + Redux (object store)
-- **Back-end**: ASP.NET + PostgreSQL
-- **Reflective Bus and Object Store**: the communication backbone that synchronizes changes across all clients
+- **Front-end**: React 18 and TypeScript, with Redux as the object store and Vite as the bundler
+- **Back-end**: a .NET service that persists projects and serves them back
+- **Object store**: the single store every editor reads and writes, which is what keeps the canvas, the tree, and the tables on the same data
 
 The JjOM provides a unified API to query, edit, and synchronize models, their layout, and their visual representation. An analogy from the web domain: the JjOM plays a role similar to the Document Object Model (DOM), but for modeling artifacts instead of HTML documents.
 
@@ -48,16 +48,18 @@ The notation architecture follows a three-level hierarchy:
 
 A **Notation** (e.g., "State Machine Notation") is owned by a metamodel. It contains zero or more viewpoints.
 
-A **Viewpoint** groups a family of related views. Viewpoints can be exclusive (only one active at a time) or overlay (layered on top of the active exclusive viewpoint). See [Viewpoints](../../user-guide/viewpoints) for the full explanation of exclusive vs overlay.
+A **Viewpoint** groups a family of related views. Its type decides how it composes: a **Syntax** viewpoint is exclusive, so only one is active at a time, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** viewpoints are overlays that layer on top of it. See [Viewpoints](../../user-guide/viewpoints).
 
 A **View** targets instances of a specific metaclass. Each view has up to four components:
 
-| Component | Purpose | Technology |
-|-----------|---------|------------|
-| Predicate | Selects which instances the view applies to | OCL or JavaScript |
-| Template | Defines the visual structure | JSX |
-| Style | Controls appearance | SCSS |
-| Events | Defines reactive behavior | ECA rules (JavaScript) |
+| Component | Purpose | How it is written |
+|-----------|---------|-------------------|
+| Predicate | Selects which instances the view applies to | `oclCondition` in OCL, or `jsCondition` in JavaScript |
+| Structure | Says what the element draws | A declarative record since 3.0, a JSX template before it |
+| Style | Controls appearance | Fields of the record, or an SCSS block for a JSX template |
+| Events | Reacts to changes and drives behavior | ECA rules in JavaScript |
+
+Views written as JSX templates keep working; the [View Designer](../../user-guide/view-designer) authors the declarative form.
 
 ### How Views Connect to Models
 
@@ -70,10 +72,10 @@ The predicate is the mechanism that defines the syntactic mapping (σ) from the 
 Templates can contain **queries** that navigate the model. Jjodel uses JavaScript expressions (not OCL) for in-template queries. A Query is `basedOn` a Metaclass and is `contained` in a Template. In practice, this means JSX expressions inside a template that access `data` properties to navigate references and filter instances.
 
 ```jsx title="Query in Template"
-{/* Query: navigate ownedTransitions reference, filter by className */}
-{data.$ownedTransitions
-    .filter(t => t.$className === 'Transition')
-    .map(t => <text>{t.$name}</text>)}
+{/* navigate the ownedTransitions reference, keep the Transition instances */}
+{data.$ownedTransitions.values
+    .filter(t => t.instanceof.name === 'Transition')
+    .map(t => <text>{t.$name.value}</text>)}
 ```
 
 This replaced OCL for model querying within templates, providing a more accessible syntax for web developers while maintaining the same expressive power for model navigation.
@@ -81,92 +83,53 @@ This replaced OCL for model querying within templates, providing a more accessib
 
 ## Core Modeling Constructs
 
-These are the meta-elements in the Jjodel meta-metamodel.
+These are the meta-elements of the Jjodel meta-metamodel. Each one exists twice: as a **D** record, the serializable data kept in the store, and as an **L** wrapper, which is what templates and expressions read. The properties named here are the ones the L wrapper exposes; the [JjOM API](../jjom-api) lists them in full.
 
 ### DModel
 
-The top-level container holding packages or classes. DModel acts as the root of a model specification. Every project has at least one DModel.
+The container of a metamodel or of a model. `isMetamodel` tells the two apart, `packages` holds the classifiers of a metamodel, `objects` the roots of a model, and `instanceof` points from a model to the metamodel it conforms to.
 
 ### DPackage
 
-A logical grouping or namespace for related classes.
-
-**Key properties:**
-- `name: String`
-- `packages: Array<DPackage>` (nested sub-packages)
-- `objects: Array<DObject>` (contained elements)
+A namespace inside a metamodel. It holds `classes`, `enumerators`, `datatypes`, and `subpackages`.
 
 ### DClass
 
-Represents a class in the metamodel. It can extend from another class and declares attributes, references, and operations.
+A classifier of the metamodel. It declares `attributes`, `references`, and `operations`, which `features` returns together. Inheritance runs through `extends` and `extendedBy`, interfaces through `implements` and `implementedBy`, and `referencedBy` gives the references that point at the class.
 
-**Key properties:**
-- `name: String` (unique within its package)
-- `isAbstract: Boolean` (if `true`, cannot be directly instantiated)
-- `isInterface: Boolean` (marks the class as an interface)
-- `isRootable: Boolean` (if `true`, instances can be root elements)
-- `isSingleton: Boolean` (restricts to a single instance per model)
-- `isFinal: Boolean` (prevents subclassing)
-- `isPrimitive: Boolean` (marks as a primitive type)
-- `isMetamodel: Boolean` (indicates metamodel-level membership)
-- `extends: Array<DClass>` (parent classes)
-- `extendedBy: Array<DClass>` (known subclasses)
-- `attributes: Array<DAttribute>` (owned attributes)
-- `references: Array<DReference>` (owned references)
-- `operations: Array<DOperation>` (owned operations)
-- `features: Array<Feature>` (all structural features combined)
-- `instances: Array<DObject>` (direct instances)
-- `allInstances: Array<DObject>` (all instances including subclass instances)
+Four flags constrain instantiation: `abstract` forbids direct instances, `interface` marks the class as an interface, `isSingleton` allows one instance, `isFinal` forbids subclassing. `isRootable` says instances may sit at the root of a model, `partial` lets instances carry features the class does not declare, and `isPrimitive` marks the built-in datatypes.
+
+The instances themselves are `instances` for the direct ones and `allInstances` when subclasses count too.
 
 ### DAttribute
 
-Represents a field or characteristic that holds an intrinsic value. The type can be a primitive (integer, string, boolean, etc.) or a user-defined enumeration.
+A slot that holds data. `type` is the primitive classifier or the enumeration, `lowerBound` and `upperBound` its multiplicity, `ordered` and `unique` the semantics of a multi-valued attribute, `defaultValue` what an instance starts with.
 
-**Key properties:**
-- `name: String`
-- `type` (one of the primitive data types below, or a user-defined enumeration)
+### DEnumerator
 
-### DEnumeration
-
-A named set of symbolic values. Enumerations define closed value sets for attributes where only specific options are valid (e.g., `Status = {ON, OFF, STANDBY}`, `Cardinality = {OneToOne, OneToMany, ManyToMany}`).
-
-**Key properties:**
-- `name: String`
-- `literals: Array<DEnumerationLiteral>` (the set of valid values)
-
-Each literal has a `name` and an optional `value`. In templates and Console expressions, read an enumeration attribute with `data.$myEnum.value`.
+A closed set of values, useful when an attribute may take only a handful of them. `literals` holds the `DEnumLiteral` elements, each with a `name` and a `value`.
 
 ### DReference
 
-A relationship between two classes. DReferences may include multiplicity constraints (one-to-one, one-to-many) and can be containment or non-containment relationships.
+A link between two classifiers. `type` is the class at the other end, and `opposite` the reference that closes the pair when one exists. Multiplicity works as it does for attributes.
 
-**Key properties:**
-- `name: String`
-- `target: DClass` (the referenced class)
-- `containment: Boolean` (if `true`, this is a composition; contained elements belong exclusively to the parent)
-- `multiplicity` (lower and upper bounds; `-1` means unbounded)
-
-When containment is `true`, the reference creates a parent-child relationship. An element contained by one parent cannot belong to another. In the editor, new instances of the contained type can only be created through the context menu of the parent element.
+Three flags say who owns what. `containment` puts the target inside the source in the containment tree. `composition` means the source owns the target and deletes it with itself. `aggregation` means the target is shared and outlives the source. A contained element belongs to one parent only, which is why new instances of a contained type are created from the context menu of their parent.
 
 ### DOperation
 
-A behavioral feature belonging to a class.
+A behavioral feature of a class.
 
 ### DObject
 
-An instance of a DClass. DObjects store runtime values for each DAttribute and links pointing to other objects.
+An instance of a class. `instanceof` gives the class, `features` the slots, `father` and `parent` its place in the containment tree, and `allSubObjects` everything below it. `name` is its display name, taken from the identity slot when the class declares one.
 
-**Key properties:**
-- `id: Pointer` (unique identifier; IDs from `DObject.new()` are temporary)
-- `className: String` (name of the instantiated class)
-- `instanceOf: DClass` (the metaclass)
-- `parent: *` (containing element, if any)
+`className` is not the metaclass: it names the kind of JjOM element you hold, `"DObject"` here and `"DClass"` for a classifier. The metaclass is `instanceof.name`.
 
-A concrete example: an ERD Entity metaclass becomes a DClass; a specific entity "User" is a DObject; its "id" attribute is a DAttribute with a DValue.
+An ERD makes this concrete: the Entity metaclass is a DClass, the entity "User" is a DObject, and its `id` attribute is a DAttribute whose slot on "User" is a DValue.
 
 ### DValue
 
-The concrete value assigned to an attribute or data field. Each DObject's DAttribute has one or more DValues, which can be a scalar (string, integer, boolean) or an enumeration literal.
+One slot of an object. `value` is the single value, `values` the whole list, and `instanceof` the attribute or reference the slot fills. For a reference, the values are the objects it points to; for an attribute, they are primitives or enumeration literals.
 
 ## Primitive Data Types
 
@@ -189,60 +152,60 @@ In practice, `EString`, `EInt`, `EBoolean`, and `EDouble` cover the vast majorit
 
 ## The $ Prefix Convention
 
-In JSX templates and Console expressions, user-defined features (attributes and references from your metamodel) are accessed with the `$` prefix. This distinguishes them from built-in JjOM properties.
+Built-in JjOM properties are read directly. The features your metamodel declares are read with a `$` prefix, which keeps them apart from the built-ins whatever you decide to call them.
 
-Given a metamodel where `Entity` has an attribute `name`, a containment reference `ownedAttributes`, and an attribute `description`:
+Take a metamodel where `Entity` declares an attribute `name`, an attribute `description`, and a containment reference `ownedAttributes`:
 
-```javascript title="The $ Prefix Convention"
-// Built-in JjOM property (no prefix)
-data.className             // returns "DClass" or "DObject"
-data.instanceOf.name       // returns "Entity"
-data.id                    // returns the element ID
+```javascript title="Built-in properties and declared features"
+// built-in
+data.className              // "DObject" for an instance, "DClass" for a classifier
+data.instanceof.name        // "Entity", the metaclass
+data.id                     // the element id
 
-// User-defined attribute ($ prefix)
-data.$name                 // returns the DValue object for the "name" attribute
-data.$name.value           // returns the string value, e.g., "User"
-data.$description.value    // returns the description text
+// declared attribute
+data.$name                  // the slot, a DValue
+data.$name.value            // "User", the string in the slot
+data.$description.value     // the description text
 
-// User-defined reference ($ prefix)
-data.$ownedAttributes      // returns the reference to contained Attribute instances
-data.$ownedAttributes.values  // returns the array of actual instances
+// declared reference
+data.$ownedAttributes        // the slot
+data.$ownedAttributes.values // the objects it points to
 
-// Check if a reference is set
-data.$left !== undefined   // true if the "left" reference points to something
+// is the reference set?
+data.$left && data.$left.value
 ```
 
 ### The Special `name` Attribute
 
-A user-defined attribute called `name` has special status in Jjodel: its value overrides the display name of the instance. This means `data.name` returns the same string as `data.$name.value`. The built-in `data.name` property is effectively aliased to the user-defined `$name` attribute when one exists.
+An attribute called `name` becomes the display name of the instance: `data.name` returns the same string as `data.$name.value`. That is why renaming an element on the canvas writes into the attribute rather than into some separate label.
 
-For enumeration values, the stored value is a symbolic identifier. To display it, access the value property:
+An enumeration slot holds a literal. Read it as any other value:
 
-```javascript title="Enumeration Value Access"
-data.$cardinality.value    // returns e.g., "OneToMany"
+```javascript title="Reading an enumeration"
+data.$cardinality.value       // the literal
+data.$cardinality.value.name  // "OneToMany"
 ```
 
 ## Navigating the JjOM in Templates
 
-JSX templates operate on three variables corresponding to the three submodels: `data` (the abstract syntax subgraph for the current element), `node` (the layout subgraph), and `view` (the rendering configuration). Most template logic uses `data`.
+Templates and handlers work with three variables, one per submodel: `data` for the model element, `node` for its layout and state, `view` for the view itself. Most of what you write touches `data`.
 
-```jsx title="JSX Template"
-// Display the name of the current element
-<span>{data.$name}</span>
+```jsx title="Reading a model from a template"
+// the name of the current element
+<span>{data.$name.value}</span>
 
-// List all attributes of an Entity
-{data.$ownedAttributes.map(attr =>
-  <div>{attr.$name}: {attr.$type.value}</div>
+// every attribute of an Entity, with its type
+{data.$ownedAttributes.values.map(attr =>
+  <div>{attr.$name.value}: {attr.$type.value.name}</div>
 )}
 
-// List names of all String attributes
+// the names of its text attributes
 {data.$ownedAttributes.values
-  .filter(s => s.$type.value.name === 'String')
-  .map(a => a.name)
-}
+  .filter(a => a.$type.value.name === 'EString')
+  .map(a => a.$name.value)}
 ```
 
-The navigational structure of these expressions depends entirely on your metamodel. If your metamodel defines a reference `left` from `Relation` to `Entity`, then `data.$left` navigates that reference. The JjOM mirrors the metamodel structure at runtime.
+What you can navigate depends on your metamodel. A reference `left` from `Relation` to `Entity` gives `data.$left`; the JjOM mirrors the metamodel at runtime, so the vocabulary of your language is the vocabulary of these expressions.
 
 ## Layout-Sensitive Notation
 
@@ -268,9 +231,13 @@ State attributes serve two purposes. On the abstract syntax side, they capture s
 
 The Jjodel runtime evaluates state dependencies incrementally. When the model changes, all affected states update automatically, keeping views consistent without manual intervention.
 
-## JjOM and the LModel Proxy
+## The D level and the L level
 
-In Jjodel's internal architecture, the `LModel` proxy provides a convenience API for accessing and manipulating the JjOM. LModel finds elements **by name** and writes attribute values using the `$attr.value` pattern. This is relevant for internal development and advanced customization; most users interact with the JjOM through templates and the Console.
+Every JjOM element exists twice. The **D** record is plain serializable data: fields and pointers, the form the store keeps and the server persists. The **L** wrapper is a proxy over that record, and it is what you get in templates, in expressions, and in the Console. The wrapper resolves a pointer into the object it names, computes derived properties such as `allInstances` or `extendedBy`, and validates a write before it reaches the store.
+
+The practical consequence: read `instanceof` on an L object and you get the class, read it on the D record and you get its id. Write through the L wrapper and the change lands in the undo history and reaches every view; write into the D record and nothing notices.
+
+`LModel` is the wrapper for a model. It finds elements by name and writes attribute values through the `$attr.value` pattern, which is the same convention templates use.
 
 :::note
 The JjOM is the single source of truth for all modeling data in Jjodel. Every editor, viewpoint, and validation rule operates on the same JjOM instance, ensuring consistency across all perspectives.
