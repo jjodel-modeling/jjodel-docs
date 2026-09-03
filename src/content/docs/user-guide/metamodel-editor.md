@@ -10,111 +10,107 @@ The Metamodel Editor is the core workspace for defining the **abstract syntax** 
 
 ## Interface Overview
 
-The Metamodel Editor consists of:
+![The Metamodel Editor with a class selected](./images/metamodel-editor-overview.png)
 
-- **Canvas** — the main area where you visually create and arrange metamodel elements
-- **Tree View** — a hierarchical view of the metamodel structure (classes, packages, features)
-- **Properties Panel** — contextual tabs for editing the selected element's properties
+The editor is split into four areas:
 
-<!-- TODO: screenshot — metamodel editor interface with annotations (new UI) -->
+- **Palette** (left) — the elements you can add, grouped into **Structure**, **Classifiers**, **Members**, and **Connections**
+- **Canvas** (center) — where you arrange your metamodel, with a toolbar above it and a minimap in the bottom-right corner
+- **Tree view and properties panel** (right) — the metamodel structure on top, the properties of the current selection below
+- **Status bar** (bottom) — the metamodel name, its element counts, and the path of the current selection
+
+The toolbar above the canvas holds undo and redo, duplicate and delete, a rendering-style dropdown (**Structured**, **Simplified**, **Compact**, **Wireframe**, **ER**), a theme selector, layout toggles, a viewpoint selector, and zoom controls.
+
+The **Basic** / **Advanced** switch in the top bar controls how much detail the panels expose. Basic keeps the common properties visible; Advanced adds the rest.
+
+## Creating Elements
+
+![The palette](./images/metamodel-editor-palette.png)
+
+Everything is created by dragging from the palette, and where you drop it decides what you get:
+
+- **Classifiers** (**Class**, **Abstract Class**, **Enumeration**) are dragged onto the canvas
+- **Members** (**Attribute**, **Operation**, **Literal**) are dropped directly onto an existing class or enumeration, as the `drop on node` hint next to each one indicates
+- **Package**, under **Structure**, is dragged onto the canvas like a classifier
+
+Double-click any name on the canvas to rename it. `Ctrl+Z` and `Ctrl+Y` undo and redo.
 
 ## Working with Classes
 
-Classes (`DClass`) are the primary building blocks of a metamodel. To create a class:
+A class (`DClass`) is the primary building block of a metamodel. Drag **Class** from the palette onto the canvas and give it a name.
 
-1. Click the **Add Class** button in the toolbar (or use the context menu on the canvas)
-2. Enter a name for the class
-3. The class appears on the canvas as a box
+Selecting a class fills the properties panel:
 
-### Class Properties
+![Class properties](./images/metamodel-editor-class-properties.png)
 
-Each class has the following configurable properties:
+- **Name** is required and must be unique within its package
+- **Abstract** prevents direct instantiation; the class only serves as a base for others
+- **Interface** marks the class as a contract rather than an implementation
+- The **Flags** row carries four further switches: **Final** (no subclasses), **Singleton** (one instance), **Rootable** (can be a root element of a model), and **Partial** (partial definition)
 
-- **name** — the unique identifier of the class within the metamodel
-- **isAbstract** — if `true`, the class cannot be directly instantiated; it serves as a base for subclasses
-- **isInterface** — marks the class as an interface (defines a contract without implementation)
-- **isRootable** — if `true`, instances of this class can serve as root elements in a model
-- **isSingleton** — restricts instantiation to a single instance per model
-- **isFinal** — prevents the class from being extended
+**Rootable** is on by default: unless you turn it off, instances of the class can be created as top-level elements in a model.
 
 ### Inheritance
 
-Classes support single and multiple inheritance. To create an inheritance relationship:
-
-1. Select the child class
-2. Use the **extends** property to point to one or more parent classes
-3. The child class inherits all attributes, references, and operations from its parents
+Classes support single and multiple inheritance. A child class inherits all attributes, references, and operations of its parents. See the [JjOM reference](../../reference/jjom#dclass) for the `extends` and `extendedBy` properties behind this.
 
 ## Working with Attributes
 
-Attributes (`DAttribute`) represent typed properties of a class. To add an attribute:
+Attributes (`DAttribute`) hold intrinsic values. Drag **Attribute** from the palette's **Members** section and drop it onto a class; it appears as a row inside the class box.
 
-1. Select a class
-2. In the Properties Panel, navigate to the **Attributes** section
-3. Click **Add Attribute**
-4. Specify the attribute name and type
+Each attribute needs a name and a type. The type dropdown lists the Ecore-style primitives Jjodel ships with:
 
-Supported types include primitive data types (`EString`, `EInt`, `EBoolean`, `EDouble`, and others) and custom enumerations. See the [JjOM reference](../../reference/jjom#primitive-data-types) for the full list of primitives.
+`EBoolean`, `EByte`, `EChar`, `EDate`, `EDouble`, `EFloat`, `EInt`, `ELong`, `EShort`, `EString`
+
+You can also point an attribute at an enumeration you defined yourself. See the [Primitive Data Types](../../reference/jjom#primitive-data-types) in the JjOM reference for the full list.
 
 ## Working with References
 
-References (`DReference`) define relationships between classes. Jjodel supports two kinds of references:
+References (`DReference`) connect classes. You can create one in two ways:
 
-- **Containment references** — express parent-child (composition) relationships; contained elements are owned by the parent and cannot exist independently
-- **Non-containment references** — express associations between classes without ownership semantics
+- Drag from an anchor on the source class to an anchor on the target class
+- Right-click the source class and choose **Add reference**, then set its type in the properties panel
 
-To create a reference:
+Selecting a reference, either on the canvas or in the tree, opens its properties:
 
-1. Select the source class
-2. In the Properties Panel, navigate to **References**
-3. Click **Add Reference**
-4. Specify the target class, multiplicity, and whether the reference is a containment
+![Reference properties](./images/metamodel-editor-reference-properties.png)
 
-### Multiplicity
+- **Name** identifies the reference on the owning class
+- **Type** is the target classifier
+- **Multiplicity** is set with the `[0..1]`, `[1..1]`, `[0..*]`, `[1..*]` presets, or with **Custom** for other bounds
+- **Composition** (*owns the target*) makes the reference a containment: contained elements belong exclusively to the parent and cannot exist on their own
+- **Aggregation** (*shares the target*) marks a weaker ownership, where the target can be shared
 
-References have configurable multiplicity bounds:
+The badge next to the reference name summarizes both at a glance, for example `Class [0..1]`.
 
-- `0..1` — optional single reference
-- `1..1` — mandatory single reference
-- `0..*` — optional collection
-- `1..*` — mandatory collection with at least one element
+Containment matters beyond the metamodel: in a model, instances of a contained type can only be created through their parent element.
 
 ## Working with Operations
 
-Operations (`DOperation`) define behaviors associated with a class. They can be used for model transformations, computed properties, or custom logic.
+Operations (`DOperation`) define behavior on a class. Drag **Operation** from the **Members** section onto a class, the same way you add an attribute. Operations are used for computed properties, transformations, and custom logic.
 
 ## Working with Enumerations
 
-Enumerations define closed sets of symbolic values. Use them for attributes where only specific options are valid: data types (`String`, `Integer`, `Boolean`), cardinalities (`OneToOne`, `OneToMany`), statuses (`Active`, `Inactive`), or any domain-specific value set.
+Enumerations define closed sets of symbolic values. Use them for attributes where only specific options are valid: cardinalities (`OneToOne`, `OneToMany`), statuses (`Active`, `Inactive`), or any domain-specific value set.
 
-To create an enumeration:
+1. Drag **Enumeration** from **Classifiers** onto the canvas and name it
+2. Drag **Literal** from **Members** onto the enumeration, once per value
+3. To use it, set an attribute's type to the enumeration instead of a primitive
 
-1. Click the **Add Enumeration** button in the toolbar (or use the context menu)
-2. Enter a name for the enumeration (e.g., `Cardinality`)
-3. Add **literals**: each literal represents one valid value (e.g., `OneToOne`, `OneToMany`, `ManyToMany`)
-
-To use an enumeration as an attribute type:
-
-1. Select a class and add (or edit) an attribute
-2. Set the attribute type to the enumeration name instead of a primitive type
-3. When users create instances of this class, the attribute appears as a dropdown with the enumeration literals
-
-Because Jjodel is reflective, adding a new literal to an enumeration immediately makes it available in all existing model instances that use that enumeration. No regeneration step is required.
-
-See the [Primitive Data Types](../../reference/jjom#primitive-data-types) in the JjOM reference for the complete list of built-in types.
+In a model, that attribute then appears as a dropdown listing the literals. Because Jjodel is reflective, adding a literal makes it immediately available in existing model instances. There is no regeneration step.
 
 ## Working with Packages
 
-Packages (`DPackage`) organize classes into logical groups, similar to namespaces. A package can contain classes or other packages, enabling hierarchical organization of large metamodels.
+Packages (`DPackage`) group classes into namespaces. A package can contain classes or other packages, which keeps large metamodels navigable.
 
 ## Tree View
 
-The Tree View provides an alternative, hierarchical representation of the metamodel. It displays the complete structure of packages, classes, attributes, references, and operations in a collapsible tree format.
+![Tree view](./images/metamodel-editor-tree-view.png)
 
-<!-- TODO: screenshot — tree view metamodel (new UI) -->
+The tree view above the properties panel shows the whole project: **Metamodels** with their classes and features, plus the **Models** and **Viewpoints** built on them. Classes expand to their attributes and references, each with its type on the right.
 
-The Tree View is especially useful for navigating complex metamodels and for quickly locating specific elements.
+Selecting an element in the tree selects it in the editor, and the filter box at the top narrows the tree as you type. For large metamodels this is usually faster than hunting across the canvas.
 
-:::tip[Keyboard shortcuts]
-Use keyboard shortcuts to speed up common operations in the editor. Check the console or help menu for available shortcuts.
-:::
+## Status Bar
+
+The status bar reports what the metamodel contains: the number of classes, attributes, operations, enumerations, and references. It is the quickest way to confirm that an element was actually created, and the breadcrumb on its right shows the path of whatever is currently selected.
