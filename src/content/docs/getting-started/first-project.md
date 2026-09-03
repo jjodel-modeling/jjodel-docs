@@ -16,7 +16,7 @@ This guide walks you through creating a minimal but complete language workbench 
 
 Your project is now visible in the Dashboard. Click on it to enter the workspace.
 
-<!-- TODO: screenshot — new project dialog (new UI) -->
+![New project dialog](./images/new-project-dialog.png)
 
 ## Step 2 — Define Your Metamodel
 
@@ -24,10 +24,10 @@ The metamodel defines the *abstract syntax* of your language — what kinds of e
 
 1. In the workspace, open the **Metamodel Editor**
 2. Create a new class called `Class`
-   - Add an attribute `name` of type `String`
+   - Add an attribute `name` of type `EString`
 3. Create a second class called `Attribute`
-   - Add an attribute `name` of type `String`
-   - Add an attribute `type` of type `String`
+   - Add an attribute `name` of type `EString`
+   - Add an attribute `type` of type `EString`
 4. Create a **containment reference** from `Class` to `Attribute`
    - Name it `attributes`, set multiplicity to `0..*`
 5. Create a third class called `Association`
@@ -36,7 +36,7 @@ The metamodel defines the *abstract syntax* of your language — what kinds of e
 
 You now have a metamodel that can describe class diagrams with classes, their attributes, and associations between classes.
 
-<!-- TODO: screenshot — metamodel editor with the three classes (new UI) -->
+![Metamodel editor with the three classes](./images/metamodel-editor-three-classes.png)
 
 :::tip[Live co-evolution]
 As you modify the metamodel, Jjodel automatically propagates changes to all models and viewpoints. No regeneration or recompilation needed.
@@ -56,7 +56,7 @@ A model is an *instance* of your metamodel — it contains concrete data conform
 
 You have just created a simple domain model using the language you defined in Step 2.
 
-<!-- TODO: screenshot — model editor with Person and Address (new UI) -->
+![Model editor with Person and Address](./images/model-editor-person-address.png)
 
 ## Step 4 — Create a Viewpoint
 
@@ -74,7 +74,7 @@ Viewpoints define the *concrete syntax* — how model elements look in the graph
 
 Your model is now rendered as a visual class diagram.
 
-<!-- TODO: screenshot — rendered class diagram viewpoint (new UI) -->
+![Rendered class diagram viewpoint](./images/rendered-class-diagram.png)
 
 ## What You Built
 
