@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="336" viewBox="0 0 720 336" role="img" aria-label="One model shown through three surfaces: the canvas, the tree, and the Data Manager table, all kept in sync.">
+  <style>
+    .t   { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+    .hdr { font-size: 12px; font-weight: 600; fill: #0369a1; }
+    .obj { font-size: 11px; fill: #1e293b; }
+    .sub { font-size: 11px; fill: #64748b; }
+    .cap { font-size: 11px; fill: #64748b; font-style: italic; }
+    .cell{ font-size: 10px; fill: #334155; }
+  </style>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="ars" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 10 0 L 0 5 L 10 10 z" fill="#7dd3fc"/>
+    </marker>
+    <marker id="are" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7dd3fc"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="336" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="719" height="335" fill="none" stroke="#e2e8f0"/>
+
+  <text class="t hdr" x="128" y="42" text-anchor="middle">Canvas</text>
+  <text class="t hdr" x="360" y="42" text-anchor="middle">Tree</text>
+  <text class="t hdr" x="592" y="42" text-anchor="middle">Data Manager</text>
+
+  <rect x="24" y="56" width="208" height="200" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="256" y="56" width="208" height="200" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="488" y="56" width="208" height="200" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
+
+  <!-- canvas -->
+  <rect x="58" y="80" width="116" height="40" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="58" y="80" width="4" height="40" rx="2" fill="#0ea5e9"/>
+  <text class="t obj" x="72" y="97">Doe</text>
+  <text class="t sub" x="72" y="113">Family</text>
+  <rect x="34" y="176" width="88" height="40" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="34" y="176" width="4" height="40" rx="2" fill="#0ea5e9"/>
+  <text class="t obj" x="46" y="193">John</text>
+  <text class="t sub" x="46" y="209">Member</text>
+  <rect x="134" y="176" width="88" height="40" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="134" y="176" width="4" height="40" rx="2" fill="#0ea5e9"/>
+  <text class="t obj" x="146" y="193">Jane</text>
+  <text class="t sub" x="146" y="209">Member</text>
+  <path d="M 104 120 C 104 150, 78 146, 78 172" fill="none" stroke="#94a3b8" stroke-width="1.3" marker-end="url(#ar)"/>
+  <path d="M 130 120 C 130 150, 178 146, 178 172" fill="none" stroke="#94a3b8" stroke-width="1.3" marker-end="url(#ar)"/>
+  <text class="t sub" x="128" y="150" text-anchor="middle">members</text>
+
+  <!-- tree -->
+  <text class="t obj" x="278" y="98">&#9662; Doe</text>
+  <text class="t sub" x="330" y="98">Family</text>
+  <text class="t obj" x="298" y="124">&#9662; members</text>
+  <text class="t obj" x="318" y="150">John</text>
+  <text class="t sub" x="366" y="150">Member</text>
+  <text class="t obj" x="318" y="176">Jane</text>
+  <text class="t sub" x="366" y="176">Member</text>
+  <path d="M 286 106 L 286 172" stroke="#cbd5e1" stroke-width="1"/>
+  <path d="M 306 132 L 306 172" stroke="#cbd5e1" stroke-width="1"/>
+
+  <!-- table -->
+  <rect x="508" y="86" width="168" height="24" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <rect x="508" y="110" width="168" height="26" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="508" y="136" width="168" height="26" fill="#ffffff" stroke="#cbd5e1"/>
+  <line x1="612" y1="86" x2="612" y2="162" stroke="#cbd5e1"/>
+  <text class="t cell" x="518" y="102">firstName</text>
+  <text class="t cell" x="622" y="102">age</text>
+  <text class="t cell" x="518" y="127">John</text>
+  <text class="t cell" x="622" y="127">34</text>
+  <text class="t cell" x="518" y="153">Jane</text>
+  <text class="t cell" x="622" y="153">31</text>
+  <text class="t sub" x="508" y="186">edit a cell, the canvas</text>
+  <text class="t sub" x="508" y="202">and the tree follow</text>
+
+  <!-- sync -->
+  <path d="M 236 156 L 252 156" stroke="#7dd3fc" stroke-width="1.4"/>
+  <polygon points="232,156 240,151 240,161" fill="#7dd3fc"/>
+  <polygon points="256,156 248,151 248,161" fill="#7dd3fc"/>
+  <path d="M 468 156 L 484 156" stroke="#7dd3fc" stroke-width="1.4"/>
+  <polygon points="464,156 472,151 472,161" fill="#7dd3fc"/>
+  <polygon points="488,156 480,151 480,161" fill="#7dd3fc"/>
+
+  <text class="t cap" x="360" y="292" text-anchor="middle">One model, one set of objects. The three surfaces read and write the same data.</text>
+  <text class="t cap" x="360" y="312" text-anchor="middle">The canvas needs a viewpoint; the tree and the table do not.</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="380" viewBox="0 0 720 380" role="img" aria-label="A syntax viewpoint draws the node, and decoration, validation and semantics viewpoints overlay on top of it to produce what the canvas shows.">
+  <style>
+    .t   { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+    .hdr { font-size: 12px; font-weight: 600; fill: #0369a1; }
+    .lay { font-size: 12px; font-weight: 600; fill: #1e293b; }
+    .sub { font-size: 10.5px; fill: #64748b; }
+    .obj { font-size: 11px; fill: #1e293b; }
+    .cap { font-size: 11px; fill: #64748b; font-style: italic; }
+    .chip{ font-size: 10px; fill: #334155; }
+  </style>
+  <defs>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0ea5e9"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="380" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="719" height="379" fill="none" stroke="#e2e8f0"/>
+
+  <text class="t hdr" x="40" y="36">Viewpoints on the metamodel</text>
+  <text class="t hdr" x="560" y="36" text-anchor="middle">What the canvas shows</text>
+
+  <rect x="40" y="52" width="300" height="46" rx="8" fill="#ffffff" stroke="#0ea5e9"/>
+  <text class="t lay" x="56" y="72">Syntax</text>
+  <text class="t sub" x="56" y="88">exclusive: only one active at a time</text>
+
+  <rect x="40" y="110" width="300" height="46" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t lay" x="56" y="130">Decoration</text>
+  <text class="t sub" x="56" y="146">colors, badges, extra glyphs</text>
+
+  <rect x="40" y="168" width="300" height="46" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t lay" x="56" y="188">Validation</text>
+  <text class="t sub" x="56" y="204">markers for the rules a model breaks</text>
+
+  <rect x="40" y="226" width="300" height="46" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t lay" x="56" y="246">Semantics and Editor behavior</text>
+  <text class="t sub" x="56" y="262">ECA rules, interaction</text>
+
+  <text class="t sub" x="40" y="300">Every viewpoint holds one view per metaclass, and a view has a kind:</text>
+  <rect x="40" y="312" width="66" height="22" rx="11" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text class="t chip" x="73" y="327" text-anchor="middle">vertex</text>
+  <rect x="114" y="312" width="66" height="22" rx="11" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text class="t chip" x="147" y="327" text-anchor="middle">edge</text>
+  <rect x="188" y="312" width="66" height="22" rx="11" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text class="t chip" x="221" y="327" text-anchor="middle">row</text>
+
+  <!-- arrows -->
+  <path d="M 344 75 C 380 75, 396 150, 428 150" fill="none" stroke="#0ea5e9" stroke-width="1.4" marker-end="url(#c)"/>
+  <path d="M 344 133 C 384 133, 396 150, 428 150" fill="none" stroke="#7dd3fc" stroke-width="1.2" marker-end="url(#c)"/>
+  <path d="M 344 191 C 384 191, 396 150, 428 150" fill="none" stroke="#7dd3fc" stroke-width="1.2" marker-end="url(#c)"/>
+  <path d="M 344 249 C 384 249, 396 150, 428 150" fill="none" stroke="#7dd3fc" stroke-width="1.2" marker-end="url(#c)"/>
+
+  <!-- canvas -->
+  <rect x="440" y="52" width="240" height="220" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="480" y="96" width="160" height="104" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="480" y="96" width="6" height="104" rx="3" fill="#0ea5e9"/>
+  <text class="t obj" x="500" y="120">Doe</text>
+  <text class="t sub" x="500" y="138">Family</text>
+  <line x1="486" y1="150" x2="640" y2="150" stroke="#e2e8f0"/>
+  <text class="t sub" x="500" y="170">lastName = Doe</text>
+  <text class="t sub" x="500" y="188">members = 2</text>
+  <circle cx="628" cy="112" r="9" fill="#e0f2fe" stroke="#0ea5e9"/>
+  <text class="t chip" x="628" y="116" text-anchor="middle" fill="#0369a1">2</text>
+  <path d="M 604 190 L 613 174 L 622 190 z" fill="#fef3c7" stroke="#d97706"/>
+  <text class="t sub" x="470" y="230">the badge comes from a decoration viewpoint,</text>
+  <text class="t sub" x="470" y="246">the warning from a validation one</text>
+
+  <text class="t cap" x="360" y="358" text-anchor="middle">Overlays add to what the syntax viewpoint draws. Switching syntax viewpoint changes the notation, never the model.</text>
+</svg>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="430" viewBox="0 0 720 430" role="img" aria-label="Anatomy of a metamodel: two classifiers with typed attributes, a composition reference with multiplicity, a shared generalization to an abstract classifier, and an enumeration.">
+  <style>
+    .t   { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+    .cls { font-size: 13px; font-weight: 600; fill: #1e293b; }
+    .abs { font-size: 13px; font-weight: 600; font-style: italic; fill: #1e293b; }
+    .ft  { font-size: 11px; fill: #334155; }
+    .st  { font-size: 10px; fill: #64748b; }
+    .rel { font-size: 11px; fill: #334155; }
+    .cal { font-size: 11px; fill: #0369a1; font-style: italic; }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#ffffff" stroke="#64748b"/>
+    </marker>
+    <marker id="dia" viewBox="0 0 14 10" refX="1" refY="5" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M 0 5 L 7 0 L 14 5 L 7 10 z" fill="#334155"/>
+    </marker>
+    <marker id="opn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#334155" stroke-width="1.4"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="430" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="719" height="429" fill="none" stroke="#e2e8f0"/>
+
+  <!-- NamedElement (abstract) -->
+  <rect x="272" y="26" width="176" height="56" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="272" y="26" width="176" height="26" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <rect x="272" y="44" width="176" height="8" fill="#f1f5f9"/>
+  <line x1="272" y1="52" x2="448" y2="52" stroke="#cbd5e1"/>
+  <text class="t abs" x="360" y="44" text-anchor="middle">NamedElement</text>
+  <text class="t ft" x="284" y="70">name : EString</text>
+
+  <!-- generalization -->
+  <path d="M 156 170 L 156 130 L 360 130" fill="none" stroke="#64748b" stroke-width="1.2"/>
+  <path d="M 564 170 L 564 130 L 360 130" fill="none" stroke="#64748b" stroke-width="1.2"/>
+  <path d="M 360 130 L 360 86" fill="none" stroke="#64748b" stroke-width="1.2" marker-end="url(#tri)"/>
+  <text class="t cal" x="372" y="120">generalization</text>
+
+  <!-- Family -->
+  <rect x="56" y="170" width="200" height="82" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="56" y="170" width="200" height="26" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <rect x="56" y="188" width="200" height="8" fill="#f1f5f9"/>
+  <line x1="56" y1="196" x2="256" y2="196" stroke="#cbd5e1"/>
+  <text class="t cls" x="156" y="188" text-anchor="middle">Family</text>
+  <text class="t ft" x="68" y="216">lastName : EString</text>
+  <text class="t ft" x="68" y="236">address : EString</text>
+
+  <!-- Member -->
+  <rect x="464" y="170" width="200" height="100" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="464" y="170" width="200" height="26" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <rect x="464" y="188" width="200" height="8" fill="#f1f5f9"/>
+  <line x1="464" y1="196" x2="664" y2="196" stroke="#cbd5e1"/>
+  <text class="t cls" x="564" y="188" text-anchor="middle">Member</text>
+  <text class="t ft" x="476" y="216">firstName : EString</text>
+  <text class="t ft" x="476" y="236">age : EInt</text>
+  <text class="t ft" x="476" y="256">gender : Gender</text>
+
+  <!-- reference -->
+  <path d="M 258 212 L 460 212" fill="none" stroke="#334155" stroke-width="1.3" marker-start="url(#dia)" marker-end="url(#opn)"/>
+  <text class="t rel" x="358" y="204" text-anchor="middle">members</text>
+  <text class="t st" x="452" y="228" text-anchor="end">0..*</text>
+
+  <!-- enumeration -->
+  <rect x="464" y="312" width="200" height="76" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <rect x="464" y="312" width="200" height="40" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <rect x="464" y="344" width="200" height="8" fill="#f1f5f9"/>
+  <line x1="464" y1="352" x2="664" y2="352" stroke="#cbd5e1"/>
+  <text class="t st" x="564" y="329" text-anchor="middle">&#171;enumeration&#187;</text>
+  <text class="t cls" x="564" y="346" text-anchor="middle">Gender</text>
+  <text class="t ft" x="476" y="370">MALE</text>
+  <text class="t ft" x="476" y="384">FEMALE</text>
+  <path d="M 564 308 L 564 274" fill="none" stroke="#94a3b8" stroke-width="1.1" stroke-dasharray="4 3"/>
+
+  <!-- callouts -->
+  <text class="t cal" x="56" y="162">classifier</text>
+  <path d="M 156 292 L 156 256" fill="none" stroke="#bae6fd" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <text class="t cal" x="156" y="308" text-anchor="middle">attributes, each with a type</text>
+  <path d="M 340 300 L 340 218" fill="none" stroke="#bae6fd" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <text class="t cal" x="340" y="330" text-anchor="middle">reference: the diamond marks</text>
+  <text class="t cal" x="340" y="346" text-anchor="middle">composition, 0..* the multiplicity</text>
+  <text class="t cal" x="664" y="406" text-anchor="end">enumeration and its literals</text>
+</svg>
