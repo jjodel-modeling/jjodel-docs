@@ -4,6 +4,12 @@ Newest-first per day: a new entry goes right under this line. Never append at th
 Log locale di questo repo, distinto da `docs/claude-code-log.md` di `jjodel` (E1 del
 2026-09-03 14:55: la traccia harness di `jjodel-docs` resta in `jjodel-docs`).
 
+## 2026-09-03 — docs: Viewpoints badge 1.5 · 3.0 and version scope
+**Prompt**: badge sidebar "1.5 · 3.0" con classe version-3-0; dichiarazione della versione delle descrizioni in testa alla pagina e nella sezione Views in Detail
+**File toccati**: src/content/docs/user-guide/viewpoints.md, docs/claude-code-log.md
+**Esito**: ✅ completato (build exit 0; verifica visiva della sidebar pendente)
+**Nome del documento prompt**: 2026-09-03 20:16
+
 ## 2026-09-03 — docs: badge di versione nella sidebar, la corrente si distingue dalle precedenti
 **Prompt**: tre classi di badge distinte in sidebar (release corrente, release precedente,
 contenuto nuovo dei docs) con salienza decrescente `New` > `3.0` > `1.5`, tutte piu' sobrie
