@@ -16,7 +16,7 @@ Available since Jjodel 3.0 (September 2026 update).
 
 This page covers the panel and the rendering model behind it. For what a viewpoint is and how views compose, see [Viewpoints](../viewpoints/). Views written as JSX templates keep working; the declarative path is the recommended one for new views.
 
-<!-- TODO: screenshot — properties rail with the View Designer tabs on a vertex view (new UI) -->
+![The View Designer on a vertex view, Structure tab](./images/view-designer-structure.png)
 
 ## Enabling the designer on a view
 
