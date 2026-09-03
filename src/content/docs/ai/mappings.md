@@ -30,6 +30,8 @@ Cards sit in two groups. **PENDING** holds what the model proposed; check a card
 
 **Insert N mappings into editor** generates the JjTL for the checked cards and hands it to the code editor. From there the text is yours: the generated rules are ordinary JjTL, so you edit, reorder, and complete them as you would rules written by hand. **Export JSON** saves the raw suggestions instead, for example to compare two runs.
 
+![The transformation editor after inserting the suggested mappings: the generated JjTL in the code pane and the arrows drawn between the two metamodels](./images/mappings-inserted-editor.png)
+
 ## Without a Model
 
 The panel also offers **Try simple matching instead**, a local matcher that pairs classes and attributes by name. It needs no provider, catches the obvious correspondences, and misses everything that requires understanding what the names mean. It is the fallback when an analysis fails, and a reasonable first pass on metamodels that share a vocabulary.

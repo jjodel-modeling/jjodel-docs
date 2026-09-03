@@ -26,7 +26,7 @@ The editor has four areas:
 - **Top bar**: the **Source** and **Target** metamodel selectors, then **Validate Transformation**, **Format Code** (`⌘+Shift+F`), **Execute Transformation** (`⌘+Enter`), and **Settings**
 - **Metamodels** (left): the source and target structures side by side, each tagged **SRC** and **TGT** and each with its own search box
 - **Code editor** (center): the JjTL rules, with syntax highlighting and its own copy, fullscreen, validate, and execute buttons
-- **Suggested Mappings** (right): AI-assisted mapping suggestions, which need an AI provider configured in Settings, and a **Grammar** reference
+- **Suggested Mappings** (right): AI-assisted mapping suggestions, which need an AI provider configured in Settings (see [Mapping Suggestions](../../ai/mappings)), and a **Grammar** reference
 
 A panel across the bottom carries three tabs, **Problems**, **Trace**, and **Output**, and the status bar below it reports whether the transformation is valid along with the cursor position and the language.
 
@@ -51,7 +51,7 @@ The editor draws the correspondences declared in your rules as arrows between th
 
 The mapping view updates as you type: adding a class mapping or an attribute binding adds the corresponding arrow.
 
-<!-- TODO: screenshot — mapping arrows between source and target metamodels (new UI) -->
+![Arrows connecting the classes and features of the source metamodel to those of the target metamodel](./images/transformation-mapping-arrows.png)
 
 ## Validation and execution
 
