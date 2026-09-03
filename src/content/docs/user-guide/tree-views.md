@@ -16,7 +16,7 @@ The root is **Megamodel**. Under it:
 
 - **Metamodels**: one node per metamodel. Packages expand to classes, classes to attributes and references, each with its type and multiplicity on the right. Abstract classes are shown in italics. Under each metamodel, a **Models** section lists the models that conform to it; a model expands to its instances, nested by containment, with singletons listed first.
 - **Viewpoints**: grouped into **Syntax** and **Validation**. A viewpoint expands to its views; vertex, row, and edge views carry different icons. A viewpoint that can be stacked on others shows a stack marker.
-- **Documentation**: a placeholder. Generating documentation from here is not wired yet.
+- **Documentation**: the documentation attached to the project.
 - **Transformations**: one node per JjTL transformation, expanding to its rules and helpers. The section appears only when the project has transformations.
 
 The icon in front of each name says what kind of element it is; hover it to read the label. The expanded and collapsed state of every node is saved with the project, so the tree reopens as you left it.
@@ -32,8 +32,6 @@ Click a row to select it. The editor selects the same element and the properties
 - **Right-click a class, package, enumeration, or metamodel** in Advanced mode and choose **Create View**. This adds a view for that element to the viewpoint you edited last. The entry is disabled until you have opened a viewpoint.
 - **Hover a view** to reveal **Duplicate** and **Delete**. The **+** button on a viewpoint adds a blank view and opens its name for editing.
 
-Renaming, deleting, and adding elements to a metamodel or model happens on the canvas or in the properties panel, not in the tree. The tree has no drag and drop.
-
 ## Filtering
 
 The **Filter** field at the top of the pane narrows the tree as you type. Matching rows stay visible together with their ancestors, the number of matches appears next to the field, and sections with no match disappear. Clearing the field restores the expansion state you had before; nodes you collapse during a search are not saved.
@@ -42,7 +40,7 @@ The **Filter** field at the top of the pane narrows the tree as you type. Matchi
 
 When the active viewpoint declares which classifiers it renders, a scope bar appears above the tree: `filter: <viewpoint> on <metamodel>`, followed by the number of classifiers the viewpoint leaves out. Those classes stay in the tree, dimmed, with their features collapsed and a **not rendered** hint. Classes of other metamodels are not dimmed, because the viewpoint has no say on them.
 
-The bar is absent when no viewpoint is active, when the viewpoint renders every classifier, and for legacy viewpoints written as JSX templates, which carry no scope information.
+The bar is absent when no viewpoint is active or when the viewpoint renders every classifier.
 
 ## Row Markers
 
