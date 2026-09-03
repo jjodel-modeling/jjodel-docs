@@ -13,20 +13,22 @@ The Transformation Editor is a dedicated environment for writing and executing J
 
 Available since Jjodel 3.0.
 
-<!-- TODO: screenshot - Transformation Editor overview (new UI) -->
+![The Transformation Editor on a Family to Person transformation](./images/transformation-editor-overview.png)
 
 ## Opening the editor
 
-Open the Transformation Editor from the project sidebar under **Behaviour > Transforms**. Click an existing transformation to edit it, or create a new one.
+Transformations live under **Transforms** in the project rail and in the **Transformations** section of the project page. Click one to open its editor, or use **New transform** to start one.
 
 ## Editor layout
 
 The editor has four areas:
 
-- **Source/Target selectors** (top bar): choose the source and target metamodels
-- **Code editor** (center): write JjTL transformation rules with syntax highlighting
-- **Metamodel browser** (left): browse source and target metamodel structures side by side
-- **Suggested Mappings** (right): AI-assisted mapping suggestions and grammar reference
+- **Top bar**: the **Source** and **Target** metamodel selectors, then **Validate Transformation**, **Format Code** (`⌘+Shift+F`), **Execute Transformation** (`⌘+Enter`), and **Settings**
+- **Metamodels** (left): the source and target structures side by side, each tagged **SRC** and **TGT** and each with its own search box
+- **Code editor** (center): the JjTL rules, with syntax highlighting and its own copy, fullscreen, validate, and execute buttons
+- **Suggested Mappings** (right): AI-assisted mapping suggestions, which need an AI provider configured in Settings, and a **Grammar** reference
+
+A panel across the bottom carries three tabs, **Problems**, **Trace**, and **Output**, and the status bar below it reports whether the transformation is valid along with the cursor position and the language.
 
 ## Writing a transformation
 
