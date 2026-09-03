@@ -40,7 +40,7 @@
   <!-- modelli -->
   <rect x="36" y="176" width="176" height="54" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
   <text class="t ttl" x="124" y="199" text-anchor="middle">Model</text>
-  <text class="t sub" x="124" y="216" text-anchor="middle">pierantonio</text>
+  <text class="t sub" x="124" y="216" text-anchor="middle">John Doe’s Family</text>
 
   <rect x="508" y="176" width="176" height="54" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
   <text class="t ttl" x="596" y="199" text-anchor="middle">Model</text>
