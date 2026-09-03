@@ -4,15 +4,15 @@ description: Define how model elements are rendered, validated, and behave throu
 sidebar:
   order: 4
   badge:
-    text: "1.5"
+    text: "1.5 · 3.0"
     variant: default
-    class: version-1-5
+    class: version-3-0
   label: Viewpoints
 ---
 
 A viewpoint defines a perspective on a model. It controls how elements look, what constraints they must satisfy, and how they behave. Each viewpoint contains a set of views, and each view targets specific metaclass instances through a predicate.
 
-Available since Jjodel 1.5.
+Available since Jjodel 1.5. The descriptions on this page refer to Jjodel 1.5 and remain valid in 3.0: viewpoints, views, predicates, exclusive and overlay viewpoints, and validation rules work the same way. Jjodel 3.0 adds a declarative way to author views, documented in [View Designer](../view-designer/).
 
 :::note
 Views can now be authored declaratively, without a template, from the properties panel. The **Views in Detail** section below describes the JSX template path, which still works. For the declarative path (shapes, structure, forms, value renderers) see [View Designer](../view-designer/).
@@ -180,6 +180,8 @@ When a second Initial State is added to the model, the validation overlay immedi
 <!-- TODO: screenshot -- validation error showing "Only one initial state allowed!" (new UI) -->
 
 ## Views in Detail
+
+This section describes the JSX template path, introduced in Jjodel 1.5 and still available in 3.0. For the declarative path (shapes, structure, forms, value renderers) see [View Designer](../view-designer/).
 
 ### Predicates
 
