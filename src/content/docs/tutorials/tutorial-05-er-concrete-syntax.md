@@ -6,7 +6,8 @@ sidebar:
   label: "Tutorial 5: ER Concrete Syntax"
   badge:
     text: New
-    variant: tip
+    variant: default
+    class: docs-new
 ---
 
 In this tutorial you give the ER language from [Tutorial 3](../tutorial-03-erd) a proper concrete syntax. You build two complete notations for the same models: a **Chen notation** (entities as rectangles, attributes as ovals, relationships as diamonds) and a **logical notation** (entities as tables with their attributes inside, relationships as direct edges). You finish with a validation overlay that works under both.

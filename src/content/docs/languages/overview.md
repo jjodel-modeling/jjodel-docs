@@ -4,7 +4,8 @@ description: Overview of JjEL, JjTL, and JjScript and how they compose.
 sidebar:
   badge:
     text: "3.0"
-    variant: note
+    variant: default
+    class: version-3-0
   order: 1
 ---
 

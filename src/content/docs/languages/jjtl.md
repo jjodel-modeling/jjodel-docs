@@ -4,7 +4,8 @@ description: Complete reference for the Jjodel Transformation Language.
 sidebar:
   badge:
     text: "3.0"
-    variant: note
+    variant: default
+    class: version-3-0
   order: 3
 ---
 

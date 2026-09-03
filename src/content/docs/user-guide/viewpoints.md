@@ -5,7 +5,8 @@ sidebar:
   order: 4
   badge:
     text: "1.5"
-    variant: note
+    variant: default
+    class: version-1-5
   label: Viewpoints
 ---
 

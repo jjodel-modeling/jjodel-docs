@@ -4,7 +4,8 @@ description: How to use the JjTL Transformation Editor in Jjodel.
 sidebar:
   badge:
     text: "3.0"
-    variant: note
+    variant: default
+    class: version-3-0
   order: 9
 ---
 

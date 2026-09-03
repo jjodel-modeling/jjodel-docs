@@ -4,7 +4,8 @@ description: The jjodel/* annotation keys that a metamodel can carry to drive re
 sidebar:
   badge:
     text: "3.0"
-    variant: note
+    variant: default
+    class: version-3-0
   order: 5
 ---
 

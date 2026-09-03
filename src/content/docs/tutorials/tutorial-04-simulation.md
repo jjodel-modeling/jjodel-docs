@@ -5,7 +5,8 @@ sidebar:
   order: 4
   badge:
     text: "3.0"
-    variant: note
+    variant: default
+    class: version-3-0
   label: "Tutorial 4: Simulation"
 ---
 
