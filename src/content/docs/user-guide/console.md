@@ -10,9 +10,11 @@ The Console is the interactive surface of Jjodel: a single input that speaks thr
 
 ## Accessing the Console
 
-The Console is available from the bottom panel of the workspace. Click on the **Console** tab to open it.
+The Console opens as a floating window over the workspace. Click the assistant icon in the status bar at the bottom of the window, or the round assistant button on the canvas.
 
-<!-- TODO: screenshot — console panel with mode chip (new UI) -->
+![The Console in Jjodie mode](./images/console-panel.png)
+
+Its header carries, from left to right: the AI provider in use (**Configure a provider** until you set one), the three mode chips, and a context chip naming the level and the artifact the Console is bound to, for example `M2 · metamodel_1`. The buttons on the right clear the transcript, restart the session, expand the window, and close it. The prompt itself changes with the mode, so you can always see which language you are typing.
 
 ## Console modes
 
@@ -24,9 +26,9 @@ The Console is available from the bottom panel of the workspace. Click on the **
 
 Multi-language modes are available since Jjodel 3.0.
 
-The active mode is shown as a **chip** in the console header. Three ways to switch:
+The three modes sit side by side as chips in the console header, and the active one is highlighted. Three ways to switch:
 
-- **Click the chip** and pick a mode from the list
+- **Click a chip**
 - **Cmd+J** (Ctrl+J on Windows/Linux) cycles through the modes
 - **Meta-commands** typed directly in the input: `/jjel`, `/js`, `/ask` (back to Jjodie), `/help`
 
