@@ -3,10 +3,15 @@ title: Viewpoints
 description: Define how model elements are rendered, validated, and behave through composable viewpoints.
 sidebar:
   order: 4
+  badge:
+    text: "1.5"
+    variant: note
   label: Viewpoints
 ---
 
 A viewpoint defines a perspective on a model. It controls how elements look, what constraints they must satisfy, and how they behave. Each viewpoint contains a set of views, and each view targets specific metaclass instances through a predicate.
+
+Available since Jjodel 1.5.
 
 :::note
 Views can now be authored declaratively, without a template, from the properties panel. The **Views in Detail** section below describes the JSX template path, which still works. For the declarative path (shapes, structure, forms, value renderers) see [View Designer](../view-designer/).

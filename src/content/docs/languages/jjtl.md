@@ -2,10 +2,15 @@
 title: JjTL Reference
 description: Complete reference for the Jjodel Transformation Language.
 sidebar:
+  badge:
+    text: "3.0"
+    variant: note
   order: 3
 ---
 
 JjTL is a declarative, rule-based Model-to-Model transformation language. It uses JjEL as its expression sub-language and produces automatic traceability for every transformation.
+
+Available since Jjodel 3.0.
 
 ## Transformation structure
 

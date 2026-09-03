@@ -22,6 +22,8 @@ The Console is available from the bottom panel of the workspace. Click on the **
 | **JjScript** | Imperative commands | `create class Person` |
 | **JjEL** | Pure expressions | `forall c in classes : c.name` |
 
+Multi-language modes are available since Jjodel 3.0.
+
 The active mode is shown as a **chip** in the console header. Three ways to switch:
 
 - **Click the chip** and pick a mode from the list

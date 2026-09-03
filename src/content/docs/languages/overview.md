@@ -2,10 +2,15 @@
 title: Jjodel Language Family
 description: Overview of JjEL, JjTL, and JjScript and how they compose.
 sidebar:
+  badge:
+    text: "3.0"
+    variant: note
   order: 1
 ---
 
 Jjodel provides three complementary languages for working with models and metamodels. Each serves a distinct purpose along the purity-effect spectrum:
+
+Available since Jjodel 3.0.
 
 | Language | Paradigm | Side effects | Primary use |
 |----------|----------|-------------|-------------|

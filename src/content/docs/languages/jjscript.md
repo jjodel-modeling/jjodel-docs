@@ -2,10 +2,15 @@
 title: JjScript Reference
 description: Complete reference for the Jjodel Scripting Language.
 sidebar:
+  badge:
+    text: "3.0"
+    variant: note
   order: 4
 ---
 
 JjScript is an imperative, command-based scripting language for direct metamodel manipulation. While JjEL evaluates expressions without side effects and JjTL produces new models declaratively, JjScript modifies the metamodel in place: it creates, renames, moves, and deletes elements as immediate operations.
+
+Available since Jjodel 3.0.
 
 ## Command syntax
 

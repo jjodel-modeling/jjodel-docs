@@ -2,10 +2,15 @@
 title: Metamodel Annotations
 description: The jjodel/* annotation keys that a metamodel can carry to drive rendering and forms.
 sidebar:
+  badge:
+    text: "3.0"
+    variant: note
   order: 5
 ---
 
 A metamodel element can carry annotations. Jjodel reads a small set of them, all in the `jjodel/` namespace, to decide how values render and how forms lay out. They live on the attribute (or reference) they describe, one key per annotation, as `source = "jjodel/<key>=<value>"`.
+
+Available since Jjodel 3.0 (September 2026 update).
 
 You rarely write them by hand. The renderer inspector on a node (Alt+click a row) writes `jjodel/renderer` for you when you change a renderer; the other keys are set the same way or from the metamodel editor. Because they are annotations, they are part of the metamodel: every view, every table and every form sees the same declaration.
 

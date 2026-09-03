@@ -2,10 +2,15 @@
 title: Transformation Editor
 description: How to use the JjTL Transformation Editor in Jjodel.
 sidebar:
+  badge:
+    text: "3.0"
+    variant: note
   order: 9
 ---
 
 The Transformation Editor is a dedicated environment for writing and executing JjTL model-to-model transformations.
+
+Available since Jjodel 3.0.
 
 <!-- TODO: screenshot - Transformation Editor overview (new UI) -->
 

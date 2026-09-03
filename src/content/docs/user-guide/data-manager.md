@@ -3,10 +3,15 @@ title: Data Manager
 description: Edit model instances in a table and a form, without a diagram.
 sidebar:
   order: 7
+  badge:
+    text: "3.0"
+    variant: note
   label: Data Manager
 ---
 
 The Data Manager is a third way to look at a model, next to the canvas and the tree view. It shows the instances of a model as a table, one metaclass at a time, and lets you create, edit and delete them through forms. It needs no viewpoint and no diagram: it reads the metamodel and shows what the model contains.
+
+Available since Jjodel 3.0 (September 2026 update).
 
 Use it when the model is data rather than a drawing: a catalogue of products, a list of states and transitions you want to fill in quickly, a model imported from XMI that has no layout yet.
 

@@ -3,10 +3,15 @@ title: "Tutorial 4: State Machine Simulation"
 description: Build a complete state machine language with visual syntax, edge routing, and operational semantics simulation.
 sidebar:
   order: 4
+  badge:
+    text: "3.0"
+    variant: note
   label: "Tutorial 4: Simulation"
 ---
 
 This tutorial builds a state machine language from scratch. You will define the metamodel, create a visual concrete syntax with viewpoints, and add operational semantics that let you simulate the state machine by clicking event buttons.
+
+Available since Jjodel 3.0.
 
 ## Objective
 

@@ -3,10 +3,15 @@ title: View Designer
 description: Author how instances render, as a node, as a row or as a form, from the properties panel of a view.
 sidebar:
   order: 5
+  badge:
+    text: "3.0"
+    variant: note
   label: View Designer
 ---
 
 The View Designer is the properties panel of a view when the view is authored declaratively. Instead of writing a JSX template and an SCSS block, you describe the view as a structured record: which metaclasses it applies to, which shape draws the node, how the header and the attribute compartment are laid out, which widgets the form uses. Jjodel renders the description with its own interpreter, and every field of the panel is a field of that record.
+
+Available since Jjodel 3.0 (September 2026 update).
 
 This page covers the panel and the rendering model behind it. For what a viewpoint is and how views compose, see [Viewpoints](../viewpoints/). Views written as JSX templates keep working; the declarative path is the recommended one for new views.
 
