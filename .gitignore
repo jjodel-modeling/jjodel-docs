@@ -20,3 +20,6 @@ npm-debug.log*
 # editor
 .vscode/
 *.swp
+
+# scratch area used by the Claude bridge (git locks moved here)
+_to_delete/
