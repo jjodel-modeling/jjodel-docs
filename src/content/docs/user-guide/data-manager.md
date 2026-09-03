@@ -16,7 +16,7 @@ Available since Jjodel 3.0 (September 2026 update).
 
 Use it when the model is data rather than a drawing: a catalogue of products, a list of states and transitions you want to fill in quickly, a model imported from XMI that has no layout yet.
 
-<!-- TODO: screenshot — Data Manager with the metaclass rail, the table and an expanded row (new UI) -->
+![The Data Manager: outline, metaclass rail, table, and an expanded row](./images/data-manager-table.png)
 
 ## Opening the Data Manager
 
@@ -37,13 +37,13 @@ Values render with the same renderers used inside canvas nodes: enumeration lite
 
 ## Creating an instance
 
-Click **New** in the header. A draft form opens below the table with one field per feature of the metaclass, laid out from the metamodel: short fields (numbers, booleans, enumerations, colours) take a quarter of the row, text and references half, multiline text the full row. You never set widths by hand.
+Creation is anchored to a container: the outline offers an **Add inside …** button for the model root and for every instance that can hold children, so the container is decided by the button you use rather than by a field in the form. A draft form then opens with one field per feature of the metaclass, laid out from the metamodel: short fields (numbers, booleans, enumerations, colours) take a quarter of the row, text and references half, multiline text the full row. You never set widths by hand.
 
 Required fields (lower bound 1) carry a small dot next to the label. A draft with a missing required value is reported, not blocked: you can save it and fix it later, and the conformance check will list it.
 
 An attribute marked as **ID** of type `EInt` numbers itself: the draft shows no field for it, and the new instance takes the highest existing value plus one.
 
-If the metaclass is contained in another one, the form asks for the container. Containment is set at creation and cannot be changed from the form; identity (the name) can.
+Containment is set at creation and cannot be changed from the form; identity (the name) can.
 
 ## Editing
 
@@ -65,7 +65,7 @@ Auto-generated names (`State_0`, `State_1`) follow the same rule and never shado
 
 ## Saving
 
-**Save project** in the header saves the whole project, the same way the toolbar button does. The autosave runs in the background after fifteen seconds of inactivity and every two minutes at most; it does not show a notification. The top bar shows when the last save happened.
+**Save project** in the header saves the whole project, the same way the toolbar button does. Next to it, **Export** writes out the instances currently listed in the table. The autosave runs in the background after fifteen seconds of inactivity and every two minutes at most; it does not show a notification. The top bar shows when the last save happened.
 
 ## Known limits
 
