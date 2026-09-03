@@ -4,6 +4,18 @@ Newest-first per day: a new entry goes right under this line. Never append at th
 Log locale di questo repo, distinto da `docs/claude-code-log.md` di `jjodel` (E1 del
 2026-09-03 14:55: la traccia harness di `jjodel-docs` resta in `jjodel-docs`).
 
+## 2026-09-03 — docs: Viewpoints dual badge 1.5 / 3.0 and version scope
+**Prompt**: seconda pillola "1.5" via CSS (::before su classe since-1-5) accanto al badge 3.0; dichiarazione della versione delle descrizioni in testa alla pagina e in Views in Detail
+**File toccati**: src/content/docs/user-guide/viewpoints.md, src/styles/custom.css, docs/claude-code-log.md
+**Esito**: ✅ completato (build exit 0; verifica visiva pendente; margin-left finale: 2.375rem)
+**Nome del documento prompt**: 2026-09-03 22:22
+**Nota**: il prompt delle 20:16 risultava gia' eseguito (commit c1f4bf5), contro la premessa
+di questo prompt. Edit 3 (paragrafo "Available since") ed Edit 4 (riga sotto "Views in Detail")
+erano gia' presenti verbatim: nessuna modifica necessaria. Applicati solo Edit 1 (badge
+"1.5 · 3.0" -> text "3.0" con class "version-3-0 since-1-5") ed Edit 2 (CSS). Nessun hard stop
+attivato: gate pulito, `class` e' `z.string().optional()` in schemas/badge.ts:5, e
+"Available since Jjodel 1.5." compare esattamente una volta.
+
 ## 2026-09-03 — docs: Viewpoints badge 1.5 · 3.0 and version scope
 **Prompt**: badge sidebar "1.5 · 3.0" con classe version-3-0; dichiarazione della versione delle descrizioni in testa alla pagina e nella sezione Views in Detail
 **File toccati**: src/content/docs/user-guide/viewpoints.md, docs/claude-code-log.md
