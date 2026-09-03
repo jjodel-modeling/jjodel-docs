@@ -1,13 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="348" viewBox="0 0 720 348" role="img" aria-label="A transformation matches elements of a source model with its rules and produces elements in a target model, recording a trace link for each one.">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="452" viewBox="0 0 720 452" role="img" aria-label="A JjTL transformation declares a source and a target metamodel, its rules match source elements and produce target elements, and a trace links each produced element to the element it came from.">
   <style>
     .t   { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
-    .m   { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .m   { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
     .hdr { font-size: 12px; font-weight: 600; fill: #0369a1; }
     .sub { font-size: 11px; fill: #64748b; }
     .obj { font-size: 11px; fill: #1e293b; }
-    .code{ font-size: 10.5px; fill: #334155; }
-    .kw  { font-size: 10.5px; fill: #0369a1; }
-    .rel { font-size: 10px; fill: #0369a1; font-style: italic; }
+    .code{ fill: #334155; }
+    .kw  { fill: #0369a1; font-weight: 600; }
+    .id  { fill: #7c3aed; }
+    .rel { font-size: 11px; fill: #0369a1; font-style: italic; }
     .cap { font-size: 11px; fill: #64748b; font-style: italic; }
   </style>
   <defs>
@@ -19,48 +20,50 @@
     </marker>
   </defs>
 
-  <rect width="720" height="348" fill="#ffffff"/>
-  <rect x="0.5" y="0.5" width="719" height="347" fill="none" stroke="#e2e8f0"/>
+  <rect width="720" height="452" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="719" height="451" fill="none" stroke="#e2e8f0"/>
 
-  <text class="t hdr" x="124" y="36" text-anchor="middle">Source model</text>
-  <text class="t sub" x="124" y="52" text-anchor="middle">conforms to Family</text>
-  <text class="t hdr" x="596" y="36" text-anchor="middle">Target model</text>
-  <text class="t sub" x="596" y="52" text-anchor="middle">conforms to Person</text>
+  <!-- transformation -->
+  <rect x="176" y="24" width="368" height="196" rx="9" fill="#ffffff" stroke="#0ea5e9"/>
+  <text class="t hdr" x="360" y="48" text-anchor="middle">JjTL transformation</text>
+  <text class="m" x="200" y="76"><tspan class="kw">transformation</tspan><tspan class="id"> Family2Person</tspan></text>
+  <text class="m" x="200" y="104"><tspan class="kw">from</tspan><tspan class="id"> Family</tspan></text>
+  <text class="m" x="200" y="123"><tspan class="kw">to</tspan><tspan class="id">   Person</tspan></text>
+  <text class="m" x="200" y="151"><tspan class="id">Member</tspan><tspan class="kw"> -&gt; </tspan><tspan class="id">Person</tspan><tspan class="code"> {</tspan></text>
+  <text class="m code" x="224" y="170">name := self.name</text>
+  <text class="m code" x="224" y="189">surname := self.parent.surname</text>
+  <text class="m code" x="200" y="208">}</text>
 
-  <rect x="24" y="64" width="200" height="150" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
-  <rect x="496" y="64" width="200" height="150" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
+  <!-- arrows -->
+  <path d="M 60 262 L 60 240 L 240 240 L 240 224" fill="none" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#c)"/>
+  <text class="t rel" x="180" y="234" text-anchor="middle">matches</text>
+  <path d="M 480 224 L 480 240 L 660 240 L 660 262" fill="none" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#c)"/>
+  <text class="t rel" x="540" y="234" text-anchor="middle">produces</text>
 
-  <rect x="40" y="82" width="168" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
-  <text class="t obj" x="52" y="104">Doe : Family</text>
-  <rect x="40" y="126" width="168" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
-  <text class="t obj" x="52" y="148">John : Member</text>
-  <rect x="40" y="170" width="168" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
-  <text class="t obj" x="52" y="192">Jane : Member</text>
+  <!-- models -->
+  <text class="t hdr" x="174" y="258" text-anchor="middle">Source model</text>
+  <text class="t hdr" x="546" y="258" text-anchor="middle">Target model</text>
+  <rect x="24" y="268" width="300" height="140" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="396" y="268" width="300" height="140" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text class="t sub" x="174" y="288" text-anchor="middle">conforms to Family</text>
+  <text class="t sub" x="546" y="288" text-anchor="middle">conforms to Person</text>
 
-  <rect x="512" y="126" width="168" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
-  <text class="t obj" x="524" y="148">John Doe : Person</text>
-  <rect x="512" y="170" width="168" height="34" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
-  <text class="t obj" x="524" y="192">Jane Doe : Person</text>
+  <rect x="44" y="298" width="260" height="30" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <text class="t obj" x="58" y="318">Doe : Family</text>
+  <rect x="44" y="336" width="260" height="30" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <text class="t obj" x="58" y="356">John : Member</text>
+  <rect x="44" y="374" width="260" height="30" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <text class="t obj" x="58" y="394">Jane : Member</text>
 
-  <!-- rule -->
-  <rect x="272" y="70" width="176" height="150" rx="9" fill="#ffffff" stroke="#0ea5e9"/>
-  <text class="t hdr" x="360" y="92" text-anchor="middle">JjTL rule</text>
-  <text class="t m kw" x="286" y="118">rule<tspan class="t m code"> Member2Person {</tspan></text>
-  <text class="t m kw" x="298" y="138">from<tspan class="t m code"> m : Member</tspan></text>
-  <text class="t m kw" x="298" y="158">to<tspan class="t m code"> p : Person</tspan></text>
-  <text class="t m code" x="298" y="178">p.name = m.firstName</text>
-  <text class="t m code" x="310" y="196">+ m.family.lastName</text>
-  <text class="t m code" x="286" y="214">}</text>
-
-  <path d="M 228 150 L 268 150" stroke="#0ea5e9" stroke-width="1.6" marker-end="url(#c)"/>
-  <text class="t rel" x="248" y="136" text-anchor="middle">matches</text>
-  <path d="M 452 150 L 492 150" stroke="#0ea5e9" stroke-width="1.6" marker-end="url(#c)"/>
-  <text class="t rel" x="478" y="136" text-anchor="middle">produces</text>
+  <rect x="416" y="336" width="260" height="30" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <text class="t obj" x="430" y="356">John Doe : Person</text>
+  <rect x="416" y="374" width="260" height="30" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <text class="t obj" x="430" y="394">Jane Doe : Person</text>
 
   <!-- trace -->
-  <path d="M 596 218 L 596 250 L 124 250 L 124 218" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#g)"/>
-  <text class="t sub" x="360" y="244" text-anchor="middle">trace</text>
+  <path d="M 412 351 L 308 351" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#g)"/>
+  <text class="t sub" x="360" y="343" text-anchor="middle">trace</text>
 
-  <text class="t cap" x="360" y="288" text-anchor="middle">The rules never touch the source model. Running the transformation creates a new target model,</text>
-  <text class="t cap" x="360" y="308" text-anchor="middle">and the trace records which source element produced which target element.</text>
+  <text class="t cap" x="360" y="430" text-anchor="middle">The rules never touch the source model. Running the transformation creates a new target model,</text>
+  <text class="t cap" x="360" y="446" text-anchor="middle">and the trace records which source element produced which target element.</text>
 </svg>

@@ -71,15 +71,29 @@ A model enters a project in one of three ways: you create it empty and populate 
 
 ## Transformations
 
-A transformation is a program that reads a model conforming to one metamodel and writes a model conforming to another. You declare it between a source and a target metamodel, then write rules in JjTL that say which source elements to match and what to produce for each match.
+A transformation is a program that reads a model conforming to one metamodel and writes a model conforming to another. You declare it between a source and a target metamodel, then write in JjTL one **class mapping** for each correspondence between the two languages.
 
-![A rule matches source elements and produces target elements, and the trace links the two](./images/transformation-flow.svg)
+![A class mapping matches source elements and produces target elements, and the trace links the two](./images/transformation-flow.svg)
 
-A rule has three parts: a `from` clause that binds a variable to the source elements it matches, a `to` clause that declares what the rule creates, and a body that fills in the produced elements from the matched ones. Rules do not run in a fixed order, and a rule never modifies the source model. Running a transformation produces a new target model, so you can run it again after fixing a rule without cleaning anything up first.
+The header names the transformation and its two metamodels. Each mapping names a source class, an arrow, and a target class, and its body assigns the target features with `:=`:
 
-Each produced element keeps a **trace** link back to the source element that caused it. The trace is what lets you answer "where did this come from" after the fact, and it is what makes rules composable: a rule that needs the target counterpart of a source element asks the trace for it instead of duplicating the work.
+```jjtl title="JjTL"
+transformation Family2Person
 
-The [Transformation Editor](../../user-guide/transformation-editor) validates the rules as you type and reports through two tabs: **Problems** for rules that do not compile or refer to features the metamodels do not have, and **Output** for what happened during the last run.
+from Family
+to   Person
+
+Member -> Person {
+    name := self.name
+    surname := self.parent.surname
+}
+```
+
+Inside a mapping, `self` is the matched source element, so `self.parent.surname` walks the reference back to the family a member belongs to. A `where { ... }` guard restricts which instances a mapping accepts. Mappings do not run in a fixed order, and none of them modifies the source model: running the transformation creates a new target model, so you can fix a mapping and run it again without cleaning anything up first. See [JjTL Reference](../../languages/jjtl) for guards, multiplicities, and the expression sub-language.
+
+Each produced element keeps a **trace** link back to the source element that caused it. The trace is what lets you answer "where did this come from" after the fact, and it is what makes mappings composable: a mapping that needs the target counterpart of a source element asks the trace for it instead of duplicating the work.
+
+The [Transformation Editor](../../user-guide/transformation-editor) validates the code as you type and reports through two tabs: **Problems** for mappings that do not compile or refer to features the metamodels do not have, and **Output** for what happened during the last run.
 
 JjTL is also the intermediate representation Jjodel uses internally, which is the ground for translating transformations to and from ATL and ETL in a future release.
 

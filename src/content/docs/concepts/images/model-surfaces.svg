@@ -63,7 +63,7 @@
   <rect x="508" y="110" width="168" height="26" fill="#ffffff" stroke="#cbd5e1"/>
   <rect x="508" y="136" width="168" height="26" fill="#ffffff" stroke="#cbd5e1"/>
   <line x1="612" y1="86" x2="612" y2="162" stroke="#cbd5e1"/>
-  <text class="t cell" x="518" y="102">firstName</text>
+  <text class="t cell" x="518" y="102">name</text>
   <text class="t cell" x="622" y="102">age</text>
   <text class="t cell" x="518" y="127">John</text>
   <text class="t cell" x="622" y="127">34</text>
