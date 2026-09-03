@@ -4,9 +4,9 @@ description: Define how model elements are rendered, validated, and behave throu
 sidebar:
   order: 4
   badge:
-    text: "1.5 · 3.0"
+    text: "3.0"
     variant: default
-    class: version-3-0
+    class: version-3-0 since-1-5
   label: Viewpoints
 ---
 
