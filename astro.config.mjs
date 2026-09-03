@@ -20,9 +20,6 @@ export default defineConfig({
       },
       lastUpdated: true,
       customCss: ['./src/styles/custom.css'],
-      head: [
-        { tag: 'script', attrs: { src: '/scripts/image-zoom.js', defer: true } },
-      ],
       sidebar: [
         {
           label: 'Getting Started',
@@ -70,6 +67,7 @@ export default defineConfig({
         },
       ],
       head: [
+        { tag: 'script', attrs: { src: '/scripts/image-zoom.js', defer: true } },
         {
           tag: 'link',
           attrs: {
