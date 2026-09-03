@@ -57,7 +57,7 @@ Every change to a metamodel is immediately reflected across all related models, 
 
 ### Can I import or export models?
 
-Ecore and XMI import/export is planned for a future release. The team is also exploring participation in the [LionWeb](https://github.com/lionWeb-io) initiative for cross-tool interoperability.
+Yes. Metamodels import from and export to Ecore (`.ecore`); models import from and export to XMI (`.xmi`). Both can also be exported as JSON. These options live in the project workspace, next to each metamodel and model. Whole projects travel as `.jjodel` files from the [Dashboard](../user-guide/dashboard#importing-and-exporting). The team is also exploring participation in the [LionWeb](https://github.com/lionWeb-io) initiative for cross-tool interoperability.
 
 ## Collaboration
 

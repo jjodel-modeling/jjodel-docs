@@ -88,6 +88,17 @@ Hovering a card reveals a star button and a **⋯** menu in its top-right corner
 Deleting a project cannot be undone.
 :::
 
+## Importing and Exporting
+
+The Dashboard moves whole projects. **Import** in the top-right corner (or **File > Import Project**) loads a `.jjodel` file; dropping a `.jjodel` file anywhere on the project list does the same. **Download** in a card's menu saves the project as a `.jjodel` file. This is the only format that carries the whole project: metamodels, models, transformations, and viewpoints.
+
+Individual metamodels and models travel in standard formats from inside the project workspace, where each artifact has its own import and export menu:
+
+- **Metamodels**: import from Ecore (`.ecore`); export as Ecore (`.ecore`) or as JSON (`.json`)
+- **Models**: import from XMI (`.xmi`, `.xml`); export as XMI (`.xmi`, with the metamodel embedded) or as JSON (`.json`)
+
+Use Ecore and XMI to exchange metamodels and models with EMF-based tools. Use JSON when you need a plain serialization to process with your own scripts.
+
 ## Grid and List View
 
 Use the toggle next to the sort dropdown to switch between the card grid and a compact table (**Name**, **Type**, **Rev**, **Metamodels**, **Models**, **Modified**), where **Type** shows whether the project is **Private**, **Public**, or **Collaborative**. The table view also lets you select multiple projects with checkboxes for bulk actions.
