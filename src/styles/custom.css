@@ -242,3 +242,58 @@ a[aria-current="page"] .sl-badge.version-3-0 {
   border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
+
+/* Tables — hairline frame, quiet header, no vertical rules */
+.sl-markdown-content table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.sl-markdown-content thead th {
+  background: var(--sl-color-gray-6);
+  color: var(--sl-color-gray-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--sl-color-hairline);
+  white-space: nowrap;
+}
+
+.sl-markdown-content tbody td {
+  padding: 0.65rem 0.9rem;
+  vertical-align: top;
+  border-bottom: 1px solid var(--sl-color-hairline);
+}
+
+.sl-markdown-content tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.sl-markdown-content tbody tr:hover td {
+  background: var(--sl-color-gray-6);
+}
+
+.sl-markdown-content tbody td:first-child {
+  font-weight: 500;
+  color: var(--sl-color-white);
+}
+
+.sl-markdown-content table code {
+  white-space: nowrap;
+}
+
+@media (min-width: 60rem) {
+  .sl-markdown-content tbody td:first-child {
+    white-space: nowrap;
+  }
+}
