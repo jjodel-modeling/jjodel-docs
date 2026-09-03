@@ -101,7 +101,7 @@ How abstract or concrete should your metamodel be? This depends on the questions
 
 If you need to track which patient is in which bed and which devices are attached, you need concrete concepts like Bed and specific device types. If you need to analyze staffing patterns, you can stay at the abstract MedicalStaff level without distinguishing nurses from doctors.
 
-Consider the Sensor class from the ICU example. The basic metamodel captures `unit`, `currentValue`, and `timestamp`. But what if you also need an alerting system for sensor battery levels, especially for vital monitoring? Then you would add properties like `batteryLevel` (Integer %), `signalQuality` (Float), `lastCalibrated` (DateTime), and threshold values. These properties are irrelevant for a patient monitoring model but essential for a device maintenance model. Same domain, different purpose, different level of abstraction.
+Consider the Sensor class from the ICU example. The basic metamodel captures `unit`, `currentValue`, and `timestamp`. But what if you also need an alerting system for sensor battery levels, especially for vital monitoring? Then you would add properties like `batteryLevel` (`EInt`, a percentage), `signalQuality` (`EFloat`), `lastCalibrated` (`EDate`), and threshold values. These properties are irrelevant for a patient monitoring model but essential for a device maintenance model. Same domain, different purpose, different level of abstraction.
 
 Start abstract. Add detail when the models cannot answer the questions you care about. Removing unnecessary detail later is harder than adding necessary detail incrementally.
 
@@ -125,4 +125,6 @@ Concretely, your metamodel gives the DSL:
 
 A DSL is defined using Jjodel's meta-metamodel, which provides the building blocks: Class, Attribute, Reference, Enumeration, Package. Your metamodel is an instance of this meta-metamodel.
 
-The next step is to give this DSL a concrete syntax through viewpoints, so that domain experts can work with it visually rather than through the raw abstract syntax. See [Viewpoints](../../user-guide/viewpoints) for details on how to define visual representations.
+The next step is to give this DSL a concrete syntax through viewpoints, so that domain experts can work with it visually rather than through the raw abstract syntax. See [Viewpoints](../../user-guide/viewpoints) for how viewpoints compose and [View Designer](../../user-guide/view-designer) for how a single view is described: a shape, where the name and the feature rows go, and which widgets the form uses.
+
+Not every domain wants a diagram. When the model is data rather than a drawing, a catalogue of devices, a list of thresholds to fill in, the [Data Manager](../../user-guide/data-manager) gives the same metamodel a table and a form, with no viewpoint involved.

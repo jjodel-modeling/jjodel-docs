@@ -48,7 +48,7 @@ The separation between domain (abstract syntax) and notation (concrete syntax) i
 
 SoC is essential for managing complexity. In multi-view modeling, it translates into viewpoints that represent distinct abstractions: structural, behavioral, validation. Each viewpoint addresses one concern, and engineers focus on one concern at a time.
 
-This follows ISO/IEC/IEEE 42010:2011, which defines the architecture description framework: **viewpoints** define the concerns to be addressed; **views** realize those concerns for a specific system. In Jjodel, viewpoints can be exclusive (one active at a time, for concrete syntax) or overlay (layered, for validation and decoration). See [Viewpoints](../../user-guide/viewpoints) for the full explanation.
+This follows ISO/IEC/IEEE 42010:2011, which defines the architecture description framework: **viewpoints** define the concerns to be addressed; **views** realize those concerns for a specific system. In Jjodel, the type of a viewpoint decides how it composes: a **Syntax** viewpoint is exclusive, so only one is active at a time, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** viewpoints are overlays that layer on top of it. See [Viewpoints](../../user-guide/viewpoints) for the full explanation.
 
 ## Topological vs Layout-Sensitive Notation
 
@@ -66,7 +66,7 @@ See [JjOM Reference](../../reference/jjom) for details on the three submodels.
 
 A DSL is a formal, machine-processable interface to domain knowledge. Unlike general-purpose languages, a DSL restricts its vocabulary and rules to a specific domain, which makes it more expressive within that domain and less error-prone.
 
-In Jjodel, building a metamodel is building the abstract syntax of a DSL. Adding viewpoints with templates and styles completes it with concrete syntax. Adding validation overlays enforces domain constraints. The result is a fully functional DSL that runs in the browser without installation.
+In Jjodel, building a metamodel is building the abstract syntax of a DSL. Viewpoints complete it with a concrete syntax: since 3.0 a view is described declaratively, by choosing a shape and saying where the name, the accent, and the feature rows go, and Jjodel's interpreter draws it. Validation overlays then enforce the domain constraints the structure alone cannot express. The result is a fully functional DSL that runs in the browser without installation, and one that can be filled in either on the canvas or as a table in the [Data Manager](../../user-guide/data-manager).
 
 ## Primitive Data Types
 

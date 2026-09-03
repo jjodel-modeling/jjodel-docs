@@ -22,7 +22,7 @@ A language L consists of a tuple with five components:
 
 **⟦·⟧** (Semantic Mapping): the function that interprets an abstract model into its meaning in S. This takes a model from A and produces its semantics.
 
-In Jjodel, the abstract syntax is defined by the metamodel. The concrete syntax is defined by viewpoints and their views (templates + styles). The syntax mapping σ is realized through view predicates that select instances and bind them to visual templates. The semantic mapping can be partially expressed through validation viewpoints and ECA rules.
+In Jjodel, the abstract syntax is defined by the metamodel and the concrete syntax by viewpoints and their views. The syntax mapping σ is realized through view predicates, which select the instances a view applies to. What the view then draws can be described in two ways: declaratively, as a shape plus a structure and a form that Jjodel's interpreter renders, or imperatively, as a JSX template with an SCSS block. The declarative path is the one introduced in 3.0 and recommended for new views; templates written for 1.5 keep working. The semantic mapping is expressed through validation and semantics viewpoints and their ECA rules.
 
 ## Metamodel as Abstract Syntax Provider
 
@@ -46,9 +46,9 @@ The notation architecture:
 
 A **Notation** is associated with exactly one metamodel (via `definedBy`). It owns zero or more viewpoints.
 
-A **Viewpoint** groups a family of views. It can be exclusive (only one active at a time, for concrete syntax) or overlay (layered on top, for decoration, validation, or semantics). See [Viewpoints](../../user-guide/viewpoints) for details.
+A **Viewpoint** groups a family of views. Its type decides how it composes: a **Syntax** viewpoint is exclusive, so only one is active at a time, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** viewpoints are overlays that layer on top of it. See [Viewpoints](../../user-guide/viewpoints) for details.
 
-A **View** targets instances of a specific metaclass through its predicate. It defines how those instances render (template), look (style), and behave (events/ECA).
+A **View** targets instances of a specific metaclass through its predicate. It defines how those instances render, look, and behave. A view has a **kind**, which decides what it produces: a **vertex** draws a node on the canvas, an **edge** draws a connection, and a **row** draws a single value wherever it appears, inside a node, in a table cell, or in a form.
 
 A **Node** is the concrete representation of an instance that satisfies a view's predicate. Nodes exist in the concrete syntax layer and carry layout and state information.
 
@@ -63,5 +63,7 @@ Building a modeling language starts from the domain. The process follows a seque
 **Concrete syntax definition** assigns visual forms to each metaclass through viewpoints and views. A DSL is a formal, machine-processable interface to domain knowledge; the concrete syntax is what makes that interface usable by humans.
 
 **Validation** adds constraint checking through overlay viewpoints. These enforce rules that the metamodel syntax alone cannot express (e.g., "a state machine has exactly one initial state").
+
+**Transformation** connects one language to another. A JjTL transformation reads models of one metamodel and produces models of a second one, which is how a language stops being an island. See [JjTL Reference](../../languages/jjtl).
 
 The separation between abstract and concrete syntax is fundamental. The same abstract syntax can support multiple concrete syntaxes: a Chen-style ER notation and a crow's foot notation both render the same metamodel. Switching between them changes only the active viewpoint; the model data is unaffected.

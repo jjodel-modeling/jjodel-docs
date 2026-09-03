@@ -1,6 +1,6 @@
 ---
 title: Project Structure
-description: How projects, metamodels, models, and viewpoints are organized in Jjodel.
+description: How projects, metamodels, models, transformations, and viewpoints are organized in Jjodel.
 sidebar:
   order: 3
 ---
@@ -23,33 +23,52 @@ Project
 │   └── ...
 ├── Model(s)              — instances conforming to metamodels
 │   └── Objects           — concrete elements with attribute values
-└── Viewpoint(s)          — visual/validation/generation perspectives
-    └── Views             — per-class rendering rules
+├── Transformation(s)     — JjTL rules from one metamodel to another
+└── Viewpoint(s)          — syntax, decoration, validation, and semantics
+    └── Views             — per-metaclass rendering rules
 ```
+
+The project page lists these four sections, and the tree in the right rail shows the same structure as one hierarchy, with the models nested under the metamodel they conform to.
+
+A project also carries a **type** that decides who can reach it: **Private**, **Public**, or **Collaborative**. See [Dashboard](../../user-guide/dashboard) for how the type is set and how whole projects are imported and exported.
 
 ## Metamodels
 
-Metamodels define the structure and constraints of the models in your project. Each metamodel specifies the allowable elements, relationships, and rules. Multiple metamodels can coexist within a single project, enabling complex multi-domain modeling scenarios.
+Metamodels define the structure and constraints of the models in your project. Each metamodel specifies the allowable elements, relationships, and rules. Multiple metamodels can coexist within a single project, which is what makes transformations between them possible.
 
-The Metamodel Editor provides a visual interface for creating and modifying metamodel elements. It supports class creation, inheritance, attribute definition, reference establishment, and constraint specification.
+The [Metamodel Editor](../../user-guide/metamodel-editor) is where you build them: classifiers on the canvas, features dropped onto them, references drawn between anchors.
 
 ## Models
 
-Models contain the actual data — instances of metamodel elements. Each model adheres to the rules and structure defined by its corresponding metamodel, ensuring consistency within the project.
+Models contain the actual data: instances of metamodel elements. Each model conforms to one metamodel, and the status bar tells you so at a glance.
 
-The Model Editor enables you to instantiate metamodel elements, set attribute values, establish references, and visualize the model structure according to the active viewpoint.
+There are three ways to work on the same model, and they stay in sync:
+
+- The **canvas**, which renders the model through the active viewpoint
+- The **tree**, which shows the containment hierarchy and is the fastest way to find one element
+- The [Data Manager](../../user-guide/data-manager), which shows instances as a table with forms and needs no viewpoint at all
+
+## Transformations
+
+A transformation reads a model conforming to one metamodel and produces a model conforming to another. Rules are written in JjTL in the [Transformation Editor](../../user-guide/transformation-editor), which validates them, runs them, and keeps a trace of what each rule produced.
 
 ## Viewpoints
 
-Viewpoints define how models are visualized, validated, or used for code generation. Each viewpoint contains configurations for appearance, layout, interaction, and behavior. You can create multiple viewpoints for the same model, tailoring the presentation to different audiences or purposes.
+Viewpoints define how models are rendered, decorated, validated, and given behavior. A viewpoint's **type** is chosen when you create it and decides how it composes with the others: a **Syntax** viewpoint is exclusive, so only one can be active at a time, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** viewpoints are overlays that stack on top of it.
+
+Inside a viewpoint, each view targets a metaclass and describes how its instances draw: as a node, as a row inside another node, or as an edge. See [Viewpoints](../../user-guide/viewpoints) for how they compose and [View Designer](../../user-guide/view-designer) for how a single view is authored.
 
 ## Validation
 
-Validation rules ensure data consistency and model integrity. These constraints — defined in the metamodel or through validation viewpoints — enforce structural requirements and business rules. When a constraint is violated, Jjodel displays notifications that guide you toward restoring validity.
+Validation rules ensure model integrity beyond what the metamodel structure can express. They live in validation viewpoints and report through the editor: a warning triangle on the affected row in the tree, a marker on the node, and a message when you hover it.
 
-## Logs
+## Feedback surfaces
 
-Jjodel includes a logging mechanism that records errors, warnings, and system events. Logs help you track modifications and maintain an audit trail, which is especially valuable in collaborative projects.
+Three places report what the tools are doing:
+
+- The **status bar** at the bottom of an editor, with the element counts and the conformance state of the model
+- The **Problems** and **Output** tabs of the Transformation Editor, for validation errors and execution details
+- The [Console](../../user-guide/console), where JjScript and JjEL run and Jjodie answers
 
 :::tip[One project, many perspectives]
 A single project can contain multiple metamodels, multiple models, and multiple viewpoints. This modular structure lets you start simple and scale as your language and domain grow in complexity.
