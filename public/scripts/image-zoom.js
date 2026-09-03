@@ -20,6 +20,27 @@
     document.body.appendChild(o);
     document.addEventListener('keydown', onKey);
   }
+
+  // Wrap content images so a "click to enlarge" badge can sit on top of them.
+  function wrap() {
+    var imgs = document.querySelectorAll('.sl-markdown-content img');
+    for (var i = 0; i < imgs.length; i++) {
+      var img = imgs[i];
+      if (img.closest('a')) continue;
+      if (img.parentNode && img.parentNode.classList && img.parentNode.classList.contains('zoomable')) continue;
+      var span = document.createElement('span');
+      span.className = 'zoomable';
+      span.setAttribute('title', 'Click to enlarge');
+      img.parentNode.insertBefore(span, img);
+      span.appendChild(img);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wrap);
+  } else {
+    wrap();
+  }
+
   document.addEventListener('click', function (e) {
     var t = e.target;
     if (!(t instanceof HTMLImageElement)) return;
