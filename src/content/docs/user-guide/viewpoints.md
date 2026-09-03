@@ -8,6 +8,10 @@ sidebar:
 
 A viewpoint defines a perspective on a model. It controls how elements look, what constraints they must satisfy, and how they behave. Each viewpoint contains a set of views, and each view targets specific metaclass instances through a predicate.
 
+:::note
+Views can now be authored declaratively, without a template, from the properties panel. The **Views in Detail** section below describes the JSX template path, which still works. For the declarative path (shapes, structure, forms, value renderers) see [View Designer](../view-designer/).
+:::
+
 ## Multi-View Modeling
 
 Complex systems require multiple perspectives. A structural perspective shows how elements relate; a behavioral perspective shows how they evolve over time; a validation perspective highlights constraint violations. Forcing all of these into a single view creates visual noise and cognitive overload.

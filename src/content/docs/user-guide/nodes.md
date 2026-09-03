@@ -2,7 +2,7 @@
 title: Nodes & Edges
 description: Visual elements in the diagram — shapes, labels, connections, and layout.
 sidebar:
-  order: 5
+  order: 6
   label: Nodes & Edges
 ---
 

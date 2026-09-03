@@ -2,7 +2,7 @@
 title: Console
 description: One input, three languages. The Console runs Jjodie, JjScript, and JjEL from a single prompt, plus raw JavaScript over the JjOM.
 sidebar:
-  order: 6
+  order: 8
   label: Console
 ---
 
