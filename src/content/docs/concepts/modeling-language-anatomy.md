@@ -22,6 +22,8 @@ A language L consists of a tuple with five components:
 
 **⟦·⟧** (Semantic Mapping): the function that interprets an abstract model into its meaning in S. This takes a model from A and produces its semantics.
 
+![The two mappings of a language: sigma from concrete to abstract syntax, and the semantic mapping from abstract syntax to the semantic domain](./images/language-tuple.svg)
+
 In Jjodel, the abstract syntax is defined by the metamodel and the concrete syntax by viewpoints and their views. The syntax mapping σ is realized through view predicates, which select the instances a view applies to. What the view then draws can be described in two ways: declaratively, as a shape plus a structure and a form that Jjodel's interpreter renders, or imperatively, as a JSX template with an SCSS block. The declarative path is the one introduced in 3.0 and recommended for new views; templates written for 1.5 keep working. The semantic mapping is expressed through validation and semantics viewpoints and their ECA rules.
 
 ## Metamodel as Abstract Syntax Provider

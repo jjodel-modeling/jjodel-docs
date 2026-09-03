@@ -30,6 +30,10 @@ Project
 
 The project page lists these four sections, and the tree in the right rail shows the same structure as one hierarchy, with the models nested under the metamodel they conform to.
 
+The tree shows what contains what. The relations between the artifacts run differently:
+
+![A model conforms to a metamodel, a viewpoint renders it, and a transformation declared between two metamodels produces one model from another](./images/project-artifacts.svg)
+
 A project also carries a **type** that decides who can reach it: **Private**, **Public**, or **Collaborative**. See [Dashboard](../../user-guide/dashboard) for how the type is set and how whole projects are imported and exported.
 
 ## Metamodels

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="348" viewBox="0 0 720 348" role="img" aria-label="How the artifacts of a project relate: a model conforms to a metamodel, a viewpoint renders the model, and a transformation declared between two metamodels produces a model from another model.">
+  <style>
+    .t   { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+    .ttl { font-size: 13px; font-weight: 600; fill: #1e293b; }
+    .sub { font-size: 11px; fill: #64748b; }
+    .rel { font-size: 11px; fill: #0369a1; font-style: italic; }
+    .relg{ font-size: 11px; fill: #64748b; font-style: italic; }
+  </style>
+  <defs>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0ea5e9"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="348" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="719" height="347" fill="none" stroke="#e2e8f0"/>
+
+  <!-- metamodelli -->
+  <rect x="36" y="40" width="176" height="54" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t ttl" x="124" y="63" text-anchor="middle">Metamodel</text>
+  <text class="t sub" x="124" y="80" text-anchor="middle">Family</text>
+
+  <rect x="508" y="40" width="176" height="54" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t ttl" x="596" y="63" text-anchor="middle">Metamodel</text>
+  <text class="t sub" x="596" y="80" text-anchor="middle">Person</text>
+
+  <!-- trasformazione -->
+  <rect x="288" y="40" width="144" height="54" rx="9" fill="#ffffff" stroke="#0ea5e9"/>
+  <text class="t ttl" x="360" y="63" text-anchor="middle">Transformation</text>
+  <text class="t sub" x="360" y="80" text-anchor="middle">JjTL rules</text>
+
+  <path d="M 288 67 L 216 67" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#g)"/>
+  <text class="t relg" x="252" y="58" text-anchor="middle">from</text>
+  <path d="M 432 67 L 504 67" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#g)"/>
+  <text class="t relg" x="468" y="58" text-anchor="middle">to</text>
+
+  <!-- modelli -->
+  <rect x="36" y="176" width="176" height="54" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t ttl" x="124" y="199" text-anchor="middle">Model</text>
+  <text class="t sub" x="124" y="216" text-anchor="middle">pierantonio</text>
+
+  <rect x="508" y="176" width="176" height="54" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t ttl" x="596" y="199" text-anchor="middle">Model</text>
+  <text class="t sub" x="596" y="216" text-anchor="middle">Family_to_Person</text>
+
+  <!-- conformance -->
+  <path d="M 124 172 L 124 98" fill="none" stroke="#0ea5e9" stroke-width="1.6" marker-end="url(#c)"/>
+  <text class="t rel" x="132" y="139">conforms to</text>
+  <path d="M 596 172 L 596 98" fill="none" stroke="#0ea5e9" stroke-width="1.6" marker-end="url(#c)"/>
+  <text class="t rel" x="588" y="139" text-anchor="end">conforms to</text>
+
+  <!-- esecuzione -->
+  <path d="M 216 203 L 504 203" fill="none" stroke="#0ea5e9" stroke-width="1.6" marker-end="url(#c)"/>
+  <text class="t rel" x="360" y="195" text-anchor="middle">produces</text>
+  <path d="M 360 203 L 360 98" fill="none" stroke="#bae6fd" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <text class="t relg" x="368" y="150">when you run it</text>
+
+  <!-- viewpoint -->
+  <rect x="36" y="272" width="176" height="52" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t ttl" x="124" y="294" text-anchor="middle">Viewpoint</text>
+  <text class="t sub" x="124" y="311" text-anchor="middle">views, one per metaclass</text>
+
+  <path d="M 124 268 L 124 234" fill="none" stroke="#0ea5e9" stroke-width="1.6" marker-end="url(#c)"/>
+  <text class="t rel" x="132" y="256">renders</text>
+
+</svg>

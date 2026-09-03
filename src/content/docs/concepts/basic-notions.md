@@ -20,6 +20,8 @@ The relationship between model and metamodel is called **conformance**: a model 
 
 Metamodeling operates across multiple levels:
 
+![The three metalevels, with the instance-of relation between elements and the conformance relation between levels](./images/metalevels.svg)
+
 **M3** (meta-metamodel) defines the constructs available for building metamodels. In Jjodel, this is the JjOM (Jjodel Object Model), which provides DClass, DAttribute, DReference, DEnumeration, and other building blocks. M3 is fixed; you do not modify it.
 
 **M2** (metamodel) uses M3 constructs to define a domain. When you create a metamodel for state machines with State, Transition, and InitialState metaclasses, you are working at M2.

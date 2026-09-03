@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="330" viewBox="0 0 720 330" role="img" aria-label="The language tuple: the syntax mapping sigma takes concrete syntax to abstract syntax, and the semantic mapping takes abstract syntax to the semantic domain.">
+  <style>
+    .t   { font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; }
+    .sym { font-size: 20px; font-weight: 700; fill: #1e293b; }
+    .ttl { font-size: 13px; font-weight: 600; fill: #1e293b; }
+    .sub { font-size: 11px; fill: #64748b; }
+    .map { font-size: 17px; font-weight: 700; fill: #0369a1; }
+    .how { font-size: 11px; fill: #0369a1; }
+    .own { font-size: 11px; fill: #64748b; font-style: italic; }
+    .mini{ font-size: 10px; fill: #475569; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0ea5e9"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="330" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="719" height="329" fill="none" stroke="#e2e8f0"/>
+
+  <!-- C -->
+  <rect x="28" y="56" width="176" height="118" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t sym" x="116" y="86" text-anchor="middle">C</text>
+  <text class="t ttl" x="116" y="106" text-anchor="middle">concrete syntax</text>
+  <text class="t sub" x="116" y="124" text-anchor="middle">what you see</text>
+  <rect x="60" y="136" width="42" height="22" rx="4" fill="#ffffff" stroke="#94a3b8"/>
+  <rect x="130" y="136" width="42" height="22" rx="4" fill="#ffffff" stroke="#94a3b8"/>
+  <path d="M 102 147 L 126 147" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#ag)"/>
+
+  <!-- A -->
+  <rect x="272" y="56" width="176" height="118" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t sym" x="360" y="86" text-anchor="middle">A</text>
+  <text class="t ttl" x="360" y="106" text-anchor="middle">abstract syntax</text>
+  <text class="t sub" x="360" y="124" text-anchor="middle">what it is</text>
+  <text class="t mini" x="360" y="146" text-anchor="middle">State, Transition, Event</text>
+  <text class="t mini" x="360" y="161" text-anchor="middle">and their instances</text>
+
+  <!-- S -->
+  <rect x="516" y="56" width="176" height="118" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t sym" x="604" y="86" text-anchor="middle">S</text>
+  <text class="t ttl" x="604" y="106" text-anchor="middle">semantic domain</text>
+  <text class="t sub" x="604" y="124" text-anchor="middle">what it means</text>
+  <text class="t mini" x="604" y="146" text-anchor="middle">event traces,</text>
+  <text class="t mini" x="604" y="161" text-anchor="middle">a relational schema, …</text>
+
+  <!-- sigma -->
+  <path d="M 204 108 L 268 108" stroke="#0ea5e9" stroke-width="1.8" marker-end="url(#a)"/>
+  <text class="t map" x="236" y="98" text-anchor="middle">σ</text>
+
+  <!-- semantic mapping -->
+  <path d="M 448 108 L 512 108" stroke="#0ea5e9" stroke-width="1.8" marker-end="url(#a)"/>
+  <text class="t map" x="480" y="98" text-anchor="middle">⟦·⟧</text>
+
+  <!-- chi le realizza -->
+  <path d="M 236 214 L 236 130" fill="none" stroke="#bae6fd" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <text class="t how" x="236" y="232" text-anchor="middle">view predicates</text>
+  <text class="t how" x="236" y="248" text-anchor="middle">select the instances</text>
+
+  <path d="M 480 214 L 480 130" fill="none" stroke="#bae6fd" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <text class="t how" x="480" y="232" text-anchor="middle">validation and semantics</text>
+  <text class="t how" x="480" y="248" text-anchor="middle">viewpoints, ECA rules</text>
+
+  <!-- chi definisce cosa -->
+  <path d="M 116 268 L 116 180" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ag)"/>
+  <text class="t own" x="116" y="286" text-anchor="middle">viewpoints and views</text>
+
+  <path d="M 360 268 L 360 180" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ag)"/>
+  <text class="t own" x="360" y="286" text-anchor="middle">the metamodel</text>
+
+  <text class="t sub" x="360" y="312" text-anchor="middle">L = (A, C, S, σ, ⟦·⟧)</text>
+</svg>
