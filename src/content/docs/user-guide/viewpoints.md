@@ -40,23 +40,23 @@ Each view has up to four components:
 
 **Events** define behavior using the ECA (Event-Condition-Action) model. An event rule fires on data changes and can update node state attributes, enabling computed properties, validation feedback, and simulation.
 
-<!-- TODO: screenshot -- viewpoint panel showing views with their components (new UI) -->
+![A viewpoint and its views in the tree](./images/viewpoints-panel-views.png)
 
 ## Exclusive vs Overlay Viewpoints
 
-Viewpoints come in two kinds, determined by the **Is Exclusive** checkbox when you create them.
+Viewpoints come in two kinds, and the **type** you pick when you create one decides which: **Syntax** produces an exclusive viewpoint, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** produce overlays. The creation dialog states it as you choose, for example *Exclusive view — defines the concrete syntax of a model* for Syntax and *Overlay — adds visual decorations to existing views* for Decoration.
 
 ### Exclusive viewpoints
 
 Syntax viewpoints are typically **exclusive**: only one exclusive viewpoint can be active at a time. When you activate "State Machine Visual Syntax", the previously active exclusive viewpoint is deactivated. This makes sense for concrete syntax: you see either the Chen notation or the crow's foot notation, not both.
 
-In the Viewpoints panel, exclusive viewpoints show a solid **EX** badge.
+In the tree, viewpoints are grouped by kind under **Syntax** and **Validation**, and the active one carries an eye icon.
 
 ### Overlay viewpoints
 
 An **overlay** (non-exclusive) viewpoint adds features on top of whatever exclusive viewpoint is currently active. Multiple overlays can be active simultaneously. They extend or override existing view definitions without replacing the entire concrete syntax.
 
-In the Viewpoints panel, overlay viewpoints show a dimmed **EX** badge (indicating the exclusive flag is off).
+Overlays stay independent of each other, so you can leave several of them on at once.
 
 Overlay viewpoints serve several purposes:
 
@@ -78,15 +78,16 @@ When an overlay viewpoint defines a view for the same metaclass as the active ex
 
 ## Creating a Viewpoint
 
-To create a new viewpoint:
+To create a new viewpoint, open the project page and click **+ New** in the **Viewpoints** section, or **New viewpoint** in the project rail on the left. The **New Viewpoint** dialog asks for two things:
 
-1. Open the metamodel editor
-2. Click **+** in the Viewpoints panel
-3. Enter a name (e.g., `Colored Viewpoint`)
-4. Set the **Is Exclusive** checkbox: checked for syntax viewpoints, unchecked for overlays
-5. The viewpoint appears in the list
+- **Name**, for example `Colored Viewpoint`
+- **Type**: **Syntax**, **Decoration**, **Validation**, **Semantics**, or **Editor behavior**
 
-To activate a viewpoint, click on it. For exclusive viewpoints, this deactivates the previously active one. For overlay viewpoints, you toggle them on and off independently.
+The type is what makes the viewpoint exclusive or an overlay, and the dialog spells out which one you are about to get. Click **Create Viewpoint** to confirm.
+
+The new viewpoint appears under **Viewpoints** in the tree, ready for its first view. To activate a viewpoint, select it. Activating an exclusive viewpoint deactivates the one that was active before; overlays toggle on and off independently.
+
+Each view inside a viewpoint carries its own **Is Exclusive** toggle in the **Apply to** tab, which decides whether that view wins over other views matching the same instance.
 
 <!-- TODO: screenshot -- creating a viewpoint with Is Exclusive unchecked (new UI) -->
 
@@ -182,6 +183,10 @@ When a second Initial State is added to the model, the validation overlay immedi
 ## Views in Detail
 
 This section describes the JSX template path, introduced in Jjodel 1.5 and still available in 3.0. For the declarative path (shapes, structure, forms, value renderers) see [View Designer](../view-designer/).
+
+Selecting a view opens its editor in the properties panel. The **Apply to** tab carries the settings that decide when the view fires, and the remaining tabs hold the components described below.
+
+![The Apply to tab of a view](./images/viewpoints-view-properties.png)
 
 ### Predicates
 
