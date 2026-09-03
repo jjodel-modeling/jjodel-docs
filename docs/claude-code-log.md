@@ -4,6 +4,22 @@ Newest-first per day: a new entry goes right under this line. Never append at th
 Log locale di questo repo, distinto da `docs/claude-code-log.md` di `jjodel` (E1 del
 2026-09-03 14:55: la traccia harness di `jjodel-docs` resta in `jjodel-docs`).
 
+## 2026-09-03 — fix: version badges on the current-page sidebar row
+**Prompt**: sulla riga attiva della sidebar (colori invertiti da Starlight) i badge di versione usano la palette del tema opposto; 1.5 invisibile in light, 3.0 quasi invisibile in dark
+**Corregge**: 2026-09-03 14:55, 2026-09-03 22:22
+**File toccati**: src/styles/custom.css, docs/claude-code-log.md
+**Esito**: ✅ completato (build exit 0, 38 pagine; valori misurati light: color rgb(125,211,252),
+background rgba(14,165,233,0.12), ::before color rgb(148,163,184), riga rgb(51,65,85); dark:
+color rgb(3,105,161), background rgb(240,249,255), ::before color rgb(71,85,105), riga
+rgb(203,213,225)) — coincidono con gli attesi in entrambi i temi
+**Nome del documento prompt**: 2026-09-03 22:28
+**Nota**: verifica eseguita da me con Playwright headless (chromium dalla cache npx) sul dev
+server, non solo sul sorgente: `getComputedStyle` su `a[aria-current="page"] .sl-badge` e sul
+suo `::before`, in light e in dark via `localStorage.starlight-theme`. Righe non attive
+invariate: View Designer e Data Manager restano #0369a1 su #f0f9ff in light e #7dd3fc su
+rgba(14,165,233,0.12) in dark. Le quattro regole sopravvivono alla minificazione in
+dist/_astro/common.*.css nell'ordine di cascata corretto.
+
 ## 2026-09-03 — docs: Viewpoints dual badge 1.5 / 3.0 and version scope
 **Prompt**: seconda pillola "1.5" via CSS (::before su classe since-1-5) accanto al badge 3.0; dichiarazione della versione delle descrizioni in testa alla pagina e in Views in Detail
 **File toccati**: src/content/docs/user-guide/viewpoints.md, src/styles/custom.css, docs/claude-code-log.md
