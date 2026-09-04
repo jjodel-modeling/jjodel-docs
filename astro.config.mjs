@@ -3,6 +3,9 @@ import starlight from '@astrojs/starlight';
 
 export default defineConfig({
   site: 'https://docs.jjodel.io',
+  redirects: {
+    '/': '/getting-started/',
+  },
   integrations: [
     starlight({
       title: 'Jjodel',
@@ -17,6 +20,9 @@ export default defineConfig({
       ],
       editLink: {
         baseUrl: 'https://github.com/jjodel-modeling/jjodel-docs/edit/main/src/content/docs/',
+      },
+      banner: {
+        content: 'Jjodel 3.0 lands on 15 September. <a href="/whats-new/">See what is coming</a>.',
       },
       lastUpdated: true,
       customCss: ['./src/styles/custom.css'],
@@ -72,6 +78,7 @@ export default defineConfig({
       ],
       head: [
         { tag: 'script', attrs: { src: '/scripts/image-zoom.js', defer: true } },
+        { tag: 'script', attrs: { src: '/scripts/release-banner.js', defer: true } },
         {
           tag: 'link',
           attrs: {

@@ -40,3 +40,13 @@ These three artifacts form the backbone of any language workbench in Jjodel. Cha
 :::tip[Try it now]
 Jjodel is available at [app.jjodel.io](https://app.jjodel.io). You can sign up and start modeling in under a minute.
 :::
+
+## Support Jjodel
+
+Jjodel is free and open source. Keeping it running requires ongoing work: building new features, maintaining the codebase, and covering the costs of the commercial cloud infrastructure that powers [app.jjodel.io](https://app.jjodel.io).
+
+Your donations make a direct difference. Jjodel is registered as a collective on [Open Collective](https://opencollective.com/jjodel), where every transaction is public and fully transparent.
+
+<a href="https://opencollective.com/jjodel/donate" target="_blank" rel="noopener">
+  <img src="https://opencollective.com/jjodel/donate/button@2x.png?color=white" alt="Donate on Open Collective" width="200" />
+</a>
