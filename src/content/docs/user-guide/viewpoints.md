@@ -37,7 +37,7 @@ A viewpoint groups a family of **views**. Each view targets instances of a speci
 
 Each view has up to four components:
 
-**Predicate** selects the instances this view applies to. Without a predicate, the view applies to all instances of its target metaclass. You can write predicates in OCL or JavaScript.
+**Predicate** selects the instances this view applies to. Without a predicate, the view applies to all instances of its target metaclasses. Predicates are built in the Applies to form, described under [Predicates](#predicates).
 
 **Template** defines the visual structure of matching instances. Templates use JSX and have access to three variables: `data` (the abstract syntax attributes), `node` (the concrete syntax / layout attributes), and `view` (the view-level attributes).
 
@@ -195,11 +195,9 @@ Selecting a view opens its editor in the properties panel. The **Apply to** tab 
 
 ### Predicates
 
-A predicate is a boolean expression that determines which instances a view applies to. You can write predicates in:
+A predicate decides which instances a view applies to, on top of the metaclasses the view targets. In 3.0 you build it in the **Applies to** tab of the [View Designer](../view-designer/): you pick a feature, an operator and a value, and combine the tests with and, or and not. The available tests are the comparisons (equal, not equal, and the four orderings), whether a feature is set or empty, and whether an element is of a given class. The result is stored as a structure, not as a string of code.
 
-**OCL** (Object Constraint Language): the classic MDE approach. Example: `self.oclIsTypeOf(State)`.
-
-**JavaScript**: more accessible for web developers. Example: `data.$className === 'State'`.
+OCL selection was dropped in 3.0. Views written for 1.5 carry their OCL condition in the record, and JavaScript conditions live in the same place, but neither is how a predicate is written today.
 
 Predicates define the **syntactic mapping** (σ) between abstract and concrete syntax. Each view's predicate selects a subset of model instances and maps them to their visual representation through the view's template and style. This is how the language tuple L = (A, C, S, σ, ⟦·⟧) is realized in practice.
 

@@ -42,10 +42,10 @@
   <!-- views -->
   <rect x="232" y="176" width="212" height="90" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
   <text class="t ttl" x="248" y="198">View</text>
-  <text class="t sub" x="248" y="216">predicate: jsCondition, oclCondition</text>
-  <text class="t sub" x="248" y="232">kind: vertex, edge, row</text>
-  <text class="t sub" x="248" y="248">structure: ir, or a JSX template</text>
-  <text class="t sub" x="248" y="262">events: ECA rules and actions</text>
+  <text class="t sub" x="248" y="216">applies to: metaclasses and a predicate</text>
+  <text class="t sub" x="248" y="232">kind: vertex, graphVertex, edge, row</text>
+  <text class="t sub" x="248" y="248">structure: the ir record, or a JSX template</text>
+  <text class="t sub" x="248" y="262">events: ECA rules and actions &#183; 3.5</text>
 
   <path d="M 338 172 L 338 146" fill="none" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#c)"/>
   <text class="t rel" x="346" y="162">viewpoint</text>

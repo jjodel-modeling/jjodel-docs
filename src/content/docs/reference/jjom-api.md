@@ -146,18 +146,17 @@ The declaration of how instances render.
 | `name` | `String` | View name |
 | `viewpointType` | `String` | Type of the viewpoint the view belongs to |
 | `isExclusiveView` | `Boolean` | Whether the view excludes the others that apply |
-| `oclCondition` | `String` | Selector written in OCL |
-| `jsCondition` | `String` | Selector written in JavaScript |
+| `oclCondition`, `jsCondition` | `String` | Selectors of the 1.5 record, kept on views that carry one |
 | `appliableTo` | `String` | `Any`, `Graph`, `GraphVertex`, `Vertex`, `Edge`, `EdgePoint` or `Field` |
 | `appliableToClasses` | `Array<String>` | JjOM classes the view accepts, such as `DObject` or `DClass` |
 | `explicitApplicationPriority` | `Number` | Priority when several views apply to the same element |
-| `ir` | `Object` | The declarative record introduced in 3.0: structure, symbol, and form |
+| `ir` | `Object` | The declarative record introduced in 3.0. `metaclasses` and `predicate` say which elements the view accepts, `kind` what it produces, `priority` how it ranks, and `shape`, `structure` and `form` how it draws |
 | `jsxString` | `String` | The JSX template, for views authored before 3.0 |
 | `events` | `Object` | Event handlers and custom actions, by name |
 | `draggable`, `resizable` | `Boolean` | What the user may do with the node |
 | `adaptWidth`, `adaptHeight` | `Boolean` | Whether the node sizes itself to its contents |
 
-Three of these fields describe behavior the current build does not run: `oclCondition` holds the OCL predicates of 1.5, kept for the views that carry one, while a predicate written today goes into `jsCondition` through the Applies to form; `events` and the sub-view mechanism are being restored and are planned <span class="badge-next">3.5</span>.
+Some of these fields belong to the record as it was before 3.0. A view authored today declares what it accepts inside `ir`, through `metaclasses` and a structured `predicate` built in the Applies to form; `oclCondition` and `jsCondition` are the selectors of that older record, and OCL selection was dropped. `events` and `subViews` are being restored and are planned <span class="badge-next">3.5</span>.
 
 ## Two vocabularies
 
