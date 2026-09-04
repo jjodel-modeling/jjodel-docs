@@ -67,6 +67,6 @@ If the transformation uses `prompt` or `confirm` (see [Interactive features](../
 
 After execution, the **Trace** tab shows every mapping that was applied: which source elements produced which target elements, and whether each attribute mapping is invertible.
 
-<!-- TODO: screenshot - Trace view with mappings (new UI) -->
+![The Trace tab after running StateMachine_to_PetriNet, with the State to Place entry expanded to show its attribute bindings](./images/transformation-trace-view.png)
 
 Use the search box to filter trace entries by class name or mapping rule.
