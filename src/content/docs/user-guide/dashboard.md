@@ -16,12 +16,12 @@ The Dashboard is organized into a sidebar and a main project list.
 
 The sidebar gives you:
 
-- **All projects** — the default view, listing everything you have access to
-- **Filters** — jump straight to **Private**, **Public**, or **Collaborative** projects
-- **Favorites** — projects you starred for quick access
-- **Browse** — **Templates** to start a project from a predefined structure, and **Explore** to discover public projects from other users
-- **Recently Modified** — a shortcut list of the last few projects you touched
-- **Resources** — links to **Documentation**, **Tutorials**, the **API Reference**, and the **GitHub** repository
+- **All projects**: the default view, listing everything you have access to
+- **Filters**: jump straight to **Private**, **Public**, or **Collaborative** projects
+- **Favorites**: projects you starred for quick access
+- **Browse**: **Templates** to start a project from a predefined structure, and **Explore** to discover public projects from other users
+- **Recently Modified**: a shortcut list of the last few projects you touched
+- **Resources**: links to **Documentation**, **Tutorials**, the **API Reference**, and the **GitHub** repository
 
 The main area lists your projects as cards (or as a table, see [Grid and list view](#grid-and-list-view) below), with **Import** and **New Project** buttons in the top-right corner, filter tabs (**All** / **Public** / **Private** / **Collaborative**), a sort dropdown, a grid/list toggle, and a search box.
 
@@ -43,9 +43,9 @@ Both entry points open the same dialog:
 - **Project Name** is required, marked with an asterisk
 - **Description** is optional and can be filled in later
 - **Project Type** decides who can reach the project:
-  - **Private** — only you can access it
-  - **Public** — anyone with the link can view it
-  - **Collaborative** — you invite other people to edit it with you
+  - **Private**: only you can access it
+  - **Public**: anyone with the link can view it
+  - **Collaborative**: you invite other people to edit it with you
 
 **Private** is preselected. The type you pick here is what the sidebar filters and the **All** / **Public** / **Private** / **Collaborative** tabs group your projects by, and it appears in the **Type** column of the list view. Click **Create Project** to confirm, or **Cancel** to discard.
 
@@ -78,11 +78,11 @@ Hovering a card reveals a star button and a **⋯** menu in its top-right corner
 
 ![Actions available on a project card](./images/dashboard-project-card-menu.png)
 
-- **Open** — enter the project workspace, same as clicking the card
-- **Download** — export the project as a file you can archive or import again later
-- **Repair & open** — attempt to fix a project that fails to load correctly, then open it
-- **Add to favorites** — pin the project to the **Favorites** section of the sidebar
-- **Delete** — permanently remove the project
+- **Open**: enter the project workspace, same as clicking the card
+- **Download**: export the project as a file you can archive or import again later
+- **Repair & open**: attempt to fix a project that fails to load correctly, then open it
+- **Add to favorites**: pin the project to the **Favorites** section of the sidebar
+- **Delete**: permanently remove the project
 
 :::caution
 Deleting a project cannot be undone.

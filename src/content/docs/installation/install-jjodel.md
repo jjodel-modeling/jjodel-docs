@@ -7,7 +7,7 @@ sidebar:
 
 While Jjodel is designed as a cloud-native platform accessible at [app.jjodel.io](https://app.jjodel.io), you can also run it locally for offline use, development, or research purposes.
 
-## Option 1 — Docker (Recommended)
+## Option 1: Docker (Recommended)
 
 Docker is the fastest way to run Jjodel locally.
 
@@ -42,7 +42,7 @@ Docker is the fastest way to run Jjodel locally.
 
 The Docker setup includes all Jjodel components: the web application, the backend services, and the database. It provides the same full-featured environment as the cloud version, except for shared storage and real-time cross-network synchronization.
 
-## Option 2 — Build from Source
+## Option 2: Build from Source
 
 For developers who want to contribute to Jjodel or customize it.
 

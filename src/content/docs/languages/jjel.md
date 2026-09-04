@@ -50,7 +50,7 @@ Classes are also bound by name (`Person.attributes`), and instance names resolve
 
 ```
 > classes
-SUCCESS — 4 results
+4 results
 State, namedElement, Transition, Event
 ```
 
@@ -84,7 +84,7 @@ Accessing a property on a **collection** is an error. Use `forall` instead:
 
 ```
 > classes.name
-ERROR — cannot access property 'name' on a collection.
+Cannot access property 'name' on a collection.
 Use 'forall c in classes : c.name'
 ```
 

@@ -169,7 +169,7 @@ Set the style to make the Transition node invisible:
 
 ## Adding Simulation
 
-:::caution[Default views are read-only — use a custom viewpoint]
+:::caution[Default views are read-only: use a custom viewpoint]
 The built-in **Default → Model** view is read-only in normal mode. You cannot add `<Panel>`, `<Control>`, or custom event actions to it directly.
 
 To follow this tutorial you must create a dedicated **simulation viewpoint** and add a custom Model view inside it (as described in the next section). This is the recommended **clone-and-own** workflow: your custom viewpoint owns the simulation layer independently of the default views.

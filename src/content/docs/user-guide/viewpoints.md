@@ -49,7 +49,7 @@ Each view has up to four components:
 
 ## Exclusive vs Overlay Viewpoints
 
-Viewpoints come in two kinds, and the **type** you pick when you create one decides which: **Syntax** produces an exclusive viewpoint, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** produce overlays. The creation dialog states it as you choose, for example *Exclusive view — defines the concrete syntax of a model* for Syntax and *Overlay — adds visual decorations to existing views* for Decoration.
+Viewpoints come in two kinds, and the **type** you pick when you create one decides which: **Syntax** produces an exclusive viewpoint, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** produce overlays. The creation dialog states it as you choose: Syntax is described as an exclusive view that defines the concrete syntax of a model, Decoration as an overlay that adds visual decorations to existing views.
 
 ### Exclusive viewpoints
 
@@ -249,7 +249,7 @@ When you create a custom exclusive viewpoint (e.g., "State Machine Visual Syntax
 :::note[Default views are read-only in normal mode]
 The views that belong to built-in default viewpoints (including **Default → Model**) are **read-only** in normal mode and cannot be edited directly. Two workflows are available:
 
-- **Recommended — clone-and-own:** Create a new custom viewpoint and add your own views there. This keeps the defaults intact and is the standard approach for building notation layers and simulation overlays.
+- **Recommended (clone-and-own):** Create a new custom viewpoint and add your own views there. This keeps the defaults intact and is the standard approach for building notation layers and simulation overlays.
 - **Debug Mode:** Enable Debug Mode from the workbench settings to unlock editing of default views. Use this only for quick experimentation; changes made this way are not preserved across sessions in the same way as custom viewpoints.
 :::
 

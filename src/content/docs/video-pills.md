@@ -5,7 +5,7 @@ sidebar:
   order: 11
 ---
 
-This page collects short video introductions — "video pills" — that cover Jjodel's core concepts and features. Each video is self-contained and focuses on a single topic.
+This page collects short video introductions ("video pills") that cover Jjodel's core concepts and features. Each video is self-contained and focuses on a single topic.
 
 ## Getting Started
 
@@ -23,7 +23,7 @@ Learn how to instantiate metamodel elements, set attribute values, and establish
 
 ### Create Your First Viewpoint
 
-See how to define a visual viewpoint that renders your model as a diagram — shapes, labels, colors, and connectors.
+See how to define a visual viewpoint that renders your model as a diagram: shapes, labels, colors, and connectors.
 
 <!-- TODO: embed or link video — viewpoint creation -->
 
@@ -31,7 +31,7 @@ See how to define a visual viewpoint that renders your model as a diagram — sh
 
 ### Understanding Metamodels and Models
 
-A conceptual introduction to the relationship between metamodels and models — what they are, how they differ, and why the distinction matters.
+A conceptual introduction to the relationship between metamodels and models: what they are, how they differ, and why the distinction matters.
 
 <!-- TODO: embed or link video -->
 
@@ -43,7 +43,7 @@ An overview of Jjodel's multi-view architecture: syntax viewpoints, validation v
 
 ### Live Co-evolution in Action
 
-Watch metamodel changes propagate instantly to models, editors, and viewpoints — no regeneration, no recompilation.
+Watch metamodel changes propagate instantly to models, editors, and viewpoints. No regeneration, no recompilation.
 
 <!-- TODO: embed or link video -->
 

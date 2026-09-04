@@ -1,13 +1,13 @@
 ---
 title: Your First Project
-description: Build your first metamodel, model, and viewpoint in Jjodel — step by step.
+description: Build your first metamodel, model, and viewpoint in Jjodel, step by step.
 sidebar:
   order: 3
 ---
 
 This guide walks you through creating a minimal but complete language workbench in Jjodel: a simple class diagram language with classes, attributes, and associations.
 
-## Step 1 — Create a New Project
+## Step 1: Create a New Project
 
 1. From the **Dashboard**, click the main menu (upper-left corner)
 2. Select **New Project**
@@ -18,9 +18,9 @@ Your project is now visible in the Dashboard. Click on it to enter the workspace
 
 ![New project dialog](./images/new-project-dialog.png)
 
-## Step 2 — Define Your Metamodel
+## Step 2: Define Your Metamodel
 
-The metamodel defines the *abstract syntax* of your language — what kinds of elements exist and how they relate to each other.
+The metamodel defines the *abstract syntax* of your language: what kinds of elements exist and how they relate to each other.
 
 1. In the workspace, open the **Metamodel Editor**
 2. Create a new class called `Class`
@@ -42,9 +42,9 @@ You now have a metamodel that can describe class diagrams with classes, their at
 As you modify the metamodel, Jjodel automatically propagates changes to all models and viewpoints. No regeneration or recompilation needed.
 :::
 
-## Step 3 — Create a Model
+## Step 3: Create a Model
 
-A model is an *instance* of your metamodel — it contains concrete data conforming to the rules you defined.
+A model is an *instance* of your metamodel: it contains concrete data conforming to the rules you defined.
 
 1. From the workspace, create a **New Model**
 2. Instantiate a `Class` element and name it `Person`
@@ -58,9 +58,9 @@ You have just created a simple domain model using the language you defined in St
 
 ![Model editor with Person and Address](./images/model-editor-person-address.png)
 
-## Step 4 — Create a Viewpoint
+## Step 4: Create a Viewpoint
 
-Viewpoints define the *concrete syntax* — how model elements look in the graphical editor.
+Viewpoints define the *concrete syntax*: how model elements look in the graphical editor.
 
 1. Open the **Viewpoint Editor**
 2. Create a new viewpoint (e.g., `ClassDiagramView`)
@@ -78,7 +78,7 @@ Your model is now rendered as a visual class diagram.
 
 ## What You Built
 
-Congratulations — you have just created a complete language workbench:
+Congratulations, you have just created a complete language workbench:
 
 - A **metamodel** defining the abstract syntax (classes, attributes, associations)
 - A **model** containing domain-specific instances (Person, Address)
@@ -88,7 +88,7 @@ This is the fundamental workflow in Jjodel. From here you can extend your langua
 
 ## Next Steps
 
-- [Dashboard](../../user-guide/dashboard) — manage your projects
-- [Metamodel Editor](../../user-guide/metamodel-editor) — explore advanced metamodeling features
-- [Viewpoints](../../user-guide/viewpoints) — learn about visual, textual, and validation viewpoints
-- [Basic Notions](../../concepts/basic-notions) — understand the conceptual foundations
+- [Dashboard](../../user-guide/dashboard): manage your projects
+- [Metamodel Editor](../../user-guide/metamodel-editor): explore advanced metamodeling features
+- [Viewpoints](../../user-guide/viewpoints): learn about visual, textual, and validation viewpoints
+- [Basic Notions](../../concepts/basic-notions): understand the conceptual foundations

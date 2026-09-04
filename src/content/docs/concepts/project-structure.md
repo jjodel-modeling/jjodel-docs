@@ -13,19 +13,19 @@ Every Jjodel project follows a layered hierarchy:
 
 ```
 Project
-├── Metamodel(s)          — language definitions
-│   ├── Package(s)        — logical groupings
-│   │   ├── Class(es)     — element types
+├── Metamodel(s)          language definitions
+│   ├── Package(s)        logical groupings
+│   │   ├── Class(es)     element types
 │   │   │   ├── Attributes
 │   │   │   ├── References
 │   │   │   └── Operations
 │   │   └── ...
 │   └── ...
-├── Model(s)              — instances conforming to metamodels
-│   └── Objects           — concrete elements with attribute values
-├── Transformation(s)     — JjTL rules from one metamodel to another
-└── Viewpoint(s)          — syntax, decoration, validation, and semantics
-    └── Views             — per-metaclass rendering rules
+├── Model(s)              instances conforming to metamodels
+│   └── Objects           concrete elements with attribute values
+├── Transformation(s)     JjTL rules from one metamodel to another
+└── Viewpoint(s)          syntax, decoration, validation, and semantics
+    └── Views             per-metaclass rendering rules
 ```
 
 The project page lists these four sections, and the tree in the right rail shows the same structure as one hierarchy, with the models nested under the metamodel they conform to.

@@ -1,6 +1,6 @@
 ---
 title: "Tutorial 3: Entity-Relationship Diagrams"
-description: Build a complete ER diagram language from scratch — metamodel with composition, enumerations, and a visual viewpoint.
+description: Build a complete ER diagram language from scratch: metamodel with composition, enumerations, and a visual viewpoint.
 sidebar:
   order: 3
 ---
@@ -248,6 +248,6 @@ In this tutorial you:
 
 ## Next Steps
 
-- [Domain Analysis](../../concepts/domain-analysis) — apply this process to an unfamiliar domain
-- [Viewpoints Reference](../../user-guide/viewpoints) — explore advanced viewpoint features (styling, events, options)
-- [JjOM Reference](../../reference/jjom) — understand data vs node submodels for edge navigation
+- [Domain Analysis](../../concepts/domain-analysis): apply this process to an unfamiliar domain
+- [Viewpoints Reference](../../user-guide/viewpoints): explore advanced viewpoint features (styling, events, options)
+- [JjOM Reference](../../reference/jjom): understand data vs node submodels for edge navigation

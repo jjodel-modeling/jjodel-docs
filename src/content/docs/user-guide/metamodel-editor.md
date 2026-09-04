@@ -1,6 +1,6 @@
 ---
 title: Metamodel Editor
-description: Define the abstract syntax of your language — classes, attributes, references, and constraints.
+description: Define the abstract syntax of your language: classes, attributes, references, and constraints.
 sidebar:
   order: 2
   label: Metamodel Editor
@@ -14,10 +14,10 @@ The Metamodel Editor is the core workspace for defining the **abstract syntax** 
 
 The editor is split into four areas:
 
-- **Palette** (left) — the elements you can add, grouped into **Structure**, **Classifiers**, **Members**, and **Connections**
-- **Canvas** (center) — where you arrange your metamodel, with a toolbar above it and a minimap in the bottom-right corner
-- **Tree view and properties panel** (right) — the metamodel structure on top, the properties of the current selection below
-- **Status bar** (bottom) — the metamodel name, its element counts, and the path of the current selection
+- **Palette** (left): the elements you can add, grouped into **Structure**, **Classifiers**, **Members**, and **Connections**
+- **Canvas** (center): where you arrange your metamodel, with a toolbar above it and a minimap in the bottom-right corner
+- **Tree view and properties panel** (right): the metamodel structure on top, the properties of the current selection below
+- **Status bar** (bottom): the metamodel name, its element counts, and the path of the current selection
 
 The toolbar above the canvas holds undo and redo, duplicate and delete, a rendering-style dropdown (**Structured**, **Simplified**, **Compact**, **Wireframe**, **ER**), a theme selector, layout toggles, a viewpoint selector, and zoom controls.
 

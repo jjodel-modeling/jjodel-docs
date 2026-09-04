@@ -1,6 +1,6 @@
 ---
 title: "Tutorial 1: A Basic Class Diagram Language"
-description: Build a simple UML class diagram language from scratch — metamodel, model, and visual viewpoint.
+description: Build a simple UML class diagram language from scratch: metamodel, model, and visual viewpoint.
 sidebar:
   order: 1
 ---
@@ -13,23 +13,23 @@ In this tutorial you will build a simple UML class diagram language from scratch
 
 ---
 
-## Part 1 — The Metamodel
+## Part 1: The Metamodel
 
 The metamodel defines what elements exist in your language and how they relate to each other.
 
-### Step 1.1 — Create the Project
+### Step 1.1: Create the Project
 
 1. Log in to [app.jjodel.io](https://app.jjodel.io)
 2. From the Dashboard, create a **New Project** named `UMLClassDiagram`
 
-### Step 1.2 — Define the `ClassDiagram` Root Class
+### Step 1.2: Define the `ClassDiagram` Root Class
 
 1. Open the Metamodel Editor
 2. Create a new class called `ClassDiagram`
-   - Set **isRootable** to `true` — this class will be the root container of every model
+   - Set **isRootable** to `true`: this class will be the root container of every model
 3. This class will contain all other elements
 
-### Step 1.3 — Define the `Class` Element
+### Step 1.3: Define the `Class` Element
 
 1. Create a new class called `Class`
 2. Add the following attributes:
@@ -39,7 +39,7 @@ The metamodel defines what elements exist in your language and how they relate t
    - Name: `classes`
    - Multiplicity: `0..*`
 
-### Step 1.4 — Define `Attribute`
+### Step 1.4: Define `Attribute`
 
 1. Create a new class called `Attribute`
 2. Add attributes:
@@ -50,7 +50,7 @@ The metamodel defines what elements exist in your language and how they relate t
    - Name: `attributes`
    - Multiplicity: `0..*`
 
-### Step 1.5 — Define `Association`
+### Step 1.5: Define `Association`
 
 1. Create a new class called `Association`
 2. Add attributes:
@@ -64,7 +64,7 @@ The metamodel defines what elements exist in your language and how they relate t
    - Name: `associations`
    - Multiplicity: `0..*`
 
-### Step 1.6 — Add Inheritance
+### Step 1.6: Add Inheritance
 
 1. Create a class called `Inheritance`
 2. Create two **non-containment references**:
@@ -80,16 +80,16 @@ Your metamodel is complete. It defines a language with class diagrams containing
 
 ---
 
-## Part 2 — The Model
+## Part 2: The Model
 
 Now create a sample model using the language you just defined.
 
-### Step 2.1 — Create a New Model
+### Step 2.1: Create a New Model
 
 1. From the workspace, create a **New Model** conforming to your `UMLClassDiagram` metamodel
 2. Create a `ClassDiagram` root instance
 
-### Step 2.2 — Add Classes
+### Step 2.2: Add Classes
 
 Create the following classes:
 
@@ -106,7 +106,7 @@ Create the following classes:
 - `title: String`
 - `credits: Integer`
 
-### Step 2.3 — Add Relationships
+### Step 2.3: Add Relationships
 
 1. Create an **Association** named `enrolledIn`
    - Source: `Student`
@@ -122,16 +122,16 @@ Create the following classes:
 
 ---
 
-## Part 3 — The Viewpoint
+## Part 3: The Viewpoint
 
 Finally, create a visual viewpoint to render your model as a UML class diagram.
 
-### Step 3.1 — Create a Viewpoint
+### Step 3.1: Create a Viewpoint
 
 1. Open the Viewpoint Editor
 2. Create a new viewpoint named `ClassDiagramNotation`
 
-### Step 3.2 — Define the Class View
+### Step 3.2: Define the Class View
 
 Create a view for the `Class` metaclass:
 
@@ -140,7 +140,7 @@ Create a view for the `Class` metaclass:
 3. **Compartment**: List `self.attributes` as `name: type` entries
 4. **Style**: White fill, black border, if `self.isAbstract` then italic name
 
-### Step 3.3 — Define the Association View
+### Step 3.3: Define the Association View
 
 Create a view for `Association`:
 
@@ -149,14 +149,14 @@ Create a view for `Association`:
 3. **Source label**: `self.sourceMultiplicity`
 4. **Target label**: `self.targetMultiplicity`
 
-### Step 3.4 — Define the Inheritance View
+### Step 3.4: Define the Inheritance View
 
 Create a view for `Inheritance`:
 
 1. **Shape**: Edge with a hollow triangle arrowhead at the parent end
 2. **Line style**: Solid
 
-### Step 3.5 — Apply and Enjoy
+### Step 3.5: Apply and Enjoy
 
 Apply the viewpoint to your model. You should see a proper UML class diagram with Person, Student, and Course rendered as boxes, connected by association lines and an inheritance arrow.
 
@@ -171,10 +171,10 @@ In this tutorial you:
 - Defined a complete metamodel for a class diagram language
 - Created a model instance with classes, attributes, and relationships
 - Built a visual viewpoint that renders the model as a UML class diagram
-- Experienced Jjodel's live co-evolution — changes to the metamodel were immediately reflected in the model and viewpoint
+- Experienced Jjodel's live co-evolution: changes to the metamodel were immediately reflected in the model and viewpoint
 
 ## Next Steps
 
-- [Tutorial 2: Custom Viewpoints](../tutorial-02-viewpoint) — explore advanced viewpoint features
-- [Viewpoints Reference](../../user-guide/viewpoints) — deep dive into viewpoint configuration
-- [Anatomy of a Modeling Language](../../concepts/modeling-language-anatomy) — understand the theoretical foundations
+- [Tutorial 2: Custom Viewpoints](../tutorial-02-viewpoint): explore advanced viewpoint features
+- [Viewpoints Reference](../../user-guide/viewpoints): deep dive into viewpoint configuration
+- [Anatomy of a Modeling Language](../../concepts/modeling-language-anatomy): understand the theoretical foundations

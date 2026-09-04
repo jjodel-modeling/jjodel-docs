@@ -23,9 +23,9 @@ Yes. Jjodel is released under the **MIT License**, which allows free use, modifi
 
 Three key differentiators set Jjodel apart:
 
-1. **Live co-evolution** — metamodel changes propagate instantly to models, editors, and viewpoints without regeneration or redeployment
-2. **Cloud-native** — no installation required, real-time collaboration built in
-3. **Reactive and reflective architecture** — the tool observes its own structure and synchronizes all components automatically
+1. **Live co-evolution**: metamodel changes propagate instantly to models, editors, and viewpoints without regeneration or redeployment
+2. **Cloud-native**: no installation required, real-time collaboration built in
+3. **Reactive and reflective architecture**: the tool observes its own structure and synchronizes all components automatically
 
 ## Access and Setup
 
@@ -35,7 +35,7 @@ Visit [app.jjodel.io](https://app.jjodel.io) in your browser. Registration is fr
 
 ### Do I need to install anything?
 
-No. Jjodel runs entirely in the browser. For local development or offline use, you can optionally install Jjodel via Docker or build from source — see [Installation](../installation/install-jjodel).
+No. Jjodel runs entirely in the browser. For local development or offline use, you can optionally install Jjodel via Docker or build from source, see [Installation](../installation/install-jjodel).
 
 ### Can I use Jjodel offline?
 
@@ -81,7 +81,7 @@ Jjodel includes an operation recorder but does not currently provide built-in ve
 
 ### Does Jjodel support metamodel evolution?
 
-Yes — this is one of Jjodel's core strengths. Metamodel changes are propagated instantly, with no recompilation needed.
+Yes, this is one of Jjodel's core strengths. Metamodel changes are propagated instantly, with no recompilation needed.
 
 ## Learning and Support
 
