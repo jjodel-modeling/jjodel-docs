@@ -17,13 +17,13 @@ The JjOM organizes data across three interconnected submodels:
 |----------|---------|----------|
 | **Data** | Represents core modeling artifacts (classes, attributes, references, instances) | DClass, DObject, DAttribute, DReference |
 | **Node** | Manages layout and positional data | Coordinates, geometry, visual state |
-| **View** | Defines visual syntax and rendering | JSX-based view templates |
+| **View** | Defines visual syntax and rendering | DViewPoint, DViewElement, predicates, ir records |
 
 **Data** encodes the abstract syntax of a model: the elements, their attribute values, and their references. This is the semantic content of your model. When you create an Entity with attributes in an ER diagram, the data submodel stores those elements and their properties.
 
 **Node** encodes all layout information: position, dimensions, edge routing, and visual state. This is the presentation layer. When you drag an element on the canvas, only the node submodel changes; the data remains untouched.
 
-**View** defines how model elements are rendered visually. It contains the JSX-based templates, predicates, and styling rules that map abstract syntax to concrete syntax. Each viewpoint produces a view submodel that determines what the user sees on the canvas.
+**View** defines how model elements are rendered visually. It holds the predicates that select elements and the declarations that draw them, which is what maps abstract syntax to concrete syntax. The active viewpoints decide which of these declarations apply, and so what the user sees on the canvas.
 
 The separation of data, node, and view is architecturally significant. It enables layout-sensitive notations where the spatial position of elements contributes to meaning (e.g., railway track plans, PCB layouts), while keeping the semantic content independent of any specific visual arrangement. In Jjodel, layout is not decoration; it is a first-class dimension of meaning that can carry semantic weight.
 
@@ -38,48 +38,40 @@ The JjOM sits at the center of Jjodel's architecture, connecting the front-end a
 The JjOM provides a unified API to query, edit, and synchronize models, their layout, and their visual representation. An analogy from the web domain: the JjOM plays a role similar to the Document Object Model (DOM), but for modeling artifacts instead of HTML documents.
 
 
-## Notation Architecture
+## Viewpoints and Views
 
-The JjOM connects metamodels to their visual representation through a Notation structure. A Notation is a named entity associated with exactly one metamodel through a `definedBy` relationship. The notation holds the complete specification of how model elements are rendered, validated, and behave.
+A metamodel says what a model is. A **viewpoint** says how it draws. Viewpoints belong to the project: the project holds them, and any of them can be matched against the elements of any model it contains. No metamodel owns a viewpoint, and there is no separate notation object between the two. The word notation is the conceptual term for what a viewpoint provides, and [Anatomy of a Modeling Language](../../concepts/modeling-language-anatomy) uses it in that sense.
 
-### Notation, Viewpoints, and Views
+![A project holds viewpoints, each view names the viewpoint it belongs to, and a view that matches an element produces a node](./images/viewpoints-views.svg)
 
-The notation architecture follows a three-level hierarchy:
+A viewpoint is itself a view element: `DViewPoint` extends `DViewElement` and points to itself as its own viewpoint. Views name the viewpoint they belong to through their `viewpoint` field, so the grouping is read upward, from the views to the viewpoint, rather than as a list held by the viewpoint.
 
-A **Notation** (e.g., "State Machine Notation") is owned by a metamodel. It contains zero or more viewpoints.
+The **type** of a viewpoint decides how it composes with the others. It is one of `syntax`, `decoration`, `validation`, `semantics`, and `editor_behavior`. A syntax viewpoint is exclusive, so one is active at a time; the others are overlays and any number of them can be active together. Viewpoints created before the type existed carry none, and their type is derived from the older flags: `isValidation` gives validation, `isExclusiveView` gives syntax, and anything else falls back to decoration. That derivation is why an imported viewpoint can behave differently from what its name suggests. See [Viewpoints](../../user-guide/viewpoints) for how they are created and combined.
 
-A **Viewpoint** groups a family of related views. Its type decides how it composes: a **Syntax** viewpoint is exclusive, so only one is active at a time, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** viewpoints are overlays that layer on top of it. See [Viewpoints](../../user-guide/viewpoints).
+A view has four parts. Its **predicate** selects the instances it applies to, written as `jsCondition` in JavaScript or `oclCondition` in OCL. Its **kind** decides what it produces, a vertex, an edge, or a row; since 3.0 the kind lives in `ir.kind`, which also writes `appliableTo`. Its **structure** says what the element draws: the `ir` record edited in the [View Designer](../../user-guide/view-designer), or the `jsxString` template of a view authored earlier, which keeps working. Its **events** hold the ECA rules and the custom actions, documented in [Jjodel Events](../jjodel-events).
 
-A **View** targets instances of a specific metaclass. Each view has up to four components:
+The predicate is where the syntactic mapping of the language is realized. Given a model and a set of views, the predicates decide which elements get which visual form, which is the mapping written as σ in [Anatomy of a Modeling Language](../../concepts/modeling-language-anatomy). Each element a view accepts becomes a **node**, and the node carries the layout and the state that rules write.
 
-| Component | Purpose | How it is written |
-|-----------|---------|-------------------|
-| Predicate | Selects which instances the view applies to | `oclCondition` in OCL, or `jsCondition` in JavaScript |
-| Structure | Says what the element draws | A declarative record since 3.0, a JSX template before it |
-| Style | Controls appearance | Fields of the record, or an SCSS block for a JSX template |
-| Events | Reacts to changes and drives behavior | ECA rules in JavaScript |
+### How a view is chosen
 
-Views written as JSX templates keep working; the [View Designer](../../user-guide/view-designer) authors the declarative form.
+Several views can accept the same element, from the active syntax viewpoint and from every overlay. They are filtered and ranked:
 
-### How Views Connect to Models
+![Kind, then predicate, then the class shortcut and the sub-view boost, and finally the explicit priority](./images/view-selection.svg)
 
-A View's predicate **selects** model instances: the predicate evaluates against each instance and returns true for those the view should render. The selected instances become **Nodes** in the concrete syntax layer. Each Node carries its own layout and state information.
+The kind comes first, and it is structural: a view that produces a vertex never draws an edge. The predicate is the strong match, evaluated on the element itself. `appliableToClasses` is a shortcut that matches by JjOM class, `DObject` or `DClass` and the others, and it deliberately ranks below a predicate: it is there to catch a family of elements without writing a condition. `subViews` works in the opposite direction: a view raises the priority of another view for the elements it contains, which is how a package view keeps its classifiers drawn in a common theme. What survives is settled by `explicitApplicationPriority`, and the highest one renders.
 
-The predicate is the mechanism that defines the syntactic mapping (σ) from the formal language definition. Given a model (abstract syntax) and a set of views with predicates, σ determines which instances get which visual representations.
+### What a view reads
 
-### Queries in Templates
+A view navigates the model through the same properties everything else uses. The `$` prefix reaches the features the metamodel declares, and the built-in properties are read directly:
 
-Templates can contain **queries** that navigate the model. Jjodel uses JavaScript expressions (not OCL) for in-template queries. A Query is `basedOn` a Metaclass and is `contained` in a Template. In practice, this means JSX expressions inside a template that access `data` properties to navigate references and filter instances.
-
-```jsx title="Query in Template"
+```jsx title="Reading the model from a view"
 {/* navigate the ownedTransitions reference, keep the Transition instances */}
 {data.$ownedTransitions.values
     .filter(t => t.instanceof.name === 'Transition')
     .map(t => <text>{t.$name.value}</text>)}
 ```
 
-This replaced OCL for model querying within templates, providing a more accessible syntax for web developers while maintaining the same expressive power for model navigation.
-
+Expressions like this one replaced OCL for navigation inside a view. OCL remains available for the predicate, where `oclCondition` and `jsCondition` are alternatives.
 
 ## Core Modeling Constructs
 
