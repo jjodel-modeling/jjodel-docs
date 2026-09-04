@@ -12,7 +12,12 @@ sidebar:
 
 A viewpoint defines a perspective on a model. It controls how elements look, what constraints they must satisfy, and how they behave. Each viewpoint contains a set of views, and each view targets specific metaclass instances through a predicate.
 
-Available since Jjodel 1.5. The descriptions on this page refer to Jjodel 1.5 and remain valid in 3.0: viewpoints, views, predicates, exclusive and overlay viewpoints, and validation rules work the same way. Jjodel 3.0 adds a declarative way to author views, documented in [View Designer](../view-designer/).
+Available since Jjodel 1.5. Viewpoints, views and predicates work as they did, and Jjodel 3.0 adds a declarative way to author views, documented in [View Designer](../view-designer/). What changed is the predicate itself: it is now expressed in the form of the **Applies to** tab rather than written in OCL.
+
+:::caution[Not in the 3.0 build]
+The current build renders through **Syntax** viewpoints only. Overlays (Decoration, Validation, Semantics, Editor behavior), the ECA rules behind them, and sub-views are being restored and are planned for 3.5. What follows describes how they work, so that these pages stay usable when they return.
+:::
+
 
 :::note
 Views can now be authored declaratively, without a template, from the properties panel. The **Views in Detail** section below describes the JSX template path, which still works. For the declarative path (shapes, structure, forms, value renderers) see [View Designer](../view-designer/).
@@ -38,7 +43,7 @@ Each view has up to four components:
 
 **Style** controls the visual appearance using SCSS. Styles are scoped to the view and can be layered with overlay viewpoints.
 
-**Events** define behavior using the ECA (Event-Condition-Action) model. An event rule fires on data changes and can update node state attributes, enabling computed properties, validation feedback, and simulation.
+**Events** <span class="badge-next">3.5</span> define behavior using the ECA (Event-Condition-Action) model. An event rule fires on data changes and can update node state attributes, enabling computed properties, validation feedback, and simulation.
 
 ![A viewpoint and its views in the tree](./images/viewpoints-panel-views.png)
 
@@ -52,7 +57,7 @@ Syntax viewpoints are typically **exclusive**: only one exclusive viewpoint can 
 
 In the tree, viewpoints are grouped by kind under **Syntax** and **Validation**, and the active one carries an eye icon.
 
-### Overlay viewpoints
+### Overlay viewpoints <span class="badge-next">3.5</span>
 
 An **overlay** (non-exclusive) viewpoint adds features on top of whatever exclusive viewpoint is currently active. Multiple overlays can be active simultaneously. They extend or override existing view definitions without replacing the entire concrete syntax.
 

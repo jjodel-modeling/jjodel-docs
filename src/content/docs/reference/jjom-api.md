@@ -157,6 +157,8 @@ The declaration of how instances render.
 | `draggable`, `resizable` | `Boolean` | What the user may do with the node |
 | `adaptWidth`, `adaptHeight` | `Boolean` | Whether the node sizes itself to its contents |
 
+Three of these fields describe behavior the current build does not run: `oclCondition` holds the OCL predicates of 1.5, kept for the views that carry one, while a predicate written today goes into `jsCondition` through the Applies to form; `events` and the sub-view mechanism are being restored and are planned <span class="badge-next">3.5</span>.
+
 ## Two vocabularies
 
 The JjOM properties above are what JavaScript sees: view templates, event handlers, and the JavaScript mode of the Console. [JjEL](../../languages/jjel) exposes the same information under its own names, and a few of them differ:

@@ -5,6 +5,10 @@ sidebar:
   order: 2
 ---
 
+:::caution[Not in the 3.0 build]
+This tutorial uses overlay viewpoints and ECA rules, which the current build does not run. They are being restored and are planned for 3.5. Follow it to see how the pieces fit together; the steps become reproducible when overlays return.
+:::
+
 In this tutorial you will extend the class diagram language from Tutorial 1 by creating multiple viewpoints that offer different perspectives on the same model.
 
 **Prerequisites:** Completed [Tutorial 1](../tutorial-01-basic).

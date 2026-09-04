@@ -32,7 +32,7 @@ sidebar:
 
 **DClass** -- A JjOM construct representing a metaclass. DClasses define the structure of model elements: their attributes, references, and containment relationships.
 
-**Decoration View** -- A view in an overlay viewpoint that modifies the visual appearance of elements without replacing their template. Typically style-only: the overlay's style layers on top of the active exclusive viewpoint's rendering.
+**Decoration View** <span class="badge-next">3.5</span> -- A view in an overlay viewpoint that modifies the visual appearance of elements without replacing their template. Typically style-only: the overlay's style layers on top of the active exclusive viewpoint's rendering.
 
 **DEnumeration** -- A JjOM construct representing a fixed set of named values. Used for attributes with a closed set of options (e.g., Visibility: public, private, protected).
 
@@ -48,7 +48,7 @@ sidebar:
 
 **DValue** -- A JjOM construct representing a concrete value held by an attribute at the model level (M1). The runtime counterpart of a DAttribute definition.
 
-**ECA** (Event-Condition-Action) -- The behavioral model used in Jjodel viewpoints. When an event occurs (e.g., `onDataUpdate`), a condition is evaluated, and if true, an action executes. Used for validation rules, computed attributes, and state machine simulation.
+**ECA** (Event-Condition-Action) <span class="badge-next">3.5</span> -- The behavioral model used in Jjodel viewpoints. When an event occurs (e.g., `onDataUpdate`), a condition is evaluated, and if true, an action executes. Used for validation rules, computed attributes, and state machine simulation.
 
 **Exclusive Viewpoint** -- A viewpoint of type Syntax. Only one exclusive viewpoint can be active at a time: activating one deactivates the previous. Exclusivity follows from the type chosen at creation, not from a separate flag. See also: Overlay Viewpoint.
 
@@ -90,7 +90,7 @@ sidebar:
 
 **Operational Semantics** -- The meaning of a language defined by how its constructs execute step by step. In Jjodel, operational semantics can be implemented through overlay viewpoints that use ECA rules and state attributes to simulate execution (e.g., state machine firing transitions).
 
-**Overlay Viewpoint** -- A viewpoint of type Decoration, Validation, Semantics, or Editor behavior. Overlays can be active at the same time as an exclusive viewpoint and as each other, adding features on top of its rendering. See also: Exclusive Viewpoint.
+**Overlay Viewpoint** <span class="badge-next">3.5</span> -- A viewpoint of type Decoration, Validation, Semantics, or Editor behavior. Overlays can be active at the same time as an exclusive viewpoint and as each other, adding features on top of its rendering. See also: Exclusive Viewpoint.
 
 **Panel** -- A JSX component available in the Model view template. Panels create floating titled containers on the canvas with custom content (buttons, text, dynamic queries). Used for simulation controls, legends, and model-level tools.
 
@@ -116,7 +116,7 @@ sidebar:
 
 **Trace** -- The record a transformation leaves after running: which source elements produced which target elements, and whether each mapping is invertible.
 
-**Validation View** -- A view in a validation overlay viewpoint. Contains an ECA rule that checks a constraint and writes error information to `node.state`. Does not need a template or style; validation feedback is rendered by the Generic error view.
+**Validation View** <span class="badge-next">3.5</span> -- A view in a validation overlay viewpoint. Contains an ECA rule that checks a constraint and writes error information to `node.state`. Does not need a template or style; validation feedback is rendered by the Generic error view.
 
 **View** -- A component of a viewpoint that targets instances of a specific metaclass. Every view has a kind, which decides what it produces: a vertex draws a node, an edge draws a connection, a row draws a single value. How it draws is described either declaratively, through symbol, structure, and form, or with the 1.5 combination of a JSX template and an SCSS style. A predicate selects the instances it applies to, and ECA events give it behavior.
 

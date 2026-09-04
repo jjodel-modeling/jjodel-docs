@@ -3,7 +3,14 @@ title: Jjodel Events
 description: The ECA rules a view can carry, the events that fire them, and the state they write.
 sidebar:
   order: 3
+  badge:
+    text: "3.5"
+    variant: default
 ---
+
+:::caution[Not in the 3.0 build]
+The current build renders through **Syntax** viewpoints only. Overlays (Decoration, Validation, Semantics, Editor behavior), the ECA rules behind them, and sub-views are being restored and are planned for 3.5. What follows describes how they work, so that these pages stay usable when they return.
+:::
 
 A view can react. Beside the structure that says how an element draws, it holds a set of handlers that run when something happens to that element, and custom actions that the template can call. Handlers are written in the **Events** tab of the view.
 

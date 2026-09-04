@@ -329,3 +329,18 @@ a[aria-current="page"] .sl-badge.version-3-0 {
   opacity: 1;
   background-color: rgba(15, 23, 42, 0.8);
 }
+
+/* "planned for 3.5" pill, for features not in the current build */
+.sl-markdown-content .badge-next {
+  display: inline-block;
+  margin-left: 0.4em;
+  padding: 0.1em 0.45em;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 999px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--sl-color-gray-2);
+  background: var(--sl-color-gray-6);
+  vertical-align: middle;
+}

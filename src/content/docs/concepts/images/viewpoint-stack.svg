@@ -17,7 +17,7 @@
   <rect width="720" height="380" fill="#ffffff"/>
   <rect x="0.5" y="0.5" width="719" height="379" fill="none" stroke="#e2e8f0"/>
 
-  <text class="t hdr" x="40" y="36">Viewpoints on the metamodel</text>
+  <text class="t hdr" x="40" y="36">Viewpoints in the project</text>
   <text class="t hdr" x="560" y="36" text-anchor="middle">What the canvas shows</text>
 
   <rect x="40" y="52" width="300" height="46" rx="8" fill="#ffffff" stroke="#0ea5e9"/>
@@ -25,15 +25,15 @@
   <text class="t sub" x="56" y="88">exclusive: only one active at a time</text>
 
   <rect x="40" y="110" width="300" height="46" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
-  <text class="t lay" x="56" y="130">Decoration</text>
+  <text class="t lay" x="56" y="130">Decoration &#183; 3.5</text>
   <text class="t sub" x="56" y="146">colors, badges, extra glyphs</text>
 
   <rect x="40" y="168" width="300" height="46" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
-  <text class="t lay" x="56" y="188">Validation</text>
+  <text class="t lay" x="56" y="188">Validation &#183; 3.5</text>
   <text class="t sub" x="56" y="204">markers for the rules a model breaks</text>
 
   <rect x="40" y="226" width="300" height="46" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
-  <text class="t lay" x="56" y="246">Semantics and Editor behavior</text>
+  <text class="t lay" x="56" y="246">Semantics and Editor behavior &#183; 3.5</text>
   <text class="t sub" x="56" y="262">ECA rules, interaction</text>
 
   <text class="t sub" x="40" y="300">Every viewpoint holds one view per metaclass, and a view has a kind:</text>

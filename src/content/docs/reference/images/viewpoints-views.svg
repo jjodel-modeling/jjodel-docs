@@ -33,8 +33,8 @@
 
   <rect x="232" y="96" width="212" height="44" rx="9" fill="#f8fafc" stroke="#cbd5e1"/>
   <text class="t ttl" x="248" y="116">Viewpoint</text>
-  <text class="t tag" x="428" y="116" text-anchor="end">type: validation</text>
-  <text class="t sub" x="248" y="132">an overlay, any number active</text>
+  <text class="t tag" x="428" y="116" text-anchor="end">type: validation &#183; 3.5</text>
+  <text class="t sub" x="248" y="132">an overlay, not applied in 3.0</text>
 
   <path d="M 178 51 L 228 51" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#c)"/>
   <path d="M 178 60 C 205 60, 205 118, 228 118" fill="none" stroke="#0ea5e9" stroke-width="1.3" marker-end="url(#c)"/>

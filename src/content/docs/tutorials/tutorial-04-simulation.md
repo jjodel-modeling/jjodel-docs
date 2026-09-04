@@ -10,6 +10,10 @@ sidebar:
   label: "Tutorial 4: Simulation"
 ---
 
+:::caution[Not in the 3.0 build]
+This tutorial uses overlay viewpoints and ECA rules, which the current build does not run. They are being restored and are planned for 3.5. Follow it to see how the pieces fit together; the steps become reproducible when overlays return.
+:::
+
 This tutorial builds a state machine language from scratch. You will define the metamodel, create a visual concrete syntax with viewpoints, and add operational semantics that let you simulate the state machine by clicking event buttons.
 
 Available since Jjodel 3.0.

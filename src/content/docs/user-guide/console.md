@@ -107,7 +107,7 @@ The node and view submodels are exposed too:
 ```javascript title="Console (JS)"
 node.x
 node.y
-view.oclCondition
+view.jsCondition
 // → "context DObject inv: self.instanceof.name = 'Entity'"
 ```
 

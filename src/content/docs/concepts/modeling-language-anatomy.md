@@ -48,7 +48,7 @@ The notation architecture:
 
 A **Notation** is associated with exactly one metamodel (via `definedBy`). It owns zero or more viewpoints.
 
-A **Viewpoint** groups a family of views. Its type decides how it composes: a **Syntax** viewpoint is exclusive, so only one is active at a time, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** viewpoints are overlays that layer on top of it. See [Viewpoints](../../user-guide/viewpoints) for details.
+A **Viewpoint** groups a family of views. Its type decides how it composes: a **Syntax** viewpoint is exclusive, so only one is active at a time, while **Decoration**, **Validation**, **Semantics**, and **Editor behavior** viewpoints are overlays that layer on top of it. The current build applies syntax viewpoints only; the overlay types are planned <span class="badge-next">3.5</span>. See [Viewpoints](../../user-guide/viewpoints) for details.
 
 A **View** targets instances of a specific metaclass through its predicate. It defines how those instances render, look, and behave. A view has a **kind**, which decides what it produces: a **vertex** draws a node on the canvas, an **edge** draws a connection, and a **row** draws a single value wherever it appears, inside a node, in a table cell, or in a form.
 
