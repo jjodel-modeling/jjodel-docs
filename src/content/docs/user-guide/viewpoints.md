@@ -55,7 +55,7 @@ Viewpoints come in two kinds, and the **type** you pick when you create one deci
 
 Syntax viewpoints are typically **exclusive**: only one exclusive viewpoint can be active at a time. When you activate "State Machine Visual Syntax", the previously active exclusive viewpoint is deactivated. This makes sense for concrete syntax: you see either the Chen notation or the crow's foot notation, not both.
 
-In the tree, viewpoints are grouped by kind under **Syntax** and **Validation**, and the active one carries an eye icon.
+In the tree, syntax viewpoints sit under a **Syntax** group and the active one carries an eye icon. A **Validation** group appears only when the project contains a viewpoint of that type; a new project has none.
 
 ### Overlay viewpoints <span class="badge-next">3.5</span>
 
@@ -127,17 +127,11 @@ The result: all State instances show an orange outline on top of whatever concre
 
 The template is listed as required because the overlay must know the structural context, but in practice you can leave it empty to inherit the exclusive viewpoint's template. The style is where the decoration happens.
 
-## Validation Overlays
+## Validation Overlays <span class="badge-next">3.5</span>
 
-Jjodel ships with a **Default Validation** viewpoint. It is an overlay with three built-in views:
+Earlier builds seeded every project with a **Default Validation** overlay made of three views: a generic error view, a lower bound check on references, and a naming check on instance names. That viewpoint is no longer created, and validation overlays are not evaluated in the current build. The checks it carried now run in the conformance validator, which reports missing names, malformed names, and unsatisfied lower bounds on the model indicator and on the nodes themselves, with no viewpoint involved.
 
-**Generic error view** displays error notifications in a uniform way across all metaclasses.
-
-**Lowerbound error view** checks that all associations satisfy their minimum multiplicity constraints.
-
-**Naming error view** enforces that instance names conform to identifier rules (no special characters).
-
-You can add custom validation views to the Default Validation viewpoint, or create your own validation overlay.
+What follows describes how a validation overlay is written, for when overlays return.
 
 ### View component requirements for validation
 
@@ -238,11 +232,7 @@ See [Jjodel Events](../../reference/jjodel-events) for the full ECA model. In vi
 
 ## Default Viewpoints
 
-Every metamodel starts with two built-in viewpoints:
-
-**Default** is an exclusive syntax viewpoint that provides a generic rendering for all metaclass instances. It shows each instance as a labeled box with its attributes. This is the fallback when no custom syntax viewpoint is active.
-
-**Default Validation** is an overlay viewpoint with built-in views for generic errors, lowerbound checks, and naming conformance. It is active by default and can be toggled off.
+Every metamodel starts with one built-in viewpoint. **Default** is an exclusive syntax viewpoint that provides a generic rendering for all metaclass instances. It shows each instance as a labeled box with its attributes. This is the fallback when no custom syntax viewpoint is active. The **Default Validation** overlay that earlier builds added next to it is no longer seeded, as explained above under Validation Overlays.
 
 When you create a custom exclusive viewpoint (e.g., "State Machine Visual Syntax"), it takes precedence over the Default viewpoint. Any metaclass not covered by a view in the custom viewpoint falls back to the Default viewpoint's rendering.
 
