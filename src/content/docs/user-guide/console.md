@@ -36,7 +36,7 @@ Input history (arrow up/down) is shared between Jjodie and JjScript; the express
 
 ### Jjodie mode
 
-Jjodie is the AI assistant. It answers questions about your models and, for editing requests, generates JjScript commands and executes them. The AI backend is configurable in Settings under Providers (OpenAI, Anthropic, Ollama, and others).
+Jjodie is the AI assistant. It answers questions about MDE, Jjodel, and your models, and for editing requests it generates JjScript blocks that you run from the chat. The AI backend is configurable in Settings under Providers (Claude, GPT, Ollama, and others). The [AI chapter](../../ai/overview) covers Jjodie, the providers, and the other AI features in detail.
 
 ### JjScript mode
 

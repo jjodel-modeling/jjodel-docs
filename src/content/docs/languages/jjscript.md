@@ -149,7 +149,7 @@ JjScript provides context-sensitive suggestions as you type, combining:
 
 ## Integration with Jjodie
 
-JjScript is the execution target for the Jjodie AI assistant. When you type a natural-language request in the chat ("add a name attribute of type String to Person"), Jjodie generates JjScript commands and executes them.
+JjScript is the execution target for the Jjodie AI assistant. When you type a natural-language request in the chat ("add a name attribute of type String to Person"), Jjodie answers with a JjScript block, and you run it with **Run** or one command at a time with **Step**. See [Jjodie](../../ai/jjodie) for the full flow.
 
 ## Complete example
 

@@ -60,7 +60,7 @@ sidebar:
 
 **JjEL** (Jjodel Expression Language) -- The expression language used for predicates, conditions, and queries over models.
 
-**Jjodie** -- The AI assistant. It answers questions about your models and turns editing requests into JjScript commands. The provider is configured in Settings.
+**Jjodie** -- The AI assistant. It answers questions about MDE, Jjodel, and your models, and turns editing requests into JjScript blocks you run yourself. The provider is configured in Settings. See [AI in Jjodel](../../ai/overview).
 
 **JjOM** (Jjodel Object Model) -- The meta-metamodel (M3) that defines the constructs available for building metamodels in Jjodel. Consists of three submodels: data, node, and view.
 

@@ -23,3 +23,6 @@ npm-debug.log*
 
 # scratch area used by the Claude bridge (git locks moved here)
 _to_delete/
+
+# cache
+.astro/

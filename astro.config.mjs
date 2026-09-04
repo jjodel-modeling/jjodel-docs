@@ -30,6 +30,10 @@ export default defineConfig({
           autogenerate: { directory: 'user-guide' },
         },
         {
+          label: 'AI in Jjodel',
+          autogenerate: { directory: 'ai' },
+        },
+        {
           label: 'Concepts',
           autogenerate: { directory: 'concepts' },
         },

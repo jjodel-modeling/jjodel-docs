@@ -59,6 +59,10 @@ Every change to a metamodel is immediately reflected across all related models, 
 
 Yes. Metamodels import from and export to Ecore (`.ecore`); models import from and export to XMI (`.xmi`). Both can also be exported as JSON. These options live in the project workspace, next to each metamodel and model. Whole projects travel as `.jjodel` files from the [Dashboard](../user-guide/dashboard#importing-and-exporting). The team is also exploring participation in the [LionWeb](https://github.com/lionWeb-io) initiative for cross-tool interoperability.
 
+### Does Jjodel use AI?
+
+Yes, through Jjodie: a chat that answers questions about MDE and Jjodel and generates JjScript for building metamodels and models, mapping suggestions between the metamodels of a transformation, and documentation generation for a project. Jjodel ships no model of its own: you connect your provider (Claude, GPT, Gemini, Ollama, and others) with your key, which stays in your browser. See [AI in Jjodel](../ai/overview).
+
 ## Collaboration
 
 ### Does Jjodel support collaborative editing?

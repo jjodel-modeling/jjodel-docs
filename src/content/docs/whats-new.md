@@ -41,6 +41,10 @@ The beta moved on since July. The changes below are live at [beta.jjodel.io](htt
 
 - One **Save project** action shared by the toolbar, the Data Manager and Save & Exit. The autosave runs after fifteen seconds of inactivity, at most every two minutes, without notifications; the top bar shows the time of the last save.
 
+**Documentation**
+
+- A new [AI in Jjodel](../ai/overview/) chapter documents Jjodie, mapping suggestions, documentation generation, and provider configuration in one place.
+
 **Known limits**
 
 - `jjodel/*` annotations are not preserved by an Ecore export and re-import.
