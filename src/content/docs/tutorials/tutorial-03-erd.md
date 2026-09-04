@@ -1,6 +1,6 @@
 ---
 title: "Tutorial 3: Entity-Relationship Diagrams"
-description: Build a complete ER diagram language from scratch: metamodel with composition, enumerations, and a visual viewpoint.
+description: "Build a complete ER diagram language from scratch: metamodel with composition, enumerations, and a visual viewpoint."
 sidebar:
   order: 3
 ---

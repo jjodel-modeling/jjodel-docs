@@ -1,6 +1,6 @@
 ---
 title: Metamodel Editor
-description: Define the abstract syntax of your language: classes, attributes, references, and constraints.
+description: "Define the abstract syntax of your language: classes, attributes, references, and constraints."
 sidebar:
   order: 2
   label: Metamodel Editor

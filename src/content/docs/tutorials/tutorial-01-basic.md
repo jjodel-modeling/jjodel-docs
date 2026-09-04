@@ -1,6 +1,6 @@
 ---
 title: "Tutorial 1: A Basic Class Diagram Language"
-description: Build a simple UML class diagram language from scratch: metamodel, model, and visual viewpoint.
+description: "Build a simple UML class diagram language from scratch: metamodel, model, and visual viewpoint."
 sidebar:
   order: 1
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Tutorial 2: Custom Viewpoints"
-description: Create multiple viewpoints for the same model: visual, validation, and code generation.
+description: "Create multiple viewpoints for the same model: visual, validation, and code generation."
 sidebar:
   order: 2
 ---
