@@ -79,8 +79,6 @@ Overlay viewpoints serve several purposes:
 
 When an overlay viewpoint defines a view for the same metaclass as the active exclusive viewpoint, the overlay's definitions layer on top. If the overlay provides only a style (no template), the exclusive viewpoint's template remains and the overlay's style is applied on top. If the overlay provides a template, it overrides the exclusive viewpoint's template for that metaclass.
 
-<!-- TODO: screenshot -- viewpoints panel showing EX badges, one overlay active (new UI) -->
-
 ## Creating a Viewpoint
 
 To create a new viewpoint, open the project page and click **+ New** in the **Viewpoints** section, or **New viewpoint** in the project rail on the left. The **New Viewpoint** dialog asks for two things:
@@ -90,11 +88,11 @@ To create a new viewpoint, open the project page and click **+ New** in the **Vi
 
 The type is what makes the viewpoint exclusive or an overlay, and the dialog spells out which one you are about to get. Click **Create Viewpoint** to confirm.
 
+![The New Viewpoint dialog with a name filled in and the Syntax type selected](./images/viewpoints-new-viewpoint-dialog.png)
+
 The new viewpoint appears under **Viewpoints** in the tree, ready for its first view. To activate a viewpoint, select it. Activating an exclusive viewpoint deactivates the one that was active before; overlays toggle on and off independently.
 
 Each view inside a viewpoint carries its own **Is Exclusive** toggle in the **Apply to** tab, which decides whether that view wins over other views matching the same instance.
-
-<!-- TODO: screenshot -- creating a viewpoint with Is Exclusive unchecked (new UI) -->
 
 ## Decoration Overlays
 
@@ -177,8 +175,6 @@ if (count > 1) {
 
 When a second Initial State is added to the model, the validation overlay immediately shows an error notification next to the offending instance.
 
-<!-- TODO: screenshot -- validation error showing "Only one initial state allowed!" (new UI) -->
-
 ## Views in Detail
 
 This section describes what a view carries. The JSX template and the SCSS block of 1.5, described further down, are no longer interpreted: they are documented because older projects still contain them, not as a way to author a view today. For the current path see [View Designer](../view-designer/).
@@ -243,9 +239,9 @@ The views that belong to built-in default viewpoints (including **Default → Mo
 - **Debug Mode:** Enable Debug Mode from the workbench settings to unlock editing of default views. Use this only for quick experimentation; changes made this way are not preserved across sessions in the same way as custom viewpoints.
 :::
 
-## Panel and Control Components
+## Panel and Control Components <span class="badge-next">3.5</span>
 
-The Model view in a **custom viewpoint** supports two special components for adding interactive panels to the canvas. These components are not available in the read-only default views; add them in a custom overlay or syntax viewpoint.
+The Model view in a **custom viewpoint** supports two special components for adding interactive panels to the canvas. These components are not available in the read-only default views; add them in a custom overlay or syntax viewpoint. Both are JSX template components, which the current build does not interpret.
 
 ### Panel
 
@@ -277,8 +273,6 @@ This example creates a simulation panel with a Reset button and one button for e
 ```
 
 `<Slider>` creates a numeric slider bound to a node property. `<Toggle>` creates an on/off switch. Both write their values to the node, making them available to templates and ECA rules.
-
-<!-- TODO: screenshot -- simulation panel with Reset and event buttons (new UI) -->
 
 :::caution
 Viewpoints are part of the notation definition, not the model data. Modifying a viewpoint changes the visualization, not the model structure. Deleting a viewpoint does not delete any model elements.
