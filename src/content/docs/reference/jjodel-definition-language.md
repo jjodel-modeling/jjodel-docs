@@ -20,4 +20,4 @@ The [Languages](../../languages/overview) chapter documents the syntax of each. 
 
 ## What is not a textual language
 
-View templates are not part of these three. A view authored in 3.0 is a declarative record edited in the [View Designer](../../user-guide/view-designer); a view authored before 3.0 is a JSX template with an SCSS block, still supported and still editable. Both read the model through the [JjOM API](../jjom-api), which is the vocabulary those expressions navigate.
+View templates are not part of these three. A view is a declarative record edited in the [View Designer](../../user-guide/view-designer): you describe it, you do not program it. The JSX templates of 1.5 are no longer interpreted. What the expressions of these languages navigate is the [JjOM API](../jjom-api).

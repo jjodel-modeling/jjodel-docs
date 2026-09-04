@@ -11,7 +11,7 @@ sidebar:
 ---
 
 :::caution[Not in the 3.0 build]
-This tutorial uses overlay viewpoints and ECA rules, which the current build does not run. They are being restored and are planned for 3.5. Follow it to see how the pieces fit together; the steps become reproducible when overlays return.
+This tutorial builds views as JSX templates with SCSS, and uses overlay viewpoints and ECA rules. None of that runs in the current build: views are authored declaratively in the View Designer, and overlays with their rules are being restored for 3.5. The metamodel steps still apply; the view steps need the new path.
 :::
 
 This tutorial builds a state machine language from scratch. You will define the metamodel, create a visual concrete syntax with viewpoints, and add operational semantics that let you simulate the state machine by clicking event buttons.

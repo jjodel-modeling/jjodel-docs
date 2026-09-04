@@ -20,7 +20,7 @@ The beta moved on since July. The changes below are live at [beta.jjodel.io](htt
 
 **View Designer**
 
-- Views are now authored declaratively from the properties panel: **Applies to**, **Structure**, **Symbol**, **Form** tabs, plus **Source** in Advanced mode. The JSX template path stays available. See [View Designer](../user-guide/view-designer/).
+- Views are now authored declaratively from the properties panel: **Applies to**, **Structure**, **Symbol**, **Form** tabs, plus **Source** in Advanced mode. The JSX template path of 1.5 is no longer interpreted. See [View Designer](../user-guide/view-designer/).
 - Instance nodes render with a header (underlined instance name, secondary type), a two-column attribute compartment, an optional accent bar, and a footer for empty slots. Structure options depend on the shape: what a symbol cannot host is not offered, and the panel says why.
 - A library of value renderers shared by nodes, tables and forms: swatches, chips, reference pills, booleans, numbers with units, dates, progress, code. Collections show four values and a `+k` chip. Singletons without values render as a pill (`Color::Red`).
 - A renderer inspector (Alt+click a row) shows the four detection rules, which one won and why, and lets you change the renderer; the change is written to the metamodel as an annotation.

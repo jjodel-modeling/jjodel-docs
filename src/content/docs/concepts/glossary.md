@@ -22,7 +22,7 @@ sidebar:
 
 **Containment** -- A reference that owns its target. A contained element belongs to exactly one parent and cannot exist without it; in the metamodel editor this is the Composition flag on the reference, as opposed to Aggregation, which shares the target.
 
-**Control** -- A JSX component available in the Model view template. Controls create workbench-level parameter panels with Slider and Toggle widgets. Control values are stored in the node and accessible to templates and ECA rules.
+**Control** -- A JSX component of the 1.5 Model view template, no longer interpreted. Controls create workbench-level parameter panels with Slider and Toggle widgets. Control values are stored in the node and accessible to templates and ECA rules.
 
 **Custom Event Action** -- A named JavaScript function defined in a view's Events tab. Custom actions can be called from template elements (e.g., button onClick handlers). They enable model manipulation logic triggered by user interaction, such as simulation step execution.
 
@@ -54,7 +54,7 @@ sidebar:
 
 **Instance** -- A model element (M1) that is an instanceOf a metaclass (M2). An instance has concrete attribute values and participates in references defined by its metaclass.
 
-**IR Authoring** -- The declarative way of describing a view, introduced in 3.0. Instead of a JSX template, the view is a structured record (kind, symbol, structure, form) that Jjodel's interpreter renders. Enabling it on a view switches the rendering of the instances it matches.
+**IR Authoring** -- The declarative way of describing a view, introduced in 3.0 and the only one that renders. The view is a structured record (kind, symbol, structure, form) that Jjodel's interpreter renders. Enabling it on a view switches the rendering of the instances it matches.
 
 **ISO/IEC/IEEE 42010** -- The international standard for architecture description. Defines viewpoints as specifications of concerns and views as their realization. Jjodel's multi-view modeling follows this framework.
 
@@ -92,13 +92,13 @@ sidebar:
 
 **Overlay Viewpoint** <span class="badge-next">3.5</span> -- A viewpoint of type Decoration, Validation, Semantics, or Editor behavior. Overlays can be active at the same time as an exclusive viewpoint and as each other, adding features on top of its rendering. See also: Exclusive Viewpoint.
 
-**Panel** -- A JSX component available in the Model view template. Panels create floating titled containers on the canvas with custom content (buttons, text, dynamic queries). Used for simulation controls, legends, and model-level tools.
+**Panel** -- A JSX component of the 1.5 Model view template, no longer interpreted. Panels create floating titled containers on the canvas with custom content (buttons, text, dynamic queries). Used for simulation controls, legends, and model-level tools.
 
 **Predicate** -- A boolean expression in a view that selects which model instances the view applies to. Written in OCL or JavaScript. Predicates define the syntactic mapping (σ) between abstract and concrete syntax.
 
 **Primitive Data Types** -- The basic value types available for metamodel attributes: EString, EInt, ELong, EFloat, EDouble, EBoolean, EChar, EByte, EShort, EDate. Aligned with the Ecore type system.
 
-**Query** -- A model navigation expression inside a JSX template. Jjodel uses JavaScript expressions (accessing `data` properties) instead of OCL for querying models within templates.
+**Query** -- A model navigation expression, written as a path over the features of an element. Queries appear in predicates, in labels and in rules, and they read the model through the `$` prefix.
 
 **Row View** -- A view of kind row: it draws a single value wherever that value appears, in the compartment of a node, in a Data Manager cell, or in a form. Renderers include swatches for colours, chips for enumeration literals, pills for references, and dashes for empty slots.
 
@@ -118,7 +118,7 @@ sidebar:
 
 **Validation View** <span class="badge-next">3.5</span> -- A view in a validation overlay viewpoint. Contains an ECA rule that checks a constraint and writes error information to `node.state`. Does not need a template or style; validation feedback is rendered by the Generic error view.
 
-**View** -- A component of a viewpoint that targets instances of a specific metaclass. Every view has a kind, which decides what it produces: a vertex draws a node, an edge draws a connection, a row draws a single value. How it draws is described either declaratively, through symbol, structure, and form, or with the 1.5 combination of a JSX template and an SCSS style. A predicate selects the instances it applies to, and ECA events give it behavior.
+**View** -- A component of a viewpoint that targets instances of a specific metaclass. Every view has a kind, which decides what it produces: a vertex draws a node, an edge draws a connection, a row draws a single value. How it draws is described declaratively, through symbol, structure, and form; the 1.5 combination of a JSX template and an SCSS style is no longer interpreted. A predicate selects the instances it applies to, and ECA events give it behavior.
 
 **View Designer** -- The properties panel of a view when the view is authored declaratively. Its tabs describe what the view applies to, the symbol, the structure of the node, and the form.
 

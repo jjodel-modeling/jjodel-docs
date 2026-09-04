@@ -151,7 +151,7 @@ The declaration of how instances render.
 | `appliableToClasses` | `Array<String>` | JjOM classes the view accepts, such as `DObject` or `DClass` |
 | `explicitApplicationPriority` | `Number` | Priority when several views apply to the same element |
 | `ir` | `Object` | The declarative record introduced in 3.0. `metaclasses` and `predicate` say which elements the view accepts, `kind` what it produces, `priority` how it ranks, and `shape`, `structure` and `form` how it draws |
-| `jsxString` | `String` | The JSX template, for views authored before 3.0 |
+| `jsxString` | `String` | The JSX template of a view authored before 3.0, no longer interpreted |
 | `events` | `Object` | Event handlers and custom actions, by name |
 | `draggable`, `resizable` | `Boolean` | What the user may do with the node |
 | `adaptWidth`, `adaptHeight` | `Boolean` | Whether the node sizes itself to its contents |

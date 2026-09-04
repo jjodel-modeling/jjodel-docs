@@ -20,7 +20,7 @@ The current build renders through **Syntax** viewpoints only. Overlays (Decorati
 
 
 :::note
-Views can now be authored declaratively, without a template, from the properties panel. The **Views in Detail** section below describes the JSX template path, which still works. For the declarative path (shapes, structure, forms, value renderers) see [View Designer](../view-designer/).
+Views are authored declaratively from the properties panel: a shape, a structure, a form. The JSX template of 1.5 is no longer interpreted, so the pages that describe it are kept as history rather than as instructions. See [View Designer](../view-designer/).
 :::
 
 ## Multi-View Modeling
@@ -39,7 +39,7 @@ Each view has up to four components:
 
 **Predicate** selects the instances this view applies to. Without a predicate, the view applies to all instances of its target metaclasses. Predicates are built in the Applies to form, described under [Predicates](#predicates).
 
-**Template** defines the visual structure of matching instances. Templates use JSX and have access to three variables: `data` (the abstract syntax attributes), `node` (the concrete syntax / layout attributes), and `view` (the view-level attributes).
+**Structure** defines what matching instances draw: the shape of the node, where the name and the accent go, which feature rows appear, and which widgets the form uses. You describe it in the panel, and the interpreter renders it.
 
 **Style** controls the visual appearance using SCSS. Styles are scoped to the view and can be layered with overlay viewpoints.
 
@@ -187,7 +187,7 @@ When a second Initial State is added to the model, the validation overlay immedi
 
 ## Views in Detail
 
-This section describes the JSX template path, introduced in Jjodel 1.5 and still available in 3.0. For the declarative path (shapes, structure, forms, value renderers) see [View Designer](../view-designer/).
+This section describes what a view carries. The JSX template and the SCSS block of 1.5, described further down, are no longer interpreted: they are documented because older projects still contain them, not as a way to author a view today. For the current path see [View Designer](../view-designer/).
 
 Selecting a view opens its editor in the properties panel. The **Apply to** tab carries the settings that decide when the view fires, and the remaining tabs hold the components described below.
 
@@ -201,35 +201,15 @@ OCL selection was dropped in 3.0. Views written for 1.5 carry their OCL conditio
 
 Predicates define the **syntactic mapping** (σ) between abstract and concrete syntax. Each view's predicate selects a subset of model instances and maps them to their visual representation through the view's template and style. This is how the language tuple L = (A, C, S, σ, ⟦·⟧) is realized in practice.
 
-### Templates
+### Structure and appearance
 
-Templates use JSX and receive three variables:
+What a view draws is a record: the shape of the node, the header, the compartment of feature rows, the form widgets, and the colors each of them uses. You build it in the panel and the interpreter renders it, so there is no template to write and no stylesheet to keep in sync. [View Designer](../view-designer/) documents every field.
 
-`data` provides access to the abstract syntax (the DObject and its attributes). Navigate the model tree: `data.$parent`, `data.$children`, `data.$className`. Access attribute values with the `$` prefix: `data.$name`, `data.$ownedTransitions`.
+A metaclass whose instances should appear only as a connection, a Transition between two states for example, is drawn by a view whose kind is **edge**. In 1.5 the same result needed a template plus a style that collapsed the node to zero size; that trick is no longer necessary.
 
-`node` provides access to the concrete syntax (position, size, layout, state attributes). Use `node.state` to read and write computed properties.
+### The 1.5 template path
 
-`view` provides access to view-level attributes and user-defined parameters.
-
-Templates can contain **queries** that navigate the model. Jjodel replaced OCL with JSX for model querying; a query is simply a JavaScript expression inside JSX that accesses `data` properties.
-
-### Styling
-
-Styles use SCSS, scoped to the view. The root selector `&>.root` targets the outermost container of the rendered node. Overlay styles are applied after exclusive viewpoint styles, so they can override or extend properties.
-
-### Silent views
-
-A **silent view** is a view that makes its node invisible and renders only an Edge component. This is the standard pattern for Transition-like metaclasses where the element itself should not appear as a box; only the arrow between source and target is visible.
-
-To create a silent view, set the style to zero dimensions:
-
-```scss title="Silent View Style (SCSS)"
-&>.root {
-    border: 0px solid var(--border-color-1)!important;
-    width: 0px;
-    height: 0px;
-}
-```
+Views authored before 3.0 carry a JSX template in `jsxString` and an SCSS block beside it. Jjodel no longer interprets them: an old project opens, and its views need to be described again in the panel. The fields survive in the record, which is why they still appear in the [JjOM API](../../reference/jjom-api).
 
 The template renders an `<Edge>` component conditionally, only when the required reference (e.g., `nextState`) is set:
 

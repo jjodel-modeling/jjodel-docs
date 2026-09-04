@@ -115,7 +115,7 @@ view.jsCondition
 
 - **Testing predicates** before using them in viewpoint definitions: write the predicate in the Console, verify it selects the right elements, then copy it into the view configuration.
 - **Prototyping JjEL expressions** before using them in JjTL guards and mappings.
-- **Exploring the JjOM structure** to understand how your metamodel maps to the runtime object graph; essential when writing JSX templates that navigate references.
+- **Exploring the JjOM structure** to understand how your metamodel maps to the runtime object graph; essential when writing predicates and rules that navigate references.
 - **Bulk edits** through JjScript (`forall a in attributes such that a.isDerived do delete a`).
 
 ## Log messages

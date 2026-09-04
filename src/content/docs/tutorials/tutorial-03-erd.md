@@ -5,6 +5,10 @@ sidebar:
   order: 3
 ---
 
+:::caution[Written for the 1.5 authoring path]
+This tutorial builds views as JSX templates with SCSS, which 3.0 no longer interprets: views are authored declaratively in the View Designer. The metamodel steps still apply; the view steps need the new path.
+:::
+
 In this tutorial you build a complete Entity-Relationship diagram language. Unlike the first two tutorials, this one follows a realistic workflow: you start with a known notation, formalize it as a metamodel, discover problems along the way, and solve them using composition, enumerations, and validation.
 
 The objective is to build a DSL that lets you describe ER diagrams by defining what Entities, Attributes, and Relationships mean at the metamodel level. You will create core classes, define relationships between them, and add enumerations for type safety.

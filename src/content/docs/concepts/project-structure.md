@@ -109,7 +109,7 @@ A **Syntax** viewpoint is exclusive. It provides the notation, so only one can b
 
 Inside a viewpoint, a view has two parts that matter. Its **predicate** selects the instances it applies to, which is usually all instances of one metaclass but can be narrower. Its **kind** decides what the view produces: a **vertex** draws a node on the canvas, an **edge** draws a connection between two nodes, and a **row** draws a single value wherever it appears, inside a node, in a table cell, or in a form.
 
-Since 3.0 a view is described declaratively. You choose a shape and say where the name, the accent, and the feature rows go, and Jjodel's interpreter draws it. Views written as JSX templates in earlier versions keep working. See [Viewpoints](../../user-guide/viewpoints) for how viewpoints are created and combined, and [View Designer](../../user-guide/view-designer) for how one view is authored.
+Since 3.0 a view is described declaratively. You choose a shape and say where the name, the accent, and the feature rows go, and Jjodel's interpreter draws it. The JSX templates of earlier versions are no longer interpreted, so a view that came with one has to be described again. See [Viewpoints](../../user-guide/viewpoints) for how viewpoints are created and combined, and [View Designer](../../user-guide/view-designer) for how one view is authored.
 
 ## Validation
 

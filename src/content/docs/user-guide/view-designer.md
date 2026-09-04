@@ -14,7 +14,7 @@ The View Designer is the properties panel of a view when the view is authored de
 
 Available since Jjodel 3.0 (September 2026 update).
 
-This page covers the panel and the rendering model behind it. For what a viewpoint is and how views compose, see [Viewpoints](../viewpoints/). Views written as JSX templates keep working; the declarative path is the recommended one for new views.
+This page covers the panel and the rendering model behind it. For what a viewpoint is and how views compose, see [Viewpoints](../viewpoints/). The JSX templates of 1.5 are no longer interpreted, so the panel is the way a view is described.
 
 ![The View Designer on a vertex view, Structure tab](./images/view-designer-structure.png)
 
