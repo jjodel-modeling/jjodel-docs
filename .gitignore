@@ -26,3 +26,7 @@ _to_delete/
 
 # cache
 .astro/
+
+# video pills: Jjodel credentials used by scripts/video-pills (never commit)
+.env.jjodel
+scripts/video-pills/work/

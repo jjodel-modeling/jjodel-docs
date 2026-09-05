@@ -1,0 +1,38 @@
+[
+ {
+  "id": "intro",
+  "text": "In this tutorial you build the metamodel of an Entity-Relationship language in Jjodel. Seven steps, from an empty project to a complete abstract syntax."
+ },
+ {
+  "id": "s1",
+  "text": "Step one. From the dashboard, create a new project called ERDLanguage, open it, and create its first metamodel. Rename the metamodel to ERD."
+ },
+ {
+  "id": "s2",
+  "text": "Step two. Entities, attributes and relationships all have a name. Drag an Abstract Class onto the canvas and call it NamedElement. Drop an Attribute on it, name it name, keep the type EString, and make it mandatory with multiplicity one to one."
+ },
+ {
+  "id": "s3",
+  "text": "Step three. Drag a Class onto the canvas and call it Entity. Drag from an anchor of Entity to NamedElement, and choose Inheritance in the edge type menu. Entity now inherits the name."
+ },
+ {
+  "id": "s4",
+  "text": "Step four. Add a class called Attribute, and make it extend NamedElement as well. Then connect Entity to Attribute and choose Composition. Name the reference ownedAttributes, with multiplicity zero to many. An attribute belongs to exactly one entity."
+ },
+ {
+  "id": "s5",
+  "text": "Step five. Attributes need a type. Add an Enumeration called Type, with the literals String, Integer and Boolean. Then drop an attribute called type on the Attribute class, typed with the enumeration, and mandatory."
+ },
+ {
+  "id": "s6",
+  "text": "Step six. Add a class called Relationship, also a NamedElement. Connect it to Entity twice, choosing Association each time: the references left and right, both mandatory. A relationship points at two entities but does not own them."
+ },
+ {
+  "id": "s7",
+  "text": "Step seven. Add an Enumeration called Cardinality with the literals OneToOne, OneToMany, ManyToOne and ManyToMany, and a mandatory attribute called cardinality on Relationship. The status bar reports four classes, two enumerations, three attributes and three references. The metamodel is complete."
+ },
+ {
+  "id": "outro",
+  "text": "Next, you create a first model with this language. The full tutorial, with every step written out, is at docs dot jjodel dot io."
+ }
+]
