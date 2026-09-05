@@ -104,114 +104,6 @@
   border-radius: 8px;
 }
 
-/* Sidebar version badges: the class carries the version number,
-   the CSS decides which one is current. On a new release, update
-   only the "current release" selector below. */
-.sl-badge[class*="version-"],
-.sl-badge.docs-new {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-  padding: 0 0.375rem;
-  border: 1px solid;
-  border-radius: 4px;
-  box-shadow: none;
-}
-
-/* Previous releases (default for any version-* class) */
-.sl-badge[class*="version-"] {
-  border-color: #cbd5e1;
-  color: #475569;
-  background-color: transparent;
-}
-
-/* Current release */
-.sl-badge.version-3-0 {
-  border-color: #0ea5e9;
-  color: #0369a1;
-  background-color: #f0f9ff;
-}
-
-/* Pages available since an earlier release: a second pill with the
-   previous version is drawn to the left of the current-release badge.
-   Fixed offset, no reflow. */
-.sl-badge.since-1-5 {
-  position: relative;
-  margin-left: 2.375rem;
-}
-
-.sl-badge.since-1-5::before {
-  content: "1.5";
-  position: absolute;
-  top: -1px;
-  right: calc(100% + 0.25rem);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-  padding: 0 0.375rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  color: #475569;
-  background-color: transparent;
-  white-space: nowrap;
-}
-
-/* New docs content */
-.sl-badge.docs-new {
-  border-color: #0ea5e9;
-  color: #ffffff;
-  background-color: #0ea5e9;
-}
-
-:root[data-theme='dark'] .sl-badge[class*="version-"] {
-  border-color: #475569;
-  color: #94a3b8;
-  background-color: transparent;
-}
-
-:root[data-theme='dark'] .sl-badge.version-3-0 {
-  border-color: #0ea5e9;
-  color: #7dd3fc;
-  background-color: rgba(14, 165, 233, 0.12);
-}
-
-:root[data-theme='dark'] .sl-badge.since-1-5::before {
-  border-color: #475569;
-  color: #94a3b8;
-}
-
-:root[data-theme='dark'] .sl-badge.docs-new {
-  color: #0f172a;
-}
-
-/* Current-page row: Starlight inverts the link colors, so the badges
-   take the palette of the opposite theme. */
-a[aria-current="page"] .sl-badge[class*="version-"],
-a[aria-current="page"] .sl-badge.since-1-5::before {
-  border-color: #475569;
-  color: #94a3b8;
-  background-color: transparent;
-}
-
-a[aria-current="page"] .sl-badge.version-3-0 {
-  border-color: #0ea5e9;
-  color: #7dd3fc;
-  background-color: rgba(14, 165, 233, 0.12);
-}
-
-:root[data-theme='dark'] a[aria-current="page"] .sl-badge[class*="version-"],
-:root[data-theme='dark'] a[aria-current="page"] .sl-badge.since-1-5::before {
-  border-color: #cbd5e1;
-  color: #475569;
-  background-color: transparent;
-}
-
-:root[data-theme='dark'] a[aria-current="page"] .sl-badge.version-3-0 {
-  border-color: #0ea5e9;
-  color: #0369a1;
-  background-color: #f0f9ff;
-}
-
 /* Screenshots: rounded corners and a hairline border on every content image */
 .sl-markdown-content img {
   border-radius: 8px;
@@ -345,25 +237,59 @@ a[aria-current="page"] .sl-badge.version-3-0 {
   vertical-align: middle;
 }
 
-/* Sidebar badges: quiet version markers instead of pills */
+/* ---- Sidebar badges: quiet version markers, right-aligned ---- */
+
+.sidebar-content a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 .sidebar-content .sl-badge {
-  font-family: var(--sl-font-system);
-  font-size: 0.6875rem;          /* 11px */
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: 0.01em;
+  flex: none;
+  margin: 0;
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--sl-color-gray-3);
-  margin-inline-start: 0.4rem;
-  vertical-align: 0.05em;
+  box-shadow: none;
+  font-family: var(--sl-font-system);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: inherit;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: inherit;
+  opacity: 0.55;
   white-space: nowrap;
 }
 
-/* Keep a faint accent on non-version badges (e.g. "New"), still text-only */
-.sidebar-content .sl-badge.success,
-.sidebar-content .sl-badge.tip {
+/* "since 1.5": inline prefix instead of a floating pill */
+.sidebar-content .sl-badge.since-1-5 {
+  position: static;
+}
+
+.sidebar-content .sl-badge.since-1-5::before {
+  content: "1.5 · ";
+  position: static;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+}
+
+/* "New" is the only badge that keeps a color */
+.sidebar-content .sl-badge.docs-new {
+  opacity: 1;
   color: var(--sl-color-accent);
+  font-size: 0.625rem;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+a[aria-current="page"] .sl-badge.docs-new {
+  color: inherit;
 }
