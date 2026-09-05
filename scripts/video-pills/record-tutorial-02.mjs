@@ -1,15 +1,13 @@
-// Video pill recorder for Tutorial 4 (Populating a Model with the Data Manager).
-// Same machinery as record-tutorial-01.mjs, plus fast-forward intervals (ffStart/ffEnd) that compose.py
-// plays k times faster: the repetitive creations are shown, not skipped, without stretching the pill.
-// The title card is composed afterwards (compose.py title.png 10.4): the in-page overlay does not survive
-// the navigation from the dashboard to the model, so the first seconds of the raw recording are covered.
+// Video pill recorder for Tutorial 2 (Concrete Syntax: Chen Diagrams).
+// Same machinery as record-tutorial-03.mjs: synthetic cursor, dead-time cuts, fast-forward intervals for the
+// second and third view, title card composed afterwards (compose.py title.png <start of s1>).
+// Expects the ERDLanguage project as left by tutorial 1 (metamodel ERD with isKey, model People, no viewpoint).
 // Usage: see README.md in this folder.
 import { chromium } from 'playwright';
 import fs from 'fs';
 const SP = process.env.PILL_DIR || process.cwd();   // working dir: narration.json and wavs, raw/, shots/
 const ENV_FILE = process.env.PILL_ENV || SP + '/.env.jjodel';   // JJ_EMAIL=... JJ_PASS=... (never commit)
 const HELPERS = process.env.PILL_HELPERS || new URL('./helpers.js', import.meta.url).pathname;
-const LOGO = new URL('../../src/assets/jjodel-logo-white.png', import.meta.url).pathname;
 const env = Object.fromEntries(fs.readFileSync(ENV_FILE,'utf8').trim().split('\n').map(l=>l.split('=')));
 const segs = JSON.parse(fs.readFileSync(SP+'/narration.json','utf8'));
 const seg = id => segs.find(s=>s.id===id);
@@ -79,119 +77,102 @@ const renameLiteral = async (enumName, idx, name) => { await H.node(enumName).lo
 const selectMemberByText = async (nodeName, text) => { await H.node(nodeName).locator('.mm-field__name').filter({hasText: new RegExp('^'+text+'$')}).first().click(); for(let k=0;k<20;k++){ if((await H.panelName())===text) break; await sleep(150);} };
 
 
+
 fs.mkdirSync(SP+'/shots', {recursive:true});
 const shot = async f => { await page.evaluate(()=>{ const c=document.getElementById('__cur'); if(c) c.style.display='none'; }); await sleep(120); await page.screenshot({path: SP+'/shots/'+f}); await page.evaluate(()=>{ const c=document.getElementById('__cur'); if(c) c.style.display=''; }); };
+const css = async () => { await page.addStyleTag({content:'.wm-backdrop,.notification-widget,.donation-banner,.advanced-mode-tutorial-overlay,.jj-toast-container{display:none!important} .react-flow__minimap{pointer-events:none!important}'}).catch(()=>0); };
 const vp = async name => { await page.locator('[title="Select viewpoint"]:visible').click(); await sleep(700); await page.locator('.toolbar-viewpoint-menu :text("'+name+'")').hover(); await sleep(350); await page.locator('.toolbar-viewpoint-menu :text("'+name+'")').click(); };
-const fclick = async loc => { await loc.click({force:true, noWaitAfter:true}); };
-const fset = async (feature, value) => { const el = page.locator('#instance-manager-draft-'+feature); const tag = await el.evaluate(e=>e.tagName); if (tag==='SELECT') await el.selectOption({label:value}); else await el.fill(value); await sleep(120); };
-const fcreate = async () => { await fclick(page.locator('.instance-manager__draft-foot button:has-text("Create")')); await sleep(900); };
-const fattr = async (entity, an, at) => { await fclick(page.locator('.instance-manager__row', {hasText:'Entity'}).first()); await sleep(500); const r = H.dm.row(entity); await fclick(r.locator('.instance-manager__td-name')); await sleep(500); await fclick(page.locator('button:has-text("Add Attribute")').first()); await sleep(500); await fset('type', at); await fset('name', an); await fcreate(); };
-const fentity = async (name, attrs) => { await fclick(page.locator('.instance-manager__row', {hasText:'Entity'}).first()); await sleep(700); await fclick(page.locator('button:has-text("New Entity")')); await sleep(500); await fset('name', name); await fcreate(); for (const [an, at] of attrs) await fattr(name, an, at); };
-const newRel = async (name, left, right, card) => { await page.locator('button:has-text("New Relationship")').click(); await sleep(900); await H.dm.set('cardinality', card); await H.dm.set('left', left); await H.dm.set('right', right); await H.dm.set('name', name); await H.dm.create(); };
+const removeCompartment = async () => { await H.vtab('Structure'); const rm = H.vpanel().locator('button[aria-label="Remove"]').filter({visible:true}); while (await rm.count()) { await rm.first().hover(); await sleep(400); await rm.first().click(); await sleep(600); } };
+const cardinalityLabel = async () => { const m = page.locator('.symbol-editor-modal'); await m.locator('button:has-text("Add label")').click(); await sleep(700); let sels = m.locator('select'); let n = await sels.count(); await sels.nth(n-2).selectOption({label:'Bottom'}); await sleep(500); await sels.nth(n-1).selectOption({label:'Feature path'}); await sleep(900); sels = m.locator('select'); n = await sels.count(); await sels.nth(n-2).selectOption({label:'cardinality : Cardinality'}); await sleep(700); };
+const mkView = async (name, mc, preset, extra) => {
+  await H.treeBack(); await H.newView('ChenNotation', name); await H.viewApplyTo(mc); await H.enableIR('Vertex (node)');
+  await removeCompartment();
+  await H.symbolPreset('DATA (ER)', preset); await H.symbolLabel('Center','name'); if (extra) await extra(); await H.symbolClose(); await sleep(400);
+};
 
-// ---- intro: title card as overlay while the app loads
+// ---- intro: title card (composed afterwards) while the project page loads
 startSeg('intro');
-const TITLE = `<div id="__title" style="pointer-events:none;position:fixed;inset:0;z-index:2147483600;background:#334155;color:#f8fafc;font-family:Inter,system-ui,sans-serif;display:flex;align-items:center;justify-content:center">
-<div style="text-align:center"><img src="data:image/png;base64,${fs.readFileSync(LOGO).toString('base64')}" style="width:260px;margin-bottom:34px" alt="Jjodel"/><div style="font-size:20px;letter-spacing:.2em;color:#7dd3fc;margin-bottom:18px">TUTORIAL 4</div>
-<div style="font-size:56px;font-weight:700;line-height:1.15">Populating a Model<br/>with the Data Manager</div>
-<div style="font-size:22px;color:#cbd5e1;margin-top:30px">Entities, attributes and relationships from a table, no canvas needed</div></div></div>`;
-await page.setContent(`<html><body style="margin:0">${TITLE}</body></html>`);
-await sleep(2500); deadStart();
-await page.goto('https://beta.jjodel.io/#/allProjects', {waitUntil:'commit'});
-await page.evaluate((t)=>{ const add=()=>{ if(document.body){ document.body.insertAdjacentHTML('beforeend', t); } else setTimeout(add,5); }; add(); }, TITLE).catch(()=>0);
-await page.waitForLoadState('load'); await page.evaluate((t)=>{ if(!document.getElementById('__title')) document.body.insertAdjacentHTML('beforeend', t); }, TITLE);
-// open the project and the model behind the title card
+await page.goto('https://beta.jjodel.io/#/allProjects', {waitUntil:'commit'}); deadStart();
 await page.locator('.gallery-card').filter({hasText:/ERDLanguage/}).first().waitFor({state:'visible', timeout:90000}); await sleep(500);
 await page.locator('.gallery-card').filter({hasText:/ERDLanguage/}).first().locator('.gallery-card__name, [class*=name]').first().click().catch(async()=>{ await page.locator('.gallery-card').filter({hasText:/ERDLanguage/}).first().click(); });
-await page.locator('.list-card__name', {hasText:/^People$/}).first().waitFor({state:'visible', timeout:90000}); await sleep(400);
-await page.locator('.list-card__name', {hasText:/^People$/}).first().click();
-await page.locator('[title="Select viewpoint"]:visible').waitFor({state:'visible', timeout:90000}); await sleep(1000); deadEnd();
-await endSeg(0.2);
-await page.evaluate(()=>{ const t=document.getElementById('__title'); if(t){ t.style.transition='opacity .5s'; t.style.opacity='0'; setTimeout(()=>t.remove(), 550);} }); await sleep(700);
+await page.locator('.list-card__name', {hasText:/^People$/}).first().waitFor({state:'visible', timeout:90000}); await sleep(1500); await css(); deadEnd();
+await endSeg(0.3);
 
-// ---- s1: open the Data Manager
+// ---- s1: create the viewpoint
 startSeg('s1');
-await sleep(1500);
-await vp('Data manager');
-await loadWait(page.locator('.instance-manager__row').first(), 1500);
-await waitUntil(segStart + 12.5);
-await H.dm.metaclass('Entity'); await sleep(800);
+await sleep(800);
+await page.locator('.psb-new', {hasText:/New viewpoint/}).hover(); await sleep(400);
+await page.locator('.psb-new', {hasText:/New viewpoint/}).click(); await sleep(1200);
+const vn = page.locator('#viewpoint-name'); await vn.click(); await vn.pressSequentially('ChenNotation', {delay:55}); await sleep(600);
+await shot('t2-new-viewpoint-dialog.png');
+await page.locator('button:has-text("Create Viewpoint")').click();
+await loadWait(page.locator('.tree-row__name', {hasText:/^ChenNotation$/}).first(), 1500); await css();
 await endSeg();
 
-// ---- s2: New Entity Department
+// ---- s2: EntityView, apply to, IR authoring
 startSeg('s2');
-await sleep(600);
-await page.locator('button:has-text("New Entity")').click(); await sleep(1200);
-await waitUntil(segStart + 6.5);
-await H.dm.set('name','Department'); await sleep(400);
-await shot('t4-new-entity.png');
-await H.dm.create(); await sleep(600);
+await H.treeBack(); await H.newView('ChenNotation', 'EntityView'); await sleep(400);
+await H.viewApplyTo('ERD.Entity'); await sleep(600);
+await page.locator('.view-editor-tab', {hasText:/^IR$/}).click(); await sleep(900);
+await shot('t2-ir-authoring.png');
+const kind = H.vpanel().locator('select').first(); await kind.selectOption({label:'Vertex (node)'}); await sleep(500);
+await page.locator('button:has-text("Enable IR authoring")').click(); await sleep(1800);
 await endSeg();
 
-// ---- s3: attributes + two more entities
+// ---- s3: remove the compartment
 startSeg('s3');
-await page.locator('button:has-text("Add Attribute")').first().click(); await sleep(1100);
-await waitUntil(segStart + 5.5);
-await H.dm.set('type','Integer'); await H.dm.set('name','id'); await shot('t4-new-attribute.png'); await H.dm.create();
-await sleep(300); ffStart(8);
-await fattr('Department','name','String');
-await fentity('Project', [['code','String'],['title','String'],['active','Boolean']]);
-await fentity('Address', [['street','String'],['city','String'],['zip','String']]);
-await fclick(page.locator('.instance-manager__row', {hasText:'Entity'}).first()); await sleep(1500); ffEnd();
-await endSeg(0.5);
+await H.vtab('Structure'); await sleep(1200);
+await shot('t2-structure-tab.png');
+await removeCompartment();
+await endSeg();
 
-// ---- s4: read the Person row
+// ---- s4: symbol and label
 startSeg('s4');
-await H.dm.row('Person').locator('.instance-manager__td-name').click(); await sleep(2500);
-await page.locator('.instance-manager__table-scroll').evaluate(e=>{ e.style.scrollBehavior='smooth'; e.scrollTop = e.scrollHeight; }); await sleep(2000);
-await shot('t4-entity-table.png');
+await H.symbolPreset('DATA (ER)', 'Entity'); await sleep(800);
+await shot('t2-symbol-editor-er-family.png');
+await H.symbolLabel('Center','name'); await sleep(800);
+await H.symbolClose(); await sleep(400);
 await endSeg();
 
-// ---- s5: relationships
+// ---- s5: look at the model
 startSeg('s5');
-await H.dm.metaclass('Relationship'); await sleep(500);
-await page.locator('button:has-text("New Relationship")').click(); await sleep(900); await H.dm.set('cardinality','ManyToOne'); await H.dm.set('left','Person'); await H.dm.set('right','Department'); await H.dm.set('name','worksIn'); await sleep(300);
-ffStart(6); await H.dm.create();
-await newRel('leads','Person','Project','OneToMany');
-await newRel('livesAt','Person','Address','OneToOne');
-await sleep(500); ffEnd();
+await page.locator('.project-name').click(); deadStart(); await sleep(1500);
+await page.locator('.list-card__name', {hasText:/^People$/}).first().click();
+await page.locator('[title="Select viewpoint"]:visible').waitFor({state:'visible', timeout:90000}); await sleep(2500); await css(); deadEnd();
+await vp('ChenNotation'); await sleep(2500);
+await endSeg();
+
+// ---- s6: AttributeView (fast)
+startSeg('s6');
+await page.locator('.appbar-tab__name', {hasText:/^ERD$/}).click(); deadStart(); await sleep(2500); await css(); deadEnd();
+ffStart(3);
+await mkView('AttributeView','ERD.Attribute','Attribute');
+ffEnd();
 await endSeg(0.5);
 
-// ---- s6: multi-edit isKey
-startSeg('s6');
-await H.dm.metaclass('Attribute'); await sleep(600); ffStart(2);
-for (const t of ['id','code']) { const rows = page.locator('table tbody tr[title="'+t+'"]'); const n = await rows.count(); for (let i=0;i<n;i++){ await rows.nth(i).locator('input[type=checkbox]').click({noWaitAfter:true}); await sleep(250); } }
-await sleep(800); ffEnd();
-await waitUntil(segStart + 8.5);
-await page.locator('.instance-manager__tri-btn', {hasText:/^on$/}).click(); await sleep(700);
-await shot('t4-multi-edit.png');
-await page.locator('.instance-manager__multi-actions button:has-text("Apply to")').click(); await sleep(1200);
-await endSeg();
-
-// ---- s7: delete preview
+// ---- s7: RelationshipView with the cardinality label
 startSeg('s7');
-await H.dm.metaclass('Entity'); await sleep(500);
-await H.dm.row('Address').hover(); await sleep(700);
-await H.dm.row('Address').locator('.instance-manager__trash').click(); await sleep(1200);
-await shot('t4-delete-dialog.png');
-await waitUntil(segStart + 10.5);
-await page.locator('.instance-manager__del-foot button:has-text("Cancel")').click(); await sleep(500);
-await endSeg();
+ffStart(3);
+await H.treeBack(); await H.newView('ChenNotation', 'RelationshipView'); await H.viewApplyTo('ERD.Relationship'); await H.enableIR('Vertex (node)');
+await removeCompartment();
+await H.symbolPreset('DATA (ER)', 'Relationship'); await H.symbolLabel('Center','name');
+ffEnd();
+await cardinalityLabel(); await sleep(600);
+await shot('t2-relationship-labels.png');
+await H.symbolClose(); await sleep(300);
+await endSeg(0.5);
 
-// ---- outro: save, back to the canvas
+// ---- outro: the model in Chen notation
 startSeg('outro');
-await page.keyboard.press('Control+S'); await sleep(1200);
-deadStart();
-await page.locator('.appbar-tab__name', {hasText:/^People$/}).click(); await sleep(2500);
-await page.addStyleTag({content:'.react-flow__minimap{pointer-events:none!important}'}).catch(()=>0);
-const vpText = await page.locator('[title="Select viewpoint"]:visible').innerText().catch(()=>'');
-deadEnd();
-if (!/Chen/.test(vpText)) await vp('ChenNotation');
+await page.locator('.appbar-tab__name', {hasText:/^People$/}).click(); deadStart();
+await page.locator('.react-flow__node:visible').first().waitFor({state:'visible', timeout:90000});
+await page.waitForFunction(()=>![...document.querySelectorAll('[class*=spinner],[class*=loading],[class*=Spinner]')].some(e=>e.offsetParent && e.getBoundingClientRect().width>0), null, {timeout:90000}).catch(()=>0);
+await sleep(1200); await css(); deadEnd();
 await sleep(600);
-deadStart(); await page.locator('[title="Auto layout"]:visible').click(); await sleep(2500); deadEnd(); await sleep(1000);
-await shot('t4-chen-grown.png');
-await page.keyboard.press('Control+S'); await sleep(1500);
+deadStart(); await page.locator('[title="Auto layout"]:visible').click(); await sleep(3000); deadEnd(); await sleep(1000);
+await shot('t2-chen-diagram.png');
 await endSeg(1.0);
+deadStart(); await page.keyboard.press('Control+S'); await sleep(5000); deadEnd();
 
 const total = now();
 fs.writeFileSync(SP+'/timeline.json', JSON.stringify({timeline, total, cuts, ffs, editedTotal: enow()}, null, 1));

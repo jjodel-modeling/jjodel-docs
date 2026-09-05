@@ -8,7 +8,11 @@ sidebar:
 
 In this tutorial you give the ER language from [the first tutorial](../01-er-metamodel) its classic notation: entities as rectangles, attributes as ovals connected to their entity, relationships as diamonds that show their cardinality, key attributes highlighted. You build it as a viewpoint with three views, one per metaclass, and you describe each view in the View Designer: which metaclass it applies to, which symbol draws it, which labels it shows. Jjodel renders the description; there is no template to write and no stylesheet to maintain.
 
-<!-- TODO: video pill (under 3 minutes): the three views of the ChenNotation viewpoint at speed -->
+<video controls preload="metadata" width="100%" poster="/videos/tutorial-02-chen-notation-poster.jpg" src="/videos/tutorial-02-chen-notation.mp4">
+  Your browser does not support the video element. <a href="/videos/tutorial-02-chen-notation.mp4">Download the video</a>.
+</video>
+
+The video (under three minutes) shows Steps 1 to 7 at speed. Use it as a preview, then follow the text; Step 8 is only in the text.
 
 ![The People model rendered with the ChenNotation viewpoint](./images/tutorial-02-chen-diagram.png)
 
@@ -18,7 +22,7 @@ In this tutorial you give the ER language from [the first tutorial](../01-er-met
 
 ## Notation as a separate layer
 
-The metamodel says what an ER model contains. A viewpoint says how it looks. A **syntax viewpoint** is exclusive: when it is active, its views decide the rendering of every instance they match, and metaclasses without a view fall back to the Default rendering. Building a second notation for the same models, which the next tutorial does, means adding a second viewpoint, not touching the metamodel or the models.
+The metamodel says what an ER model contains. A viewpoint says how it looks. A **syntax viewpoint** is exclusive: when it is active, its views decide the rendering of every instance they match, and metaclasses without a view fall back to the Default rendering. Building a second notation for the same models means adding a second viewpoint, not touching the metamodel or the models.
 
 Each **view** is a record with three parts you will fill in turn. *Applies to*: the metaclass whose instances the view draws. *Symbol*: the shape, taken from a catalogue of presets that already includes a Data (ER) family, with its fill, border and text labels. *Structure*: what the node shows besides the symbol, in particular the compartment that lists attribute values. The [View Designer](../../user-guide/view-designer) page documents every field; this tutorial uses the few that Chen notation needs.
 
@@ -106,4 +110,4 @@ A notation is a syntax viewpoint made of views, one per metaclass, and it lives 
 
 ## Next steps
 
-The next tutorial adds a second notation to the same models and switches between the two. For the fields you used, see [View Designer](../../user-guide/view-designer); for how viewpoints compose and what exclusive means, see [Viewpoints](../../user-guide/viewpoints).
+The next tutorial, [Populating a Model with the Data Manager](../03-data-manager), grows the `People` model from a table and shows the key attributes filled by the rule you just wrote. For the fields you used, see [View Designer](../../user-guide/view-designer); for how viewpoints compose and what exclusive means, see [Viewpoints](../../user-guide/viewpoints).

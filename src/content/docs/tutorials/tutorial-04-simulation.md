@@ -2,12 +2,12 @@
 title: "State Machine Simulation"
 description: Build a complete state machine language with visual syntax, edge routing, and operational semantics simulation.
 sidebar:
-  order: 7
+  order: 6
   badge:
     text: "3.0"
     variant: default
     class: version-3-0
-  label: "7. State Machine Simulation"
+  label: "6. State Machine Simulation"
 ---
 
 :::caution[Not in the 3.0 build]

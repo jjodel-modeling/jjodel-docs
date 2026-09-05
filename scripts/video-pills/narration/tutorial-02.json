@@ -1,0 +1,47 @@
+[
+ {
+  "id": "intro",
+  "text": "In this tutorial you give the ER language its classic notation: entities as rectangles, attributes as ovals, relationships as diamonds. You build it as a viewpoint with three views in the View Designer, one per metaclass. No template to write, no stylesheet.",
+  "dur": 16.152834
+ },
+ {
+  "id": "s1",
+  "text": "Step one. From the project page, click New viewpoint. Name it ChenNotation, keep the type Syntax, and create it. The metamodel editor opens with the empty viewpoint selected in the tree.",
+  "dur": 11.858821
+ },
+ {
+  "id": "s2",
+  "text": "Step two. Hover the ChenNotation row in the tree and click its plus to add a view. Name it EntityView. In the Apply to tab choose ERD dot Entity. Then open the IR tab, keep the kind Vertex, and click Enable IR authoring: the panel becomes the View Designer, with the tabs Structure, Symbol and Form.",
+  "dur": 19.743673
+ },
+ {
+  "id": "s3",
+  "text": "Step three. In the Structure tab, remove the attributes compartment: Chen notation draws attributes as their own ovals. Do it while the symbol is still a rectangle.",
+  "dur": 10.324626
+ },
+ {
+  "id": "s4",
+  "text": "Step four. In the Symbol tab, open the symbol editor. The catalogue has a Data ER family: pick Entity. In the Text tab, set the first label to Center, taken from the intrinsic property name. Close the editor.",
+  "dur": 14.066395
+ },
+ {
+  "id": "s5",
+  "text": "Step five. Open the People model and switch the viewpoint selector to ChenNotation. Entities are now plain rectangles with their name. Attributes and relationships still fall back to the default rendering: the viewpoint has no view for them yet.",
+  "dur": 14.087937
+ },
+ {
+  "id": "s6",
+  "text": "Step six. Back in ERD, add AttributeView the same way: applicable to ERD dot Attribute, IR authoring on, compartment removed, preset Attribute, an ellipse, with the centered name.",
+  "dur": 12.923583
+ },
+ {
+  "id": "s7",
+  "text": "Step seven. Add RelationshipView with the Relationship preset, a diamond, and give it a second label: Add label, position Bottom, source Feature path, feature cardinality.",
+  "dur": 11.414286
+ },
+ {
+  "id": "outro",
+  "text": "In People the notation is complete: rectangles, ovals, and diamonds with their cardinality below. Step eight of the written tutorial fills the key attributes with a conditional rule. The full tutorial is at docs dot jjodel dot io.",
+  "dur": 14.063039
+ }
+]

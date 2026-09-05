@@ -14,16 +14,15 @@ Before you start, complete [Your First Project](../getting-started/first-project
 ## The path
 
 | # | Tutorial | What you learn | Time |
-|---|----------|----------------|------|
+|---|---|---|---|
 | 1 | [Your First Language: An ER Metamodel](./01-er-metamodel) | Classes, inheritance, containment, enumerations, a first model, live co-evolution | 30 min |
 | 2 | [Concrete Syntax: Chen Diagrams](./02-chen-notation) | A syntax viewpoint and its views, the symbol catalogue, labels, conditional fill for keys | 40 min |
-| 3 | A Second Notation and a Validation Overlay (planned) | Switching notations on one model, silent views, validation rules that work across notations | 45 min |
-| 4 | [Populating a Model with the Data Manager](./04-data-manager) | Transactional creation from forms, reference pickers, the neighborhood diagram, multi-edit, delete with a preview | 30 min |
-| 5 | Working with Jjodie (planned) | Generating a metamodel from a prompt, reading the resulting JjScript, Explain This, documentation generation | 30 min |
-| 6 | Model Transformation: From ER to a Relational Schema (planned) | A second metamodel, JjTL mappings and guards, cross-type resolution, trace view, SQL generation | 60 min |
-| 7 | [State Machine Simulation](./tutorial-04-simulation) | A separate, advanced example: operational semantics, panels and controls, visual feedback | 60 min |
+| 3 | [Populating a Model with the Data Manager](./03-data-manager) | Transactional creation from forms, reference pickers, the neighborhood diagram, multi-edit, delete with a preview | 30 min |
+| 4 | Working with Jjodie (planned) | Generating a metamodel from a prompt and reading its JjScript, Explain This on a view, documentation generation with protected paragraphs, meta-commands, fixing a response that does not compile | 30 min |
+| 5 | Model Transformation: From ER to a Relational Schema (planned) | A second metamodel, JjTL mappings and guards, cross-type resolution, trace view, SQL generation | 60 min |
+| 6 | [State Machine Simulation](./tutorial-04-simulation) | A separate, advanced example: operational semantics, panels and controls, visual feedback | 60 min |
 
-Tutorial 7 uses a different domain and stands on its own. It assumes tutorials 1 to 3.
+Tutorial 6 uses a different domain and stands on its own. It assumes tutorials 1 and 2.
 
 ## Text and video
 
