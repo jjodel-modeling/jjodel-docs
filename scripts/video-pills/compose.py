@@ -1,12 +1,18 @@
 """Cut the dead intervals, mix narration onto the recording and burn subtitles.
-Usage: python3 compose.py <workdir> <output.mp4>
+Usage: python3 compose.py <workdir> <output.mp4> [title.png until_seconds]
+  With a title image, it is overlaid from the start until until_seconds (half a second fade-out) so the
+  title card does not depend on the recorded page keeping its overlay across navigations.
+  Set REUSE_CUT=1 to skip the cut pass when <workdir>/cut.mp4 is already there.
   needs <workdir>/raw/tutorial1.webm, <workdir>/timeline.json (from the recorder) and the segment WAVs.
-  timeline.json carries segment starts in edited time and the list of [from, to] raw intervals to cut.
+  timeline.json carries segment starts in edited time, the [from, to] raw intervals to cut and the
+  [from, to, k] raw intervals to play k times faster.
 """
 import json, subprocess, sys
 work, out = sys.argv[1], sys.argv[2]
+title = sys.argv[3] if len(sys.argv) > 3 else None
+until = float(sys.argv[4]) if len(sys.argv) > 4 else 0
 data = json.load(open(f'{work}/timeline.json'))
-tl, cuts = data['timeline'], data.get('cuts', [])
+tl, cuts, ffs = data['timeline'], data.get('cuts', []), data.get('ffs', [])
 def ts(t):
     h = int(t // 3600); m = int(t % 3600 // 60); s = t % 60
     return f"{h:02d}:{m:02d}:{s:06.3f}".replace('.', ',')
@@ -19,13 +25,24 @@ open(f'{work}/subs.srt', 'w').write('\n'.join(srt))
 n = len(tl)
 # 1. constant frame rate intermediate with the dead intervals removed (video only; mixing audio in the
 #    same pass makes ffmpeg's filter queue overflow, reported as "No space left on device")
-keep = '*'.join(f"(1-between(t,{a:.3f},{b:.3f}))" for a, b in cuts) or '1'
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f'{work}/raw/tutorial1.webm', '-vf', f"fps=30,select='{keep}',setpts=N/(30*TB)",
+# dead intervals are dropped; fast-forward intervals [from, to, k] keep one frame in k
+keep = '*'.join([f"(1-between(t,{a:.3f},{b:.3f}))" for a, b in cuts] +
+                [f"if(between(t,{a:.3f},{b:.3f}),eq(mod(n,{k}),0),1)" for a, b, k in ffs]) or '1'
+import os
+if not (os.environ.get('REUSE_CUT') and os.path.exists(f'{work}/cut.mp4')):
+  subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f'{work}/raw/tutorial1.webm', '-vf', f"fps=30,select='{keep}',setpts=N/(30*TB)",
                 '-an', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', f'{work}/cut.mp4'], check=True)
 # 2. narration and subtitles on the cut video
 style = "FontName=DejaVu Sans,FontSize=7.5,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BackColour=&H90000000,BorderStyle=4,Outline=0,Shadow=0,MarginV=18,MarginL=40,MarginR=40,Alignment=2"
 fc = ';'.join(filt) + ';' + ''.join(f'[a{i+1}]' for i in range(n)) + f'amix=inputs={n}:normalize=0:dropout_transition=0,apad[aout]'
-cmd = ['ffmpeg', '-v', 'error', '-y', '-i', f'{work}/cut.mp4', *inputs, '-filter_complex', fc, '-map', '0:v', '-map', '[aout]',
+src = f'{work}/cut.mp4'
+if title:
+    # separate video-only pass: the looped image plus the audio mix in one graph overflows the filter queue
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', src, '-loop', '1', '-framerate', '30', '-i', title, '-filter_complex',
+                    f"[1:v]format=rgba,fade=t=out:st={until-0.5:.2f}:d=0.5:alpha=1[tt];[0:v][tt]overlay=enable='lte(t,{until:.2f})':shortest=1[v]",
+                    '-map', '[v]', '-an', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', f'{work}/cut_titled.mp4'], check=True)
+    src = f'{work}/cut_titled.mp4'
+cmd = ['ffmpeg', '-v', 'error', '-y', '-i', src, *inputs, '-filter_complex', fc, '-map', '0:v', '-map', '[aout]',
        '-vf', f"subtitles={work}/subs.srt:force_style='{style}'",
        '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p', '-r', '30',
        '-c:a', 'aac', '-b:a', '128k', '-shortest', '-movflags', '+faststart', out]

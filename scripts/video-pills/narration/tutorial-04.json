@@ -1,0 +1,47 @@
+[
+ {
+  "id": "intro",
+  "text": "In this tutorial you grow the People model without touching the canvas. The Data Manager shows a model as a table, one metaclass at a time, and edits it through forms.",
+  "dur": 9.18517
+ },
+ {
+  "id": "s1",
+  "text": "Step one. With the People model open, open the viewpoint selector in the toolbar and choose Data manager. A tab called People Instances opens: the model outline on the left, the metaclasses in the middle, and the table of the selected metaclass on the right. Click Entity: three rows.",
+  "dur": 16.978821
+ },
+ {
+  "id": "s2",
+  "text": "Step two. Click New Entity. The draft is transactional: nothing exists in the model until you click Create. Type Department and create it. The row appears, and the form opens below it with an empty ownedAttributes section.",
+  "dur": 13.938685
+ },
+ {
+  "id": "s3",
+  "text": "Step three. Click Add Attribute. The container is decided by the button you clicked, not by a field. Create id of type Integer, then name of type String. Then add two more entities the same way: Project with code, title and active, and Address with street, city and zip.",
+  "dur": 17.247528
+ },
+ {
+  "id": "s4",
+  "text": "Step four. Click the Person row. It expands into a neighborhood diagram, one hop around the instance, and the form below shows its attributes, editable in place.",
+  "dur": 9.453878
+ },
+ {
+  "id": "s5",
+  "text": "Step five. Select Relationship and click New Relationship. The left and right pickers list only entities, because that is what the metamodel allows. Create worksIn, leads and livesAt, each with its cardinality.",
+  "dur": 13.600317
+ },
+ {
+  "id": "s6",
+  "text": "Step six. In the Attribute table, tick the three id rows and code. The form becomes a multi-edit form: identity is hidden, it is never bulk-edited. Set isKey to on and apply to the four rows.",
+  "dur": 12.55542
+ },
+ {
+  "id": "s7",
+  "text": "Step seven. Hover Address and click its trash icon. Before anything is removed, the dialog lists the relationship that points at Address and the three attributes that would go with it. Cancel.",
+  "dur": 11.905261
+ },
+ {
+  "id": "outro",
+  "text": "Save, and switch back to the People tab. In Chen notation the model now has six entities and five relationships. The full tutorial is at docs dot jjodel dot io.",
+  "dur": 10.313016
+ }
+]

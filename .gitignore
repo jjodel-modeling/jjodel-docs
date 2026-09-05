@@ -30,3 +30,6 @@ _to_delete/
 # video pills: Jjodel credentials used by scripts/video-pills (never commit)
 .env.jjodel
 scripts/video-pills/work/
+
+# desktop app scratch folder
+Claude outputs/

@@ -7,7 +7,7 @@ import fs from 'fs';
 const SP = process.env.PILL_DIR || process.cwd();   // working dir: narration.json and wavs, raw/, shots/
 const ENV_FILE = process.env.PILL_ENV || SP + '/.env.jjodel';   // JJ_EMAIL=... JJ_PASS=... (never commit)
 const HELPERS = process.env.PILL_HELPERS || new URL('./helpers.js', import.meta.url).pathname;
-const LOGO = new URL('../../src/assets/jjodel-logo-dark.png', import.meta.url).pathname;
+const LOGO = new URL('../../src/assets/jjodel-logo-white.png', import.meta.url).pathname;
 const env = Object.fromEntries(fs.readFileSync(ENV_FILE,'utf8').trim().split('\n').map(l=>l.split('=')));
 const segs = JSON.parse(fs.readFileSync(SP+'/narration.json','utf8'));
 const seg = id => segs.find(s=>s.id===id);
@@ -32,7 +32,7 @@ const CURSOR_INIT = () => { const boot = () => { if(!document.head){ setTimeout(
 };
 
 const b = await chromium.launch({executablePath: process.env.CHROME});
-const ctx = await b.newContext({viewport:{width:W,height:Hh}, proxy:{server: process.env.HTTPS_PROXY}, ignoreHTTPSErrors:true, recordVideo:{dir: SP+'/raw', size:{width:W,height:Hh}}});
+const ctx = await b.newContext({viewport:{width:W,height:Hh}, ...(process.env.HTTPS_PROXY ? {proxy:{server: process.env.HTTPS_PROXY}} : {}), ignoreHTTPSErrors:true, recordVideo:{dir: SP+'/raw', size:{width:W,height:Hh}}});
 await ctx.route('**/*', async route => { try { const r = await route.fetch(); await route.fulfill({response:r}); } catch(e){ await route.abort(); } });
 await ctx.addInitScript(CURSOR_INIT);
 
