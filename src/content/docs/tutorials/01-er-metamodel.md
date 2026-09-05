@@ -152,4 +152,4 @@ Two ideas from this tutorial carry through the whole path. Containment decides h
 
 ## Next steps
 
-Continue with [Concrete Syntax for ER Diagrams](../tutorial-05-er-concrete-syntax), which gives this metamodel a Chen notation and a table-based notation. For the features you used here, see the [Metamodel Editor](../../user-guide/metamodel-editor) page and the [JjOM reference](../../reference/jjom).
+Continue with [Concrete Syntax: Chen Diagrams](../02-chen-notation), which gives this metamodel its graphical notation. For the features you used here, see the [Metamodel Editor](../../user-guide/metamodel-editor) page and the [JjOM reference](../../reference/jjom).
