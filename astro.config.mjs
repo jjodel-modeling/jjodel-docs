@@ -61,10 +61,6 @@ export default defineConfig({
           link: '/faq/',
         },
         {
-          label: 'Video Tutorials',
-          link: '/video-pills/',
-        },
-        {
           label: "What's New",
           link: '/whats-new/',
         },

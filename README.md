@@ -35,7 +35,6 @@ jjodel-docs/
 │   │       ├── reference/
 │   │       ├── installation/
 │   │       ├── faq.md
-│   │       ├── video-pills.md
 │   │       └── index.mdx
 │   └── styles/
 │       └── custom.css            ← Jjodel brand colors
