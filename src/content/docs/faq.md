@@ -87,7 +87,7 @@ Yes, this is one of Jjodel's core strengths. Metamodel changes are propagated in
 
 ### Where can I find tutorials?
 
-See the [Tutorials](../tutorials/tutorial-01-basic) section for step-by-step guides.
+See the [Tutorials](../tutorials/) section for step-by-step guides.
 
 ### Is Jjodel used in teaching or research?
 

@@ -1,13 +1,13 @@
 ---
-title: "Tutorial 4: State Machine Simulation"
+title: "State Machine Simulation"
 description: Build a complete state machine language with visual syntax, edge routing, and operational semantics simulation.
 sidebar:
-  order: 4
+  order: 7
   badge:
     text: "3.0"
     variant: default
     class: version-3-0
-  label: "Tutorial 4: Simulation"
+  label: "7. State Machine Simulation"
 ---
 
 :::caution[Not in the 3.0 build]
@@ -24,7 +24,7 @@ By the end of this tutorial you will have a working state machine editor where s
 
 ## Prerequisites
 
-Complete [Tutorial 1: Basic Metamodel](../tutorial-01-basic) before starting. You should know how to create metaclasses, attributes, and references.
+Complete [Your First Language: An ER Metamodel](../01-er-metamodel) before starting. You should know how to create metaclasses, attributes, and references.
 
 ## The State Machine Metamodel
 

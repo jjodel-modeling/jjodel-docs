@@ -1,9 +1,9 @@
 ---
-title: "Tutorial 5: Concrete Syntax for ER Diagrams"
-description: "Give the ER language from Tutorial 3 two switchable notations, Chen diagrams and a table-based logical view, plus a validation overlay that works with both."
+title: "Concrete Syntax for ER Diagrams"
+description: "Give the ER language from the first tutorial two switchable notations, Chen diagrams and a table-based logical view, plus a validation overlay that works with both."
 sidebar:
-  order: 5
-  label: "Tutorial 5: ER Concrete Syntax"
+  order: 2
+  label: "2. ER Concrete Syntax"
   badge:
     text: New
     variant: default
@@ -14,11 +14,11 @@ sidebar:
 This tutorial builds views as JSX templates with SCSS, and uses overlay viewpoints and ECA rules. None of that runs in the current build: views are authored declaratively in the View Designer, and overlays with their rules are being restored for 3.5. The metamodel steps still apply; the view steps need the new path.
 :::
 
-In this tutorial you give the ER language from [Tutorial 3](../tutorial-03-erd) a proper concrete syntax. You build two complete notations for the same models: a **Chen notation** (entities as rectangles, attributes as ovals, relationships as diamonds) and a **logical notation** (entities as tables with their attributes inside, relationships as direct edges). You finish with a validation overlay that works under both.
+In this tutorial you give the ER language from [the first tutorial](../01-er-metamodel) a proper concrete syntax. You build two complete notations for the same models: a **Chen notation** (entities as rectangles, attributes as ovals, relationships as diamonds) and a **logical notation** (entities as tables with their attributes inside, relationships as direct edges). You finish with a validation overlay that works under both.
 
 In Jjodel a notation is an exclusive viewpoint. Building a second notation does not touch the metamodel or the models; switching between notations is one click. This tutorial makes that concrete.
 
-**Prerequisites:** Completed [Tutorial 3](../tutorial-03-erd). You reuse its `ERDLanguage` project, including the metamodel and the model with Person, Role, and Car. [Tutorial 4](../tutorial-04-simulation) is useful background for silent views but is not required.
+**Prerequisites:** Completed [Your First Language: An ER Metamodel](../01-er-metamodel). You reuse its `ERDLanguage` project, including the metamodel and the model with Person, Role, and Car. [State Machine Simulation](../tutorial-04-simulation) is useful background for silent views but is not required.
 
 **Time:** ~45 minutes
 
@@ -44,7 +44,7 @@ Both notations render the same abstract syntax. Choosing between them is an audi
 4. Leave **Is Exclusive** checked (this is a syntax viewpoint)
 5. Activate it
 
-The draft `ConceptualERD` viewpoint from Tutorial 3 stays as it is; you can compare the two at the end. Any metaclass without a view in `ChenNotation` falls back to the Default viewpoint's rendering, so the canvas never goes blank while you work.
+Any metaclass without a view in `ChenNotation` falls back to the Default viewpoint's rendering, so the canvas never goes blank while you work.
 
 ### Step 2: Entity as a rectangle
 
@@ -85,7 +85,7 @@ Then open the **Style** tab and define the rectangle in the Local CSS & LESS Edi
 }
 ```
 
-Note the separation: the template defines structure, the style defines appearance. In Tutorial 3 you wrote inline styles inside the JSX to get a quick result; moving them to the Style tab keeps templates readable and lets you recolor the notation through the palette swatches (`--background-1`, `--border-color-1`, `--color-1`) without touching code.
+Note the separation: the template defines structure, the style defines appearance. Inline styles inside the JSX give a quick result; moving them to the Style tab keeps templates readable and lets you recolor the notation through the palette swatches (`--background-1`, `--border-color-1`, `--color-1`) without touching code.
 
 <!-- TODO: screenshot — Entity rendered as a plain rectangle in ChenNotation (new UI) -->
 
@@ -117,7 +117,7 @@ Attributes are separate nodes on the canvas: drag each one next to its owning en
 
 ### Step 4: Underline key attributes
 
-Chen notation underlines key attributes. The metamodel from Tutorial 3 has no notion of key yet, so extend it:
+Chen notation underlines key attributes. The metamodel from the first tutorial has no notion of key yet, so extend it:
 
 1. Go to the metamodel
 2. Add an attribute `isKey` of type `Boolean` to the `Attribute` class
@@ -254,7 +254,7 @@ In the logical notation, attributes live inside the entity box as rows. Add a vi
 </div>
 ```
 
-The `map` over `data.$ownedAttributes` is the same navigation you used in Tutorial 3, now producing one row per attribute with its type, and reusing the `isKey` underline from Step 4.
+The `map` over `data.$ownedAttributes` navigates the containment reference, producing one row per attribute with its type, and reusing the `isKey` underline from Step 4.
 
 ```scss title="Style for Entity (SCSS)"
 &>.root {
@@ -338,7 +338,7 @@ Compare with Step 6: there the edges started at the visible diamond (`start={nod
 
 ### Step 11: Validate unique entity names
 
-Tutorial 3 mentioned a semantic rule the metamodel alone cannot express: no two entities may share a name. Enforce it with a validation overlay.
+The first tutorial mentioned a semantic rule the metamodel alone cannot express: no two entities may share a name. Enforce it with a validation overlay.
 
 1. Create a viewpoint named `UniqueNames` with **Is Exclusive unchecked** (this is an overlay)
 2. Activate it; it composes with whatever exclusive notation is active
