@@ -8,7 +8,7 @@ sidebar:
 
 In this tutorial you define the abstract syntax of an Entity-Relationship language: entities that own typed attributes, relationships between entities, and cardinalities. You then build a small model with it and change the metamodel while the model is open, to see how Jjodel keeps the two in sync. No concrete syntax yet: the model is edited in the default view, so this page teaches one thing, the metamodel.
 
-<video controls preload="metadata" width="100%" src="/videos/tutorial-01-er-metamodel.mp4">
+<video controls preload="metadata" width="100%" poster="/videos/tutorial-01-er-metamodel-poster.jpg" src="/videos/tutorial-01-er-metamodel.mp4">
   Your browser does not support the video element. <a href="/videos/tutorial-01-er-metamodel.mp4">Download the video</a>.
 </video>
 

@@ -31,6 +31,7 @@ The recorder waits for each narration to finish before moving to the next step, 
 - `record-tutorial-01.mjs`: the recorder for tutorial 1; copy it for the next pill and change the segments.
 - `narration/*.json`: narration segments, one entry per step.
 - `tts.py`, `compose.py`: synthesis, cutting and final assembly.
+- `poster-tutorial-01.mjs`: renders the title card as the `poster` image of the `<video>` element.
 
 ## Known limits
 
