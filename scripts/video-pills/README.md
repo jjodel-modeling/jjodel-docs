@@ -43,9 +43,14 @@ The recording machine matters. On two vCPUs the app renders at about 15 frames p
 - `record-tutorial-02.mjs`: the recorder for tutorial 2 (Chen notation in the View Designer); expects the project as left by tutorial 1, with no viewpoint.
 - `record-tutorial-03.mjs`: the recorder for tutorial 3 (Data Manager). It adds fast-forward intervals: `ffStart(k)` / `ffEnd()` around a repetitive stretch make `compose.py` keep one frame in `k`, so the stretch plays `k` times faster while the narration timeline stays aligned. From this pill on, the title card is added by `compose.py` (see below) because the in-page overlay is lost when the app navigates from the dashboard to a model.
 - `record-tutorial-04.mjs`: the recorder for tutorial 4 (Jjodie). It needs `OPENAI_KEY=...` in the credentials file and pastes it into Settings; answers come from the provider, so takes differ in wording.
+- `record-tutorial-05.mjs`: the recorder for tutorial 5 (ER to a relational schema with JjTL). It records a local Jjodel in offline mode instead of beta (`JJ_URL`, default `http://localhost:3000`), so it needs no credentials: put a `storage.json` in the work folder with the localStorage keys of a browser where the `ERDLanguage` project exists (`offline`, `user`, `projects`, plus the UI preferences you want), and the recorder seeds a fresh profile with them. It expects the project as left by tutorial 4 with the `Relational` metamodel and an empty `ER_to_Relational` transformation, drives the Monaco editor through its API (typed braces would be auto-closed), and waits for the write-back of the target model by watching the console. A hidden or background browser tab throttles the timers that the write-back relies on, so the recording is headless on purpose.
 - `narration/*.json`: narration segments, one entry per step.
 - `tts.py`, `compose.py`: synthesis, cutting and final assembly.
-- `poster-tutorial-01.mjs`, `poster-tutorial-02.mjs`, `poster-tutorial-03.mjs`, `poster-tutorial-04.mjs`: render the title card as the `poster` image of the `<video>` element; the tutorial 2 to 4 scripts also write `title-tutorial-0N.png`, the frame that `compose.py` overlays on the first seconds.
+- `poster-tutorial-01.mjs` to `poster-tutorial-05.mjs`: render the title card as the `poster` image of the `<video>` element; the tutorial 2 to 4 scripts also write `title-tutorial-0N.png`, the frame that `compose.py` overlays on the first seconds.
+
+## Recording on a Mac
+
+The recorders run wherever Node and a Playwright Chromium are available; `chromium.launch()` uses Playwright's own browser when `CHROME` is not set. With the frontend repository next door, a symlink is enough: `ln -s ~/jjodel/frontend/node_modules scripts/video-pills/node_modules` (ignored by git). Synthesis and composition can then run elsewhere on `work/raw/tutorial1.webm`, `work/timeline.json` and the WAVs.
 
 ## Known limits
 

@@ -1,0 +1,26 @@
+[
+ {
+  "id": "intro",
+  "text": "In this tutorial you write your first model-to-model transformation: two JjTL rules that turn the People model of the ER language into tables, columns and foreign keys."
+ },
+ {
+  "id": "s1",
+  "text": "Step one. The target metamodel, Relational, is built as in tutorial one. A Table owns its Columns through a composition. A Column has a name, a type from the SqlType enumeration and a primary key flag. A ForeignKey points at a source table and a target table."
+ },
+ {
+  "id": "s2",
+  "text": "Step two. Open the transformation, with ERD as source and Relational as target. The first rule reads: for every Entity create a Table, and copy its name. Validate, then Execute: pick the People model, keep the output name, and run. Three tables, and nothing else yet."
+ },
+ {
+  "id": "s3",
+  "text": "Step three. Columns live inside tables. The rule names the feature columns and creates one Column per attribute with forall. A value mapping turns the ER type into the SQL type, and the key flag becomes the primary key. Execute again: every table owns its columns, and the id columns are primary keys."
+ },
+ {
+  "id": "s4",
+  "text": "Step four. A Relationship becomes a ForeignKey. Left and right are entities, but source and target expect tables: the executor resolves them through the trace, whatever the order of the rules. Execute once more, this time naming the output PeopleSchema. Two foreign keys, pointing at tables."
+ },
+ {
+  "id": "s5",
+  "text": "Step five. Back in the editor, the Trace tab lists every rule application with its bindings, and the Output tab reports the run and any warning. Save the project: the schema is a model like any other."
+ }
+]
