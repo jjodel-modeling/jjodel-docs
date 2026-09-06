@@ -122,6 +122,12 @@ The **Output** tab reports the run: rules executed, instances created, bindings 
 
 ![The Trace tab after the last run: twelve mappings](./images/tutorial-05-trace.png)
 
+## Letting the assistant propose the rules
+
+You wrote the three rules by hand, which is the point of this tutorial. The editor can also propose them. The **Suggested Mappings** panel on the right sends the two metamodels to the AI provider configured in Settings (see [Providers](../../ai/providers)) and returns the correspondences it finds as cards: `Entity → Table`, `Attribute → Column`, `Relationship → ForeignKey`, each with a confidence level and, where the types differ, a note on how the executor will handle it (the `left` and `right` references are marked **auto-resolved**, the `Type` to `SqlType` conversion **auto-converted**). Check the cards you agree with and insert them: the panel writes the rules into the editor, and you refine them as you did here, adding the value mapping on `type` or a guard.
+
+Try it on `ER_to_Relational` once you have a provider: press **Analyze Metamodels**, compare the proposal with the rules you wrote, and keep in mind that the suggestions are a starting point to read, as with any generated script. The panel is described in [Mapping Suggestions](../../ai/mappings).
+
 ## Cleaning up
 
 Every execution creates a new target model, and the dialog appends `_1`, `_2` to the proposed name when it is already taken. Delete `ERD_to_Relational` and `ERD_to_Relational_1` from the project page (the menu of each card has **Delete**, with no confirmation), keep `PeopleSchema`, and save.
@@ -132,4 +138,4 @@ A JjTL transformation is a list of rules, one per source class, with bindings th
 
 ## Next steps
 
-The [JjTL Reference](../../languages/jjtl) covers guards, multiplicities, explicit `resolve`, helpers and the current limitations; the [Transformation Editor](../../user-guide/transformation-editor) page describes the editor itself. Tutorial 6, [State Machine Simulation](../tutorial-04-simulation), leaves the ER example for a language with an operational semantics.
+The [JjTL Reference](../../languages/jjtl) covers guards, multiplicities, explicit `resolve`, helpers and the current limitations; the [Transformation Editor](../../user-guide/transformation-editor) page describes the editor itself, and [Mapping Suggestions](../../ai/mappings) the assisted way to start a transformation. Tutorial 6, [State Machine Simulation](../tutorial-04-simulation), leaves the ER example for a language with an operational semantics.
