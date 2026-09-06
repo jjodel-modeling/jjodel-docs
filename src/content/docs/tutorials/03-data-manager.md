@@ -108,4 +108,4 @@ The Data Manager is a third way to look at a model, next to the canvas and the t
 
 ## Next steps
 
-The next tutorial, Working with Jjodie, lets the assistant generate and explain parts of the project. For the table and the forms, see the [Data Manager](../../user-guide/data-manager) page.
+The next tutorial, [Working with Jjodie](../04-jjodie), lets the assistant generate and explain parts of the project. For the table and the forms, see the [Data Manager](../../user-guide/data-manager) page.

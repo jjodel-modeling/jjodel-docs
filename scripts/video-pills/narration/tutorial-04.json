@@ -1,0 +1,42 @@
+[
+ {
+  "id": "intro",
+  "text": "In this tutorial you put Jjodie, the assistant, to work on the ER project three times: to build a second metamodel from a sentence, to explain an element of the Chen diagram, and to document the project while keeping a paragraph you wrote yourself.",
+  "dur": 14.024853
+ },
+ {
+  "id": "s1",
+  "text": "Step one. Jjodie needs a provider. Open Settings from the warning icon in the chat, choose a provider under AI Providers, paste an API key and test the connection. The key stays in your browser.",
+  "dur": 12.694739
+ },
+ {
+  "id": "s2",
+  "text": "Step two. Create an empty metamodel called Library and open Jjodie: the context chip says which artifact it is bound to. Describe the language you want in one sentence. The answer is a JjScript block, not a change: nothing happens until you press Run.",
+  "dur": 16.119683
+ },
+ {
+  "id": "s3",
+  "text": "Step three. Press Run, then Run again in the script panel. Here it stops: the class Library has the same name as the metamodel, so the containment command cannot tell them apart. Rename the class to Catalogue, tell Jjodie what failed, and run the commands it sends back.",
+  "dur": 16.653741
+ },
+ {
+  "id": "s4",
+  "text": "Step four. Open the People model in Chen notation, right-click an entity and choose Explain this. Jjodie streams a short reading of the element: what it is, what it holds, how it relates to the rest. It is a reading aid, not saved anywhere.",
+  "dur": 14.854195
+ },
+ {
+  "id": "s5",
+  "text": "Step five. On the project page, click Generate under Documentation. The first document comes from a local generator; pick the model in the toolbar of the Documentation tab and click Regenerate. The whole project goes to the provider and comes back as Markdown: the domain, one section per metamodel, one per class.",
+  "dur": 19.091837
+ },
+ {
+  "id": "s6",
+  "text": "Step six. Click Edit and write a paragraph of your own between protected and end markers. Save, then Regenerate: the generated text is replaced, your paragraph stays, marked with a lock.",
+  "dur": 11.497234
+ },
+ {
+  "id": "outro",
+  "text": "Meta-commands such as slash help and slash clear work in the same input. The full tutorial, with the failing cases and how to recover, is at docs dot jjodel dot io.",
+  "dur": 10.009478
+ }
+]

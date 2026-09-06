@@ -18,7 +18,7 @@ Before you start, complete [Your First Project](../getting-started/first-project
 | 1 | [Your First Language: An ER Metamodel](./01-er-metamodel) | Classes, inheritance, containment, enumerations, a first model, live co-evolution | 30 min |
 | 2 | [Concrete Syntax: Chen Diagrams](./02-chen-notation) | A syntax viewpoint and its views, the symbol catalogue, labels, conditional fill for keys | 40 min |
 | 3 | [Populating a Model with the Data Manager](./03-data-manager) | Transactional creation from forms, reference pickers, the neighborhood diagram, multi-edit, delete with a preview | 30 min |
-| 4 | Working with Jjodie (planned) | Generating a metamodel from a prompt and reading its JjScript, Explain This on a view, documentation generation with protected paragraphs, meta-commands, fixing a response that does not compile | 30 min |
+| 4 | [Working with Jjodie](./04-jjodie) | A provider and its key, a metamodel from a sentence and its JjScript, a failing script and how to recover, Explain this on the Chen diagram, documentation with protected paragraphs, meta-commands | 30 min |
 | 5 | Model Transformation: From ER to a Relational Schema (planned) | A second metamodel, JjTL mappings and guards, cross-type resolution, trace view, SQL generation | 60 min |
 | 6 | [State Machine Simulation](./tutorial-04-simulation) | A separate, advanced example: operational semantics, panels and controls, visual feedback | 60 min |
 

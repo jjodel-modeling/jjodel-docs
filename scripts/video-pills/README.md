@@ -23,7 +23,7 @@ PILL_DIR=$PWD/work PILL_ENV=$PWD/.env.jjodel CHROME=/path/to/chrome node record-
 python3 compose.py work tutorial-01-er-metamodel.mp4
 ```
 
-For tutorials 2 and 3 the last step takes the title frame and the second at which it fades out (the start of the first narrated step, read from `timeline.json`):
+For tutorials 2 to 4 the last step takes the title frame and the second at which it fades out (the start of the first narrated step, read from `timeline.json`):
 
 ```
 node poster-tutorial-03.mjs
@@ -41,10 +41,11 @@ The recording machine matters. On two vCPUs the app renders at about 15 frames p
 - `helpers.js`: Playwright helpers for the metamodel and model editors (drag classifiers, drop members, connect anchors and pick the edge type, set fields, select edges). Selectors follow the 3.0 beta interface and need checking after UI changes.
 - `record-tutorial-01.mjs`: the recorder for tutorial 1; copy it for the next pill and change the segments.
 - `record-tutorial-02.mjs`: the recorder for tutorial 2 (Chen notation in the View Designer); expects the project as left by tutorial 1, with no viewpoint.
-- `record-tutorial-03.mjs`: the recorder for tutorial 3 (Data Manager). It adds fast-forward intervals: `ffStart(k)` / `ffEnd()` around a repetitive stretch make `compose.py` keep one frame in `k`, so the stretch plays `k` times faster while the narration timeline stays aligned. Its title card is added by `compose.py` (see below) because the in-page overlay is lost when the app navigates from the dashboard to a model.
+- `record-tutorial-03.mjs`: the recorder for tutorial 3 (Data Manager). It adds fast-forward intervals: `ffStart(k)` / `ffEnd()` around a repetitive stretch make `compose.py` keep one frame in `k`, so the stretch plays `k` times faster while the narration timeline stays aligned. From this pill on, the title card is added by `compose.py` (see below) because the in-page overlay is lost when the app navigates from the dashboard to a model.
+- `record-tutorial-04.mjs`: the recorder for tutorial 4 (Jjodie). It needs `OPENAI_KEY=...` in the credentials file and pastes it into Settings; answers come from the provider, so takes differ in wording.
 - `narration/*.json`: narration segments, one entry per step.
 - `tts.py`, `compose.py`: synthesis, cutting and final assembly.
-- `poster-tutorial-01.mjs`, `poster-tutorial-02.mjs`, `poster-tutorial-03.mjs`: render the title card as the `poster` image of the `<video>` element; the tutorial 2 and 3 scripts also write `title-tutorial-0N.png`, the frame that `compose.py` overlays on the first seconds.
+- `poster-tutorial-01.mjs`, `poster-tutorial-02.mjs`, `poster-tutorial-03.mjs`, `poster-tutorial-04.mjs`: render the title card as the `poster` image of the `<video>` element; the tutorial 2 to 4 scripts also write `title-tutorial-0N.png`, the frame that `compose.py` overlays on the first seconds.
 
 ## Known limits
 
