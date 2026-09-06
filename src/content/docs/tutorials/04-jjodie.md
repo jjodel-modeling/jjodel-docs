@@ -106,4 +106,4 @@ Jjodie works in three registers. In the chat it turns a request into JjScript th
 
 ## Next steps
 
-The next tutorial writes a JjTL transformation from the ER metamodel to a relational schema. For the assistant itself, see [Jjodie](../../ai/jjodie), [Documentation Generation](../../ai/documentation) and [Providers](../../ai/providers).
+The next tutorial, [Model Transformation: From ER to a Relational Schema](../05-er-to-relational), writes a JjTL transformation that turns the `People` model into tables, columns and foreign keys. For the assistant itself, see [Jjodie](../../ai/jjodie), [Documentation Generation](../../ai/documentation) and [Providers](../../ai/providers).
