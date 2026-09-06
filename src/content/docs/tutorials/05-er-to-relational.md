@@ -138,4 +138,4 @@ A JjTL transformation is a list of rules, one per source class, with bindings th
 
 ## Next steps
 
-The [JjTL Reference](../../languages/jjtl) covers guards, multiplicities, explicit `resolve`, helpers and the current limitations; the [Transformation Editor](../../user-guide/transformation-editor) page describes the editor itself, and [Mapping Suggestions](../../ai/mappings) the assisted way to start a transformation. Tutorial 6, [State Machine Simulation](../tutorial-04-simulation), leaves the ER example for a language with an operational semantics.
+The [JjTL Reference](../../languages/jjtl) covers guards, multiplicities, explicit `resolve`, helpers and the current limitations; the [Transformation Editor](../../user-guide/transformation-editor) page describes the editor itself, and [Mapping Suggestions](../../ai/mappings) the assisted way to start a transformation.

@@ -69,7 +69,7 @@ Overlay viewpoints serve several purposes:
 
 **Validation**: check constraints that the metamodel syntax alone cannot express. For example, enforcing that a state machine has exactly one Initial State.
 
-**Semantics and simulation**: attach runtime behavior to model elements. For state machines, a semantics overlay tracks which state is active, lets users fire events through buttons, and highlights the active state visually. The overlay uses state attributes as observed properties and custom event actions to implement the transition system semantics. See [Tutorial 4: State Machine Simulation](../../tutorials/tutorial-04-simulation) for a complete walkthrough.
+**Semantics and simulation**: attach runtime behavior to model elements. For state machines, a semantics overlay tracks which state is active, lets users fire events through buttons, and highlights the active state visually. The overlay uses state attributes as observed properties and custom event actions to implement the transition system semantics.
 
 **Editor behavior enhancement**: modify how the editor responds to user actions on specific elements.
 
