@@ -32,7 +32,7 @@ Save. The status bar reads **3 classes, 5 attributes, 0 operations, 1 enumeratio
 
 ## Step 2: Create the transformation
 
-On the project page, click **New transform** in the **Transformations** section and name it `ER_to_Relational`. Transformation names use letters, digits and underscores; hyphens are not accepted. The editor opens with the source and target metamodels side by side on the left, the code in the middle, and a panel at the bottom with **Problems**, **Trace** and **Output**.
+On the project page, click **New transform** in the **Transformations** section and name it `ER_to_Relational`. Transformation names use letters, digits and underscores; hyphens are not accepted. The editor opens with the source and target metamodels side by side on the left, the code in the middle, and a panel at the bottom with **Problems**, **Trace** and **Output**. The top bar carries the **Source** and **Target** selectors, **Validate** and **Execute**.
 
 Select `ERD` as **Source** and `Relational` as **Target** in the top bar. The two structures appear on the left, tagged **SRC** and **TGT**. Replace the code with the header:
 
@@ -55,7 +55,9 @@ Entity -> Table {
 
 A rule reads as "for every `Entity` in the source model, create a `Table`". Inside the braces, `name := name` copies the entity's `name` into the table's `name`: the left side is a feature of the target class, the right side is an expression evaluated on the source instance, whose features are in scope by name. As you type, an arrow appears between `Entity` and `Table` in the metamodel panels.
 
-Click **Validate Transformation**: the status bar reports the transformation as valid. Then click **Execute Transformation**. A dialog asks for the source model; pick `People` and confirm. A new model appears under **Models** in the sidebar, conforming to `Relational`, with three instances of `Table` named `Person`, `Role` and `Car`. Open it: three boxes and nothing else, since the rule has said nothing about columns yet.
+Click **Validate**: the Problems tab reports no problems. Then click **Execute**. A dialog asks for two things: the **Source Model**, a dropdown that lists the models conforming to `ERD` (only `People`, here), and the **Output Model Name**, prefilled with `ERD_to_Relational`; keep it or type `Schema`. An execution preview restates the input and the output. Click **Execute Transformation**.
+
+A new model appears under **Models** in the sidebar, tagged `Model · Relational`, with three instances of `Table` named `Person`, `Role` and `Car`. Open it: three boxes and nothing else, since the rule has said nothing about columns yet.
 
 <!-- TODO: screenshot tutorial-05-execute-dialog.png: the Execute dialog with People selected -->
 
@@ -79,7 +81,7 @@ Entity -> Table {
 
 Read it from the outside in. `-> columns { ... }` names the feature of `Table` that will receive new objects. `forall a in ownedAttributes -> Column { ... }` creates one `Column` per attribute of the entity, with `a` bound to the attribute. The three bindings fill the column: `a.name` copies the name; `a.isKey` copies the key flag into `isPrimaryKey`; the middle line is a value mapping, which converts the `Type` literal of the ER attribute into the `SqlType` literal of the column. The pairs after the colon are read left to right, source value then target value, and enumeration literals are written by name.
 
-Execute again on `People`. A second target model appears. Open it and expand `Person`: three columns, `name` and `surname` of type `VARCHAR`, `age` of type `INTEGER`, none marked as primary key. `Role` and `Car` have two columns each, and their `id` columns have `isPrimaryKey` set, because those are the attributes you flagged with `isKey` in tutorial 2. In the tree view the columns sit under their table, as contained instances, exactly where `columns` puts them.
+Execute again on `People`; the dialog proposes `ERD_to_Relational_1` as the output name, since the first name is taken. A second target model appears. Open it and expand `Person`: three columns, `name` and `surname` of type `VARCHAR`, `age` of type `INTEGER`, none marked as primary key. `Role` and `Car` have two columns each, and their `id` columns have `isPrimaryKey` set, because those are the attributes you flagged with `isKey` in tutorial 2. In the tree view the columns sit under their table, as contained instances, exactly where `columns` puts them.
 
 <!-- TODO: screenshot tutorial-05-columns.png: the target model with Person expanded into its three columns -->
 
@@ -113,7 +115,7 @@ The **Output** tab reports the run: rules executed, instances created, bindings 
 
 ## Cleaning up
 
-Every execution creates a new target model. Delete the ones from Steps 3 and 4 from the project page, keep the last, and save with **Ctrl+S**.
+Every execution creates a new target model, and the dialog appends `_1`, `_2` to the proposed name when it is already taken. Delete the models from Steps 3 and 4 from the project page (hover the card and use its menu), keep the last one, and save with **Ctrl+S**.
 
 ## What you learned
 
