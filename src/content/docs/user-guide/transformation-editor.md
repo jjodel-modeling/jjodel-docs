@@ -55,9 +55,14 @@ The mapping view updates as you type: adding a class mapping or an attribute bin
 
 ## Validation and execution
 
-Click **Validate** to check the transformation for syntax errors. The Problems panel at the bottom shows errors and warnings.
+Click **Validate** to check the transformation for syntax errors. The Problems panel at the bottom shows errors and warnings. A class creation written directly in a rule body, with no enclosing feature (`-> Column { ... }` instead of `-> columns { -> Column { ... } }`), is reported here as a validation error.
 
-Click **Execute** to run the transformation. Jjodel creates a new target model containing the transformation result. The Output panel shows execution details, timing, and any warnings.
+Click **Execute** to run the transformation. Jjodel creates a new target model containing the transformation result: one instance per matched source instance for each rule, plus the objects created inside features, which appear in the tree view under the instance that contains them. The Output panel shows execution details and timing, and lists the warnings of the run. The executor does not stop on a warning, so read this panel when the target model is not what you expected. The warnings you will meet most often:
+
+- a feature named in `-> feature { ... }` that does not exist on the target class: nothing is created for it
+- a `forall` written in a rule body with no feature around it: the executor names the feature it chose, and asks you to write it explicitly
+- a value that reaches no attribute, reference or feature of the target class: the instance, the key and the reason are named
+- an enumeration value whose name matches no literal of the target enumeration: it is written as a string
 
 ### Interactive execution
 
@@ -65,7 +70,9 @@ If the transformation uses `prompt` or `confirm` (see [Interactive features](../
 
 ## Trace view
 
-After execution, the **Trace** tab shows every mapping that was applied: which source elements produced which target elements, and whether each attribute mapping is invertible.
+After execution, the **Trace** tab shows every class mapping that was applied: which source element produced which target element, and, for each attribute binding, the source value, the target value and whether the binding is invertible. The entries are the rule-level instances; objects created inside a feature with `->` or `forall` belong to the entry of the rule that created them and are not listed as separate trace links.
+
+The trace is what cross-type resolution reads during execution (see [Cross-type resolution](../../languages/jjtl#cross-type-resolution)). It is built anew at every run and is not saved with the project.
 
 ![The Trace tab after running StateMachine_to_PetriNet, with the State to Place entry expanded to show its attribute bindings](./images/transformation-trace-view.png)
 

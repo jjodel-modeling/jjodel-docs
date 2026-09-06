@@ -69,7 +69,7 @@ A slash command Jjodie does not know is reported as such and not sent to the mod
 
 ## When Something Fails
 
-A JjScript block that fails shows the error and an **Ask Jjodie** button that puts the failed script and the message into the input, so you can ask for a fix. A console expression that fails offers the same. If the provider selected for the chat has no key but another one does, Jjodie switches to it and says so in the transcript. If no provider is configured at all, the answer tells you to open Settings; see [Providers](../providers).
+A JjScript block that fails stops at the failing command. A dialog shows the error message with two choices: **Skip Line** moves past that command and continues with the rest of the script, **Close** ends the run there. The commands already applied stay applied; the summary counts them along with the error, and the panel shows an **Error** badge in place of **Completed**. There is no button that sends the failure back to Jjodie: to get a fix, tell it what happened in a new message, error message included, and ask only for the part that is missing. [Tutorial 4](../../tutorials/04-jjodie) walks through one such recovery. If the provider selected for the chat has no key but another one does, Jjodie switches to it and says so in the transcript. If no provider is configured at all, the answer tells you to open Settings; see [Providers](../providers).
 
 ## Explain This
 

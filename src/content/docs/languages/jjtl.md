@@ -34,6 +34,10 @@ Transition -> Transition {
 
 The `from` and `to` headers reference metamodels loaded in the current project. The executor matches source instances by class name and creates target instances according to the mappings.
 
+### Which instances a rule sees
+
+A rule on class `X` matches every instance of `X` in the source model, whether the instance is a root or sits inside another instance through a containment reference. An ER metamodel that keeps `Attribute` instances in `Entity.ownedAttributes` still lets you write a rule on `Attribute`, and the rule fires once per attribute. The `source` and `data` bindings, when you use them in expressions, cover the same set: all objects of the model, contained ones included.
+
 ## Class mappings
 
 A class mapping specifies a correspondence between source and target classes:
@@ -104,7 +108,10 @@ Discrete value conversions use the `:` separator with comma-separated pairs:
 ```jjtl
 tokens := isInitial : true=1, false=0
 code := status : "active"=1, "inactive"=0, "deleted"=-1
+type := a.type : String=VARCHAR, Integer=INTEGER, Boolean=BOOLEAN
 ```
+
+Keys and values can be literals (`true`, `1`, `"active"`) or bare identifiers. Identifiers are the form to use for enumerations: an enumeration value reaches the executor as the name of its literal, and a target attribute typed by an enumeration accepts the name of one of its literals. In the third line above, an ER attribute whose `type` is the `Type` literal `String` gives a column whose `type` is the `SqlType` literal `VARCHAR`. A name that matches no literal of the target enumeration is written as a string, with a warning in the Output panel.
 
 Unmapped values pass through unchanged.
 
@@ -122,7 +129,7 @@ The `->` syntax reads as "source maps to target". Both syntaxes are interchangea
 
 ### Object creation
 
-Nested target objects are created inline with `->`:
+Nested target objects are created inline with `->`. The outer arrow names a feature of the enclosing target class; the inner arrow names the class to instantiate. The new object is stored in that feature of the target instance the rule is building:
 
 ```jjtl
 -> inputArcs {
@@ -133,9 +140,13 @@ Nested target objects are created inline with `->`:
 }
 ```
 
+The feature is resolved against the target metamodel and is never read as a class name. If `inputArcs` is not a feature of the enclosing target class, the executor reports it and creates nothing. A class creation written directly in a rule body, `-> Arc { ... }` with no feature around it, is a validation error: there is no slot to put the object in.
+
+Objects created this way become contained instances in the target model, in the feature you named. The rule-level instance (the `Transition` in the example) is created first; its nested objects are added right after, once the model has assigned it an id.
+
 ### forall in mappings
 
-The `forall` construct iterates over collections to create multiple target objects:
+The `forall` construct iterates over a collection and creates one target object per element. It goes inside the feature that receives the objects:
 
 ```jjtl
 -> fields {
@@ -146,6 +157,10 @@ The `forall` construct iterates over collections to create multiple target objec
     }
 }
 ```
+
+The `such that` clause is optional, and the arrow may sit on the same line as the iterator or on the next one. The iteration variable (`a`) is bound to the source element itself, not to a reference wrapper: when `attributes` is a reference collection, each element is dereferenced before the body runs, so `a.name` reads the attribute's name. An element that names no object of the source model is iterated as is, with one warning for the collection.
+
+A `forall` written directly in a rule body, with no feature around it, still runs. The executor looks for the one reference of the target class whose type can hold the created class and stores the objects there; when the metamodel offers none or several, it falls back to a pluralized guess (`Column` into `columns`) and warns naming the guess. Write the feature explicitly to avoid the guess.
 
 ## Execution model
 
@@ -284,11 +299,19 @@ The Trace View in the Transformation Editor displays this information for each m
 
 The following limitations apply to the current implementation. They are tracked as bugs or planned features.
 
-**`name := name` binding**: assigning the source element's `name` to the target element's `name` feature currently does not update the target element's display name (the `DObject.name` property). The user-defined feature `name` and the internal `DObject.name` may be separate concepts. Under investigation.
+**Multiplicity `[*]`**: an unbounded multiplicity creates exactly one target instance per source instance. The semantics of unbounded creation are still to be defined; use `forall` inside a feature to create one object per element of a collection.
+
+**Dotted source attributes in the arrow form**: inside a `forall` body, `a.name -> targetAttr` does not parse. Write `targetAttr := a.name`, or use the conversion syntax `-> targetAttr : a.name`.
+
+**`.forAll(x: pred)` in expressions**: the JjEL collection method `forAll` is not recognized inside JjTL expressions, because `forall` is a JjTL keyword. Use `all(x: pred)` or a `such that` clause instead.
 
 **No `resolve` for collections**: `resolve(collection, Type)` is not yet supported as a single call. Use `forall` to resolve each element individually.
 
-**Dotted source attributes in `forall`**: `a.name -> targetAttr` does not parse inside a `forall` block. Use the conversion syntax instead: `-> targetAttr : a.name`.
+**A feature named like the class it holds**: `-> Column { -> Column { ... } }`, a feature `Column` holding objects of class `Column`, cannot be told apart from a bare class creation. It produces a warning instead of an object. Features are lowercase by convention, so the case is rare.
+
+**Nested objects and the trace**: objects created inside a feature are contained instances of the target model, but they are not registered as targets for cross-type resolution. A binding elsewhere that evaluates to one of the source elements iterated by a `forall` is not resolved to the nested object it produced.
+
+**Diagnostics go to the Output panel**: a feature that does not exist on the target class, a `forall` stored through the pluralized guess, a value that reaches no attribute or reference of the target class, and an enumeration name that matches no literal are all reported there as warnings. Execution does not stop on them.
 
 ## Helper functions
 
@@ -376,6 +399,35 @@ Transition -> Transition {
 }
 ```
 
+ER to relational schema, with contained source instances, iterated creation and an enumeration mapping (the transformation of [tutorial 5](../../tutorials/05-er-to-relational)):
+
+```jjtl title="JjTL"
+transformation ER_to_Relational
+
+from ERD
+to   Relational
+
+Entity -> Table {
+    name := name
+
+    -> columns {
+        forall a in ownedAttributes -> Column {
+            name := a.name
+            type := a.type : String=VARCHAR, Integer=INTEGER, Boolean=BOOLEAN
+            isPrimaryKey := a.isKey
+        }
+    }
+}
+
+Relationship -> ForeignKey {
+    name := name
+    source := left
+    target := right
+}
+```
+
+The `Attribute` instances are contained in `Entity.ownedAttributes`; the `forall` reads them through the reference collection and creates one `Column` per attribute inside `Table.columns`. `left` and `right` are references to entities, resolved to the corresponding tables through the trace.
+
 ## Grammar summary
 
 ```text title="EBNF"
@@ -389,10 +441,19 @@ classMapping   = sourcePatterns '->' IDENT
                  ('where' '{' jjelExpression '}')?
                  '{' mappingBody '}'
 
-attributeMapping = IDENT ':=' jjelExpression
-                 | IDENT '->' IDENT (':' jjelExpression)?
+attributeMapping = IDENT ':=' jjelExpression (':' valueMappings)?
+                 | IDENT '->' IDENT (':' jjelExpression)? (':' valueMappings)?
+                 | objectCreation
 
-objectCreation = '->' IDENT? '{' mappingBody '}'
+valueMappings  = valueKey '=' valueKey (',' valueKey '=' valueKey)*
+valueKey       = literal | IDENT
+
+objectCreation = '->' feature '{' ( '->' className '{' mappingBody '}'
+                                  | forAllMapping+ ) '}'
+
+forAllMapping  = 'forall' IDENT 'in' jjelExpression
+                 ('such' 'that' jjelExpression)?
+                 '->' className '{' mappingBody '}'
 
 helper         = 'helper' IDENT '(' paramList ')' '->' IDENT
                  '{' jjelExpression '}'
