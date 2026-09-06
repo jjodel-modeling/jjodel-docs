@@ -3,7 +3,7 @@ title: "Model Transformation: From ER to a Relational Schema"
 description: "Write a JjTL transformation that turns the ER model into tables, columns and foreign keys: a second metamodel, iterated creation with forall, an enumeration mapping, references resolved through the trace."
 sidebar:
   order: 5
-  label: "5. ER to Relational"
+  label: "5. ER to Relational Transformation"
 ---
 
 In this tutorial you write your first model-to-model transformation. The source is the `People` model of the previous tutorials; the target is a relational schema, described by a second metamodel you define first. The transformation is short, two rules, but it exercises the parts of JjTL you will use most: attribute bindings, objects created inside a containment feature, one object per element of a collection, a value mapping between two enumerations, and references that point from one target element to another.
