@@ -19,7 +19,7 @@ Before you start, complete [Your First Project](../getting-started/first-project
 | 2 | [Concrete Syntax: Chen Diagrams](./02-chen-notation) | A syntax viewpoint and its views, the symbol catalogue, labels, conditional fill for keys | 40 min |
 | 3 | [Populating a Model with the Data Manager](./03-data-manager) | Transactional creation from forms, reference pickers, the neighborhood diagram, multi-edit, delete with a preview | 30 min |
 | 4 | [Working with Jjodie](./04-jjodie) | A provider and its key, a metamodel from a sentence and its JjScript, a failing script and how to recover, Explain this on the Chen diagram, documentation with protected paragraphs, meta-commands | 30 min |
-| 5 | [Model Transformation: From ER to a Relational Schema](./05-er-to-relational) | A second metamodel, JjTL rules and bindings, objects created inside features with forall, enumeration mappings, cross-type resolution, the trace | 45 min |
+| 5 | [Model Transformation: From ER to a Relational Schema](./05-er-to-relational) | A second metamodel, one JjTL rule per class, enumeration mappings, containments and references resolved through the trace, two-pass execution | 45 min |
 | 6 | [State Machine Simulation](./tutorial-04-simulation) | A separate, advanced example: operational semantics, panels and controls, visual feedback | 60 min |
 
 Tutorial 6 uses a different domain and stands on its own. It assumes tutorials 1 and 2.

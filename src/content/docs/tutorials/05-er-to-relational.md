@@ -1,12 +1,12 @@
 ---
 title: "Model Transformation: From ER to a Relational Schema"
-description: "Write a JjTL transformation that turns the ER model into tables, columns and foreign keys: a second metamodel, iterated creation with forall, an enumeration mapping, references resolved through the trace."
+description: "Write a JjTL transformation that turns the ER model into tables, columns and foreign keys: a second metamodel, one rule per class, an enumeration mapping, containment and references resolved through the trace."
 sidebar:
   order: 5
   label: "5. ER to Relational Transformation"
 ---
 
-In this tutorial you write your first model-to-model transformation. The source is the `People` model of the previous tutorials; the target is a relational schema, described by a second metamodel you define first. The transformation is short, two rules, but it exercises the parts of JjTL you will use most: attribute bindings, objects created inside a containment feature, one object per element of a collection, a value mapping between two enumerations, and references that point from one target element to another.
+In this tutorial you write your first model-to-model transformation. The source is the `People` model of the previous tutorials; the target is a relational schema, described by a second metamodel you define first. The transformation is short, three rules, but it exercises the parts of JjTL you will use most: attribute bindings, a value mapping between two enumerations, and the two-pass execution that lets a binding on a containment or a reference name source elements and get the target elements they produced.
 
 <video controls preload="metadata" width="100%" poster="/videos/tutorial-05-er-to-relational-poster.jpg" src="/videos/tutorial-05-er-to-relational.mp4">
   Your browser does not support the video element. <a href="/videos/tutorial-05-er-to-relational.mp4">Download the video</a>.
@@ -14,7 +14,7 @@ In this tutorial you write your first model-to-model transformation. The source 
 
 The video (under two minutes) shows the five steps at speed. Use it as a preview, then follow the text.
 
-![The Transformation Editor on ER_to_Relational: the two metamodels on the left, the two rules in the middle, the Output tab below](./images/tutorial-05-editor-overview.png)
+![The Transformation Editor on ER_to_Relational: the two metamodels on the left, the three rules in the middle, the Output tab below](./images/tutorial-05-editor-overview.png)
 
 **Prerequisites:** the `ERDLanguage` project with the `ERD` metamodel of [tutorial 1](../01-er-metamodel), including the `isKey` flag added in [tutorial 2](../02-chen-notation), and the `People` model with its three entities (`Person`, `Role`, `Car`) and two relationships (`hasRole`, `shares`). If you grew the model in [tutorial 3](../03-data-manager), everything below still applies; the counts you check simply become six tables, fifteen columns and five foreign keys. The steps use **Basic** mode.
 
@@ -67,25 +67,26 @@ A new model appears under **Models** in the sidebar, tagged `Model · Relational
 
 ## Step 4: Attributes become columns
 
-The attributes of an entity live inside it, in `ownedAttributes`, and the columns of a table must live inside the table, in `columns`. JjTL expresses both with one construct. Extend the rule:
+Attributes get a rule of their own. Add it after the first one, and add one line to the `Table` rule:
 
 ```jjtl
 Entity -> Table {
     name := name
+    columns := ownedAttributes
+}
 
-    -> columns {
-        forall a in ownedAttributes -> Column {
-            name := a.name
-            type := a.type : String=VARCHAR, Integer=INTEGER, Boolean=BOOLEAN
-            isPrimaryKey := a.isKey
-        }
-    }
+Attribute -> Column {
+    name := name
+    type := type : String=VARCHAR, Integer=INTEGER, Boolean=BOOLEAN
+    isPrimaryKey := isKey
 }
 ```
 
-Read it from the outside in. `-> columns { ... }` names the feature of `Table` that will receive new objects. `forall a in ownedAttributes -> Column { ... }` creates one `Column` per attribute of the entity, with `a` bound to the attribute. The three bindings fill the column: `a.name` copies the name; `a.isKey` copies the key flag into `isPrimaryKey`; the middle line is a value mapping, which converts the `Type` literal of the ER attribute into the `SqlType` literal of the column. The pairs after the colon are read left to right, source value then target value, and enumeration literals are written by name.
+The second rule matches every `Attribute` of the model. Attributes are not root elements, they live inside their entity in `ownedAttributes`, and a rule sees them all the same: the executor enumerates every instance of the source model, contained ones included. The three bindings fill the column: `name` copies the name; `isKey` becomes `isPrimaryKey`; the middle line is a value mapping, which converts the `Type` literal of the ER attribute into the `SqlType` literal of the column. The pairs after the colon are read left to right, source value then target value, and enumeration literals are written by name.
 
-Execute again on `People`; the dialog proposes `ERD_to_Relational_1` as the output name, since the first name is taken. A second target model appears. Each table now lists its columns as pills in the `columns` row: three for `Person`, two for `Role`, two for `Car`. The columns take the names of the attributes they come from, which are the names Jjodel gave them when you created them in tutorial 1: `id2`, `name2` and `id3` rather than a second `id`, a second `name` and a third `id`, because two elements of the same model cannot share a name.
+The line `columns := ownedAttributes` is where the two rules meet. Its right side is a collection of attributes, source elements; its left side is a containment of tables that expects columns. You do not convert one into the other. JjTL executes in two passes: the first pass creates every target element and records in the trace which source element produced it, the second pass evaluates the bindings. When a binding evaluates to a source element that the trace knows, the executor substitutes the target element it produced, and it does so element by element on a collection. So `ownedAttributes` becomes the list of the columns created by the `Attribute` rule, and the table receives them in its `columns` containment. The order of the rules does not matter, because all targets exist before any binding runs.
+
+Execute again on `People`; the dialog proposes `ERD_to_Relational_1` as the output name, since the first name is taken. A second target model appears. Each table now lists its columns as pills in the `columns` row: three for `Person`, two for `Role`, two for `Car`, and the columns are also drawn as nodes of their own, each connected to its table. They take the names of the attributes they come from, which are the names Jjodel gave them when you created them in tutorial 1: `id2`, `name2` and `id3` rather than a second `id`, a second `name` and a third `id`, because two elements of the same model cannot share a name.
 
 ![The second target model: three tables with their columns](./images/tutorial-05-tables.png)
 
@@ -93,11 +94,11 @@ To check the types and the keys, open the viewpoint selector in the toolbar and 
 
 ![The Data Manager on the Column metaclass: seven columns with their types and primary keys](./images/tutorial-05-columns.png)
 
-The rule would have been wrong in two other forms, and the editor tells you so. `-> Column { ... }` directly in the rule body, with no feature around it, is a validation error: there is no slot to put the object in. `forall` directly in the rule body, without `-> columns`, runs but has to guess the feature; the Output panel then names the guess and asks you to write it. The explicit form costs one line and removes the guess.
+JjTL also lets a rule create the columns itself, inside the table, with `-> columns { forall a in ownedAttributes -> Column { ... } }`. That form is described in the [JjTL Reference](../../languages/jjtl#object-creation); it is the right one when the nested objects have no class mapping of their own. Here they do, and one rule per class keeps each rule short and lets the trace do the wiring.
 
 ## Step 5: Relationships become foreign keys
 
-Add the second rule after the first:
+Add the third rule after the second:
 
 ```jjtl
 Relationship -> ForeignKey {
@@ -107,7 +108,7 @@ Relationship -> ForeignKey {
 }
 ```
 
-`left` and `right` are references to entities, but `ForeignKey.source` and `ForeignKey.target` expect tables. You do not convert them yourself. Every table created by the first rule is recorded in the trace together with the entity it came from, and when a binding evaluates to a source element that has a corresponding target element, the executor substitutes the target. This is cross-type resolution, and it works whatever the order of the rules, because all target instances are created before any binding is evaluated.
+`left` and `right` are references to entities, but `ForeignKey.source` and `ForeignKey.target` expect tables. This is the same resolution as in Step 4, on a single-valued reference instead of a containment: every table created by the first rule is in the trace with the entity it came from, and the binding gets the table.
 
 Execute once more, and this time type `PeopleSchema` as the output name. The new model has three tables with their columns and two foreign keys: `hasRole` from `Person` to `Role`, `shares` from `Person` to `Car`. Select `hasRole`: `source` and `target` point at tables of this model, not at entities of `People`, and the canvas draws the two references as edges.
 
@@ -115,11 +116,11 @@ Execute once more, and this time type `PeopleSchema` as the output name. The new
 
 ## Step 6: Read the trace and the Output
 
-Open the **Trace** tab. It lists one entry per rule application: `Entity -> Table` three times, `Relationship -> ForeignKey` twice, each with the source element and the target element it produced. Expand an entry to see its bindings with the source value, the target value and whether the binding can be inverted: `name := name` can, the value mapping on `type` can as long as no two source literals map to the same target literal, `source := left` records the resolution that took place.
+Open the **Trace** tab. It lists one entry per rule application: `Entity -> Table` three times, `Attribute -> Column` seven times, `Relationship -> ForeignKey` twice, each with the source element and the target element it produced. Expand an entry to see its bindings with the source value, the target value and whether the binding can be inverted: `name := name` can, the value mapping on `type` can as long as no two source literals map to the same target literal, `columns := ownedAttributes` and `source := left` record the resolution that took place.
 
 The **Output** tab reports the run: rules executed, instances created, bindings applied, time. It is also where warnings go. Execution does not stop on a warning, so when a target model is not what you expected this is the first place to look: a feature name that does not exist on the target class, a value that reached no attribute, an enumeration name that matched no literal are all named here with the instance they concern.
 
-![The Trace tab after the last run: five mappings, 75% invertible](./images/tutorial-05-trace.png)
+![The Trace tab after the last run: twelve mappings](./images/tutorial-05-trace.png)
 
 ## Cleaning up
 
@@ -127,7 +128,7 @@ Every execution creates a new target model, and the dialog appends `_1`, `_2` to
 
 ## What you learned
 
-A JjTL transformation is a list of rules, each mapping a source class to a target class, with bindings that fill the target's features from expressions on the source. Objects that belong inside another object are created in the feature that holds them, with `-> feature { ... }`, and `forall` creates one per element of a collection. Value mappings translate between enumerations by literal name. References across the two models resolve through the trace, so you write `source := left` and get a table. The trace and the Output panel show what happened, binding by binding.
+A JjTL transformation is a list of rules, one per source class, with bindings that fill the target's features from expressions on the source. Contained instances are matched like root ones. Value mappings translate between enumerations by literal name. Containments and references across the two models resolve through the trace, because the executor creates all targets before it evaluates any binding: you write `columns := ownedAttributes` and get the columns, `source := left` and get a table. The trace and the Output panel show what happened, binding by binding.
 
 ## Next steps
 

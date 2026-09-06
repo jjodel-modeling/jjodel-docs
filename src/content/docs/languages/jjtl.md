@@ -399,7 +399,7 @@ Transition -> Transition {
 }
 ```
 
-ER to relational schema, with contained source instances, iterated creation and an enumeration mapping (the transformation of [tutorial 5](../../tutorials/05-er-to-relational)):
+ER to relational schema, with contained source instances, an enumeration mapping and a containment filled through the trace (the transformation of [tutorial 5](../../tutorials/05-er-to-relational)):
 
 ```jjtl title="JjTL"
 transformation ER_to_Relational
@@ -409,14 +409,13 @@ to   Relational
 
 Entity -> Table {
     name := name
+    columns := ownedAttributes
+}
 
-    -> columns {
-        forall a in ownedAttributes -> Column {
-            name := a.name
-            type := a.type : String=VARCHAR, Integer=INTEGER, Boolean=BOOLEAN
-            isPrimaryKey := a.isKey
-        }
-    }
+Attribute -> Column {
+    name := name
+    type := type : String=VARCHAR, Integer=INTEGER, Boolean=BOOLEAN
+    isPrimaryKey := isKey
 }
 
 Relationship -> ForeignKey {
@@ -426,7 +425,7 @@ Relationship -> ForeignKey {
 }
 ```
 
-The `Attribute` instances are contained in `Entity.ownedAttributes`; the `forall` reads them through the reference collection and creates one `Column` per attribute inside `Table.columns`. `left` and `right` are references to entities, resolved to the corresponding tables through the trace.
+The `Attribute` instances are contained in `Entity.ownedAttributes` and are matched by the second rule like any root instance. `ownedAttributes`, `left` and `right` evaluate to source elements; cross-type resolution replaces them with the columns and the tables those elements produced, element by element on the collection, so `columns` receives the columns of the entity. The same result can be written with a single rule that creates the columns inside the table (`-> columns { forall a in ownedAttributes -> Column { ... } }`, see [Object creation](#object-creation)); the two-rule form is preferable when the nested objects have a class mapping of their own.
 
 ## Grammar summary
 

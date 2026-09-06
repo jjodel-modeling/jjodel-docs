@@ -5,7 +5,8 @@
 // `offline`, `user` and `projects`) in <PILL_DIR>/storage.json; the recorder seeds them into a fresh
 // profile before the first navigation. Expects the project as left by tutorial 4 plus the `Relational`
 // metamodel and an empty transformation `ER_to_Relational` (header only, ERD -> Relational), and no
-// target model yet. The transformation editor is driven through the Monaco API so that auto-closing
+// target model yet. The rules are the two-pass form of the tutorial: one rule per class, the containment
+// and the references filled through the trace. The transformation editor is driven through the Monaco API so that auto-closing
 // braces do not garble the typed rules.
 // Usage: PILL_DIR=$PWD/work node record-tutorial-05.mjs   (see README.md in this folder)
 import { chromium } from 'playwright';
@@ -89,7 +90,8 @@ const execute = async (outputName) => {
 };
 const HEADER = 'transformation ER_to_Relational\n\nfrom ERD\nto   Relational\n';
 const RULE1_OPEN = '\nEntity -> Table {\n    name := name\n';
-const RULE1_COLUMNS = '\n    -> columns {\n        forall a in ownedAttributes -> Column {\n            name := a.name\n            type := a.type : String=VARCHAR, Integer=INTEGER, Boolean=BOOLEAN\n            isPrimaryKey := a.isKey\n        }\n    }\n';
+const RULE1_COLUMNS = '    columns := ownedAttributes\n';
+const RULE_ATTR = '\nAttribute -> Column {\n    name := name\n    type := type : String=VARCHAR, Integer=INTEGER, Boolean=BOOLEAN\n    isPrimaryKey := isKey\n}\n';
 const RULE2 = '\nRelationship -> ForeignKey {\n    name := name\n    source := left\n    target := right\n}\n';
 
 // ---- intro: title card composed afterwards; open the project behind it
@@ -130,12 +132,12 @@ await endSeg();
 startSeg('s3');
 await click(tab('ER_to_Relational')); await sleep(1200);
 await setCode(HEADER + RULE1_OPEN);
-await typeCode(RULE1_COLUMNS + '}\n');
+await typeCode(RULE1_COLUMNS + '}\n' + RULE_ATTR);
 await sleep(800);
 const go2 = await execute();
-const done2 = waitLog(/Nested attribute setting complete/);
+const done2 = waitLog(/Reference setting complete/);
 await click(go2); deadStart(); await done2; await sleep(1500); await hideSim(); deadEnd();
-await sleep(800);
+await click(page.locator('[title="Auto layout"]:visible').first()); await sleep(2000);
 await shot('t5-tables.png');
 await click(page.locator('[title="Select viewpoint"]:visible').first()); await sleep(700);
 await click(page.locator('.toolbar-viewpoint-menu :text("Data manager")').first()); deadStart(); await page.locator('.instance-manager__row').first().waitFor({timeout:30000}).catch(()=>0); await sleep(800); deadEnd();
@@ -149,9 +151,9 @@ await click(tab('ER_to_Relational')); await sleep(1200);
 await typeCode(RULE2);
 await sleep(600);
 const go3 = await execute('PeopleSchema');
-const done3 = waitLog(/Nested attribute setting complete/);
+const done3 = waitLog(/Reference setting complete/);
 await click(go3); deadStart(); await done3; await sleep(1500); await hideSim(); deadEnd();
-await arrange([[/^hasRole/, 470, 540], [/^shares/, 800, 540]]); await sleep(600);
+await click(page.locator('[title="Auto layout"]:visible').first()); await sleep(2000);
 const fk = nodeOf(/^hasRole/);
 if (await fk.count()) { await click(fk.locator('.mm-node__header').first()); await sleep(1200); }
 await shot('t5-foreign-keys.png');
