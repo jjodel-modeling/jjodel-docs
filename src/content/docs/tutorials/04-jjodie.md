@@ -58,7 +58,7 @@ Two habits make this reliable: read the script before running it, and when somet
 
 ## Step 4: Explain an element of the Chen diagram
 
-Open the `People` model with `ChenNotation` active. Right-click the `Person` rectangle: the context menu ends with **Explain this**, after the editing entries and **Edit view · EntityView**. Click it.
+Open the `People` model with `ChenNotation` active. Right-click the `Person` box: the context menu ends with **Explain this**, after the editing entries and **Edit view · EntityView**. Click it.
 
 A window titled `Explaining: Person`, tagged **OBJECT**, streams a short text: `Person` is an instance of `Entity`, it owns `name`, `surname` and `age`, and other elements can reference it. The text is generated from the element's type, features and values, for someone learning MDE. It is not stored: close the window and it is gone.
 

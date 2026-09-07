@@ -80,7 +80,7 @@ The table shows the references as pills; the filter chips above it (`All`, `OneT
 
 Go back to the **Attribute** table. Tick the checkboxes of the four key attributes: the three `id` rows and `code`. The form area turns into a multi-edit form headed `4 attributes selected`. The `type` field reads **Mixed**, because the selection holds both `Integer` and `String` (in the current build the values behind it show as raw identifiers; the label is what matters); `isKey` shows how many are on and how many off, with an **on / off** switch. Identity is not there: the form says `Name is hidden: identity is never bulk-edited`.
 
-Set `isKey` to **on** and click **Apply to 4**. The four rows get a tick in the `isKey` column (`Role.id` and `Car.id` already had it from tutorial 2), and if you open the canvas with `ChenNotation` active the key ovals are filled, as [tutorial 2](../02-chen-notation) set up.
+Set `isKey` to **on** and click **Apply to 4**. The four rows get a tick in the `isKey` column (`Role.id` and `Car.id` already had it from tutorial 2), and if you open the canvas with `ChenNotation` active the key pills take the deeper blue, as [tutorial 2](../02-chen-notation) set up.
 
 ![The multi-edit form for four attributes](./images/tutorial-03-multi-edit.png)
 
@@ -94,7 +94,7 @@ Click **Cancel**. The point of the dialog is that the Data Manager knows the mod
 
 ## Step 8: Back to the canvas
 
-Press **Ctrl+S**, then switch to the `People` tab. With `ChenNotation` active and **Auto layout**, the diagram now shows six rectangles, fifteen ovals and five diamonds, laid out in one wide row; zoom out or pan to see it all. Nothing you did in the table needed the canvas, and everything you did is there.
+Press **Ctrl+S**, then switch to the `People` tab. With `ChenNotation` active and **Auto layout**, the diagram now shows six boxes, fifteen pills and five diamonds, laid out in one wide row; zoom out or pan to see it all. Nothing you did in the table needed the canvas, and everything you did is there.
 
 ![Part of the grown model in Chen notation: the three new relationships above Person, Department and Project](./images/tutorial-03-chen-grown.png)
 
