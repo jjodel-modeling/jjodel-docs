@@ -100,7 +100,7 @@ Press **Ctrl+S**, then switch to the `People` tab. With `ChenNotation` active an
 
 ## Customizing the form
 
-The forms you used are laid out from the metamodel: field order and widths follow the features and their types. A dedicated Data Manager viewpoint, which lets you choose the widget for each field and a visual theme for the form, is in development and not in the public build yet. When it lands, this tutorial gains a step on it.
+The forms you used are laid out from the metamodel: field order and widths follow the features and their types. Click **Data Manager** in the project sidebar to change the form theme, the palette and the widget of each field; the settings apply to every model of the project. See [Configuring the Data Manager](../../user-guide/data-manager#configuring-the-data-manager).
 
 ## What you learned
 

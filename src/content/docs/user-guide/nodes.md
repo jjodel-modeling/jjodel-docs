@@ -18,7 +18,7 @@ What a node shows is decided in the [View Designer](../view-designer/):
 
 - The **Symbol** tab picks the shape and its fill, border, padding, and sizing
 - The **Structure** tab places the name and type, the accent bar, and the compartment that lists the features
-- The **Form** tab describes the same element as a form, used in the properties rail and the [Data Manager](../data-manager/)
+- The **Form** tab describes the same element as a form; on the canvas its widget overrides decide how the node's rows render, while the [Data Manager](../data-manager/) has a configuration of its own
 
 The small circles on a node's border are its **anchors**. They appear on hover and are where edges start and end.
 

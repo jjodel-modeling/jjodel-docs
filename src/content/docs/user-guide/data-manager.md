@@ -10,9 +10,9 @@ sidebar:
   label: Data Manager
 ---
 
-The Data Manager is a third way to look at a model, next to the canvas and the tree view. It shows the instances of a model as a table, one metaclass at a time, and lets you create, edit and delete them through forms. It needs no viewpoint and no diagram: it reads the metamodel and shows what the model contains.
+The Data Manager is a third way to look at a model, next to the canvas and the tree view. It shows the instances of a model as a table, one metaclass at a time, and lets you create, edit and delete them through forms. It needs no diagram and no setup: it reads the metamodel and shows what the model contains.
 
-Available since Jjodel 3.0 (September 2026 update).
+Available since Jjodel 3.0.
 
 Use it when the model is data rather than a drawing: a catalogue of products, a list of states and transitions you want to fill in quickly, a model imported from XMI that has no layout yet.
 
@@ -67,7 +67,20 @@ Auto-generated names (`State_0`, `State_1`) follow the same rule and never shado
 
 **Save project** in the header saves the whole project, the same way the toolbar button does. Next to it, **Export** writes out the instances currently listed in the table. The autosave runs in the background after fifteen seconds of inactivity and every two minutes at most; it does not show a notification. The top bar shows when the last save happened.
 
+## Configuring the Data Manager
+
+The Data Manager has one configuration per project, separate from the viewpoints you use on the canvas. Switching the active viewpoint does not change the table or the forms, and a canvas viewpoint does not change the Data Manager.
+
+To edit the configuration, click **Data Manager** in the project sidebar. The properties rail shows:
+
+- **Form theme**: the layout preset of the form, which sets label placement, density and section style: **Comfortable**, **Compact**, **Sectioned**, **Dense**. **Default (Comfortable)** is the built-in one.
+- **Palette**: the colours of the table and the form together. **Slate** is the default; **Paper**, **Ink** and **Mist** are the alternatives, each with a light and a dark variant.
+- **Fields**: pick a **Metaclass** and choose the **Widget** of each feature. The list offers only the widgets compatible with the feature's type; a feature with no override keeps the widget its type derives.
+
+A project that never touched these settings has no configuration stored, and every model uses the defaults. The first change creates it. Under **Data Manager** the sidebar then lists the metaclasses that differ from the defaults, with the overridden features below each one; resetting every override of a metaclass removes it from the list.
+
 ## Known limits
 
 - An instance created from the Data Manager while no canvas is open for that model does not get a node on the diagram until you open the canvas. Open the canvas and the node appears.
-- The Data Manager shows the model as the metamodel defines it. A viewpoint contributes only the widgets it declares for the form; it does not filter what the table shows.
+- The Data Manager shows the model as the metamodel defines it. Its configuration changes how values are edited and how the screen looks; it does not filter rows or hide instances.
+- The configuration panel covers theme, palette and widgets. Column order, field order, labels and hidden fields are not editable from the interface yet.
