@@ -5,75 +5,59 @@ sidebar:
   order: 2
 ---
 
-:::caution[Beta]
-Jjodel 3.0 is available as a public beta at [beta.jjodel.io](https://beta.jjodel.io). It is in active development: features listed below may still change before the final release.
-:::
+## v3.0, September 2026
 
-## v3.0 Beta, September 2026 update
+Jjodel 3.0 was released on 15 September 2026 and is live at [app.jjodel.io](https://app.jjodel.io). It replaces the public beta that ran from July to September.
 
-The beta moved on since July. The changes below are live at [beta.jjodel.io](https://beta.jjodel.io).
+**Languages**
+
+- JjTL (Jjodel Transformation Language): declarative model-to-model transformations with two-pass execution, automatic trace model, cross-type resolution, interactive `prompt`/`confirm` commands, and a hardened write-back pipeline (inherited attributes, reference-only transformations, arrays, enumeration literals). A rule can create nested objects inside a target feature, reference collections are dereferenced in `forall`, and contained source instances take part in the execution. See the [ER to Relational tutorial](../tutorials/05-er-to-relational/).
+- JjEL (Jjodel Expression Language): `forall`/`exists` with set-theoretic semantics, `with...do` context binding, `implies`, null-safe navigation (`?.`, `??`), type checks with `is`, and a built-in library of more than one hundred methods for strings, numbers, collections, and dates.
+- JjScript: imperative metamodel editing with structural commands, `validate`, `undo`/`redo`, `forall` bulk edits, and interactive `let` bindings. Name resolution only considers the element kinds a command accepts, prefers an exact-case match, and reports an ambiguous name instead of picking one.
+
+**Modeling environment**
+
+- Complete UI redesign with progressive disclosure (Basic and Advanced modes) and redesigned side panels.
+- Megamodel view: a project-level overview of metamodels, models, viewpoints, and transformations with their relations.
+- Edge rendering: Manhattan routing, per-edge labels with overlap avoidance, segment dragging, and edge markers.
+- Improved tree views and Ecore/XMI round-trip (including EDataType export), and Ecore import from the UI.
+- Multi-language Console: a single input with three modes (Jjodie assistant, JjScript, JjEL), a mode chip with picker, keyboard cycling, and `/jjel`, `/js`, `/ask`, `/help` meta-commands.
 
 **Data Manager**
 
 - A third way to work on a model, next to the canvas and the tree view: a table of instances per metaclass, with forms to create, edit and delete them, a containment outline, a one-hop neighborhood diagram on each row, and a delete preview that shows the cascade and the dangling references before anything is removed. See [Data Manager](../user-guide/data-manager/).
-- Reachable from the model entry in the project sidebar and from the syntax picker in the toolbar (**Data manager**).
+- Reachable from the **Data Manager** section of the project sidebar, which is always present, and from the syntax picker in the toolbar (**Data manager**).
+- The Data Manager is the only place where an instance renders as a form. Its settings live in a viewpoint of its own, edited from the properties rail: **Form theme**, **Palette** (Slate, Paper, Ink, Mist), and a per-metaclass table of widget overrides.
 
 **View Designer**
 
-- Views are now authored declaratively from the properties panel: **Applies to**, **Structure**, **Symbol**, **Form** tabs, plus **Source** in Advanced mode. The JSX template path of 1.5 is no longer interpreted. See [View Designer](../user-guide/view-designer/).
+- Views are authored declaratively from the properties panel: **Applies to**, **Structure**, **Symbol**, **Form** tabs, plus **Source** in Advanced mode. The JSX template path of 1.5 is no longer interpreted. See [View Designer](../user-guide/view-designer/).
 - Instance nodes render with a header (underlined instance name, secondary type), a two-column attribute compartment, an optional accent bar, and a footer for empty slots. Structure options depend on the shape: what a symbol cannot host is not offered, and the panel says why.
 - A library of value renderers shared by nodes, tables and forms: swatches, chips, reference pills, booleans, numbers with units, dates, progress, code. Collections show four values and a `+k` chip. Singletons without values render as a pill (`Color::Red`).
 - A renderer inspector (Alt+click a row) shows the four detection rules, which one won and why, and lets you change the renderer; the change is written to the metamodel as an annotation.
-
-**Forms**
-
-- The same view renders as a form in the properties rail (**Form** tab on an instance) and in the Data Manager. Four themes (plain, card, compact, inspector), labels above or on the left, per-feature widget overrides, and inline, list or hidden treatment of references.
-- Form layout comes from the metamodel: a twelve-column grid where each type has a width, with no per-field settings.
+- Forms: four themes (plain, card, compact, inspector), labels above or on the left, per-feature widget overrides, and inline, list or hidden treatment of references. The layout comes from the metamodel: a twelve-column grid where each type has a width, with no per-field settings.
 
 **Metamodel**
 
 - Annotations in the `jjodel/` namespace drive rendering: `renderer`, `unit`, `min`, `max`, `multiline`. See [Metamodel Annotations](../reference/metamodel-annotations/).
-- Names are unique among siblings in a model (two instances with the same container cannot share a name) and across a metamodel (case-sensitive, with a warning on near-duplicates; datatypes have their own namespace). Auto-generated names never shadow a name you typed.
+- Names are unique among siblings in a model (two instances with the same container cannot share a name) and across a metamodel (case-sensitive, with a warning on near-duplicates; datatypes have their own namespace). Auto-generated names never shadow a name you typed, and a duplicate metamodel or model name gets a numeric suffix.
 - An `EInt` attribute marked as ID numbers new instances automatically.
-- Ecore import from the UI.
 
 **Saving**
 
 - One **Save project** action shared by the toolbar, the Data Manager and Save & Exit. The autosave runs after fifteen seconds of inactivity, at most every two minutes, without notifications; the top bar shows the time of the last save.
 
-**Documentation**
+**AI assistance**
 
-- A new [AI in Jjodel](../ai/overview/) chapter documents Jjodie, mapping suggestions, documentation generation, and provider configuration in one place.
+- Jjodie assistant integrated in the Console: natural-language requests are translated to JjScript and executed, in the scope shown to the model. Configurable providers: OpenAI, Anthropic, DeepSeek, Mistral, Gemini, Groq, Kimi, Ollama, or local.
+- The [AI in Jjodel](../ai/overview/) chapter documents Jjodie, mapping suggestions, documentation generation, and provider configuration in one place.
 
 **Known limits**
 
 - `jjodel/*` annotations are not preserved by an Ecore export and re-import.
 - An instance created from the Data Manager while the canvas of its model is closed appears on the diagram only once you open the canvas.
 
-## v3.0 Beta
-
-**Languages**
-
-- JjTL (Jjodel Transformation Language): declarative model-to-model transformations with two-pass execution, automatic trace model, cross-type resolution, interactive `prompt`/`confirm` commands, and a hardened write-back pipeline (inherited attributes, reference-only transformations, arrays, enumeration literals).
-- JjEL (Jjodel Expression Language) completed: `forall`/`exists` with set-theoretic semantics, `with...do` context binding, `implies`, null-safe navigation (`?.`, `??`), type checks with `is`, and a built-in library of more than one hundred methods for strings, numbers, collections, and dates.
-- JjScript: imperative metamodel editing with structural commands, `validate`, `undo`/`redo`, `forall` bulk edits, and interactive `let` bindings.
-
-**Console**
-
-- Multi-language Console: a single input with three modes (Jjodie assistant, JjScript, JjEL), a mode chip with picker, keyboard cycling, and `/jjel`, `/js`, `/ask`, `/help` meta-commands.
-
-**Modeling environment**
-
-- Complete UI redesign with progressive disclosure (Basic and Advanced modes) and redesigned side panels to reduce cognitive load.
-- Megamodel view: a project-level overview of metamodels, models, viewpoints, and transformations with their relations.
-- Edge rendering: Manhattan routing, per-edge labels with overlap avoidance, segment dragging, and edge markers.
-- Improved tree views and Ecore/XMI round-trip (including EDataType export).
-
-**AI assistance**
-
-- Jjodie assistant integrated in the Console: natural-language requests are translated to JjScript and executed. Configurable providers: OpenAI, Anthropic, DeepSeek, Mistral, Gemini, Groq, Kimi, Ollama, or local.
-
-**In progress**
+**Planned**
 
 - Conformance validation feedback in the editor (per-model indicator, per-node badges) and user-defined invariants in JjEL.
 
