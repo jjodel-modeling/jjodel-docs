@@ -31,7 +31,7 @@ An unknown `jjodel/*` key is ignored. Annotations outside the namespace are left
 
 For a given attribute the order is:
 
-1. A widget override in the Form tab of the view (`FormSpec.widgets`), visible in the inspector as rule 0.
+1. A widget override (`FormSpec.widgets`), visible in the inspector as rule 0. On the canvas it comes from the Form tab of the view; in the Data Manager it comes from the Data Manager configuration.
 2. `jjodel/renderer`, or a `Color` type.
 3. The value itself, and `jjodel/multiline`.
 4. An enumeration whose literals are all colour names.

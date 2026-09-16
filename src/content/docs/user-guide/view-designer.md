@@ -58,7 +58,9 @@ Below the groups, **Field compartments** decide how the attribute rows are group
 
 ## The Form tab
 
-The same view can render as a form: in the **Form** tab of the properties rail when an instance is selected, and inside the Data Manager. The Form tab of the View Designer configures that rendering.
+The Form tab of a vertex view describes the element as a form. In Jjodel 3.0 an instance renders as a form in one place only, the [Data Manager](../data-manager/), and the Data Manager takes its settings from its own configuration, not from the viewpoints of the canvas (see [Configuring the Data Manager](../data-manager/#configuring-the-data-manager)).
+
+In a canvas viewpoint, the part of this tab that has a visible effect is **Widgets**: an override also decides how the feature's row renders inside the node, as rule 0 of the [renderer inspector](#how-a-renderer-is-chosen). **Theme**, **Labels**, **Features** and the **Basic** column are saved with the view, but no surface of 3.0 reads them from a canvas viewpoint.
 
 **Theme** chooses one of four presets: **Plain**, **Card**, **Compact**, **Inspector**. Leave it empty to use the host's default. **Labels** go **Above** the field or to its **Left**; the left placement suits the compact theme.
 

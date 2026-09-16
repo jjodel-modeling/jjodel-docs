@@ -26,8 +26,9 @@ Jjodel 3.0 was released on 15 September 2026 and is live at [app.jjodel.io](http
 **Data Manager**
 
 - A third way to work on a model, next to the canvas and the tree view: a table of instances per metaclass, with forms to create, edit and delete them, a containment outline, a one-hop neighborhood diagram on each row, and a delete preview that shows the cascade and the dangling references before anything is removed. See [Data Manager](../user-guide/data-manager/).
-- Reachable from the **Data Manager** section of the project sidebar, which is always present, and from the syntax picker in the toolbar (**Data manager**).
-- The Data Manager is the only place where an instance renders as a form. Its settings live in a viewpoint of its own, edited from the properties rail: **Form theme**, **Palette** (Slate, Paper, Ink, Mist), and a per-metaclass table of widget overrides.
+- Reachable from the model entry in the project sidebar and from the syntax picker in the toolbar (**Data manager**).
+- The Data Manager is the only place where an instance renders as a form. Its configuration is one per project and does not depend on the active viewpoint: select **Data Manager** in the project sidebar and the properties rail offers **Form theme** (Comfortable, Compact, Sectioned, Dense), **Palette** (Slate, Paper, Ink, Mist) and a per-metaclass table of widget overrides.
+- Form layout comes from the metamodel: a twelve-column grid where each type has a width, with no per-field settings. See [Configuring the Data Manager](../user-guide/data-manager/#configuring-the-data-manager).
 
 **View Designer**
 
@@ -35,7 +36,7 @@ Jjodel 3.0 was released on 15 September 2026 and is live at [app.jjodel.io](http
 - Instance nodes render with a header (underlined instance name, secondary type), a two-column attribute compartment, an optional accent bar, and a footer for empty slots. Structure options depend on the shape: what a symbol cannot host is not offered, and the panel says why.
 - A library of value renderers shared by nodes, tables and forms: swatches, chips, reference pills, booleans, numbers with units, dates, progress, code. Collections show four values and a `+k` chip. Singletons without values render as a pill (`Color::Red`).
 - A renderer inspector (Alt+click a row) shows the four detection rules, which one won and why, and lets you change the renderer; the change is written to the metamodel as an annotation.
-- Forms: four themes (plain, card, compact, inspector), labels above or on the left, per-feature widget overrides, and inline, list or hidden treatment of references. The layout comes from the metamodel: a twelve-column grid where each type has a width, with no per-field settings.
+- The **Form** tab of a vertex view overrides the widget of each feature, and the override also decides how the row renders in the node.
 
 **Metamodel**
 
