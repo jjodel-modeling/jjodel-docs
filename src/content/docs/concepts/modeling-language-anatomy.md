@@ -64,7 +64,7 @@ Building a modeling language starts from the domain. The process follows a seque
 
 **Concrete syntax definition** assigns visual forms to each metaclass through viewpoints and views. A DSL is a formal, machine-processable interface to domain knowledge; the concrete syntax is what makes that interface usable by humans.
 
-**Validation** adds the constraints that the metamodel syntax alone cannot express (e.g., "a state machine has exactly one initial state"), written as declarative JjEL rules on its classes <span class="badge-next">3.5</span>. See [Validation](../../user-guide/validation).
+**Validation** adds the constraints that the metamodel syntax alone cannot express (e.g., "a state machine has exactly one initial state"), written as declarative JjEL rules on its classes. See [Validation](../../user-guide/validation).
 
 **Transformation** connects one language to another. A JjTL transformation reads models of one metamodel and produces models of a second one, which is how a language stops being an island. See [JjTL Reference](../../languages/jjtl).
 

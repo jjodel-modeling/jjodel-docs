@@ -44,6 +44,10 @@ Jjodel 3.0 was released on 15 September 2026 and is live at [app.jjodel.io](http
 - Names are unique among siblings in a model (two instances with the same container cannot share a name) and across a metamodel (case-sensitive, with a warning on near-duplicates; datatypes have their own namespace). Auto-generated names never shadow a name you typed, and a duplicate metamodel or model name gets a numeric suffix.
 - An `EInt` attribute marked as ID numbers new instances automatically.
 
+**Validation**
+
+- A complete redesign of validation. Invariants and constraints are written declaratively on metamodel classes, with the full expressiveness of JjEL, and each rule carries its own message. A model is checked on demand: the results list every violation with its message, and the violating nodes are marked on the canvas. The ECA-based validation of 1.5 has been removed. See [Validation](../user-guide/validation/).
+
 **Saving**
 
 - One **Save project** action shared by the toolbar, the Data Manager and Save & Exit. The autosave runs after fifteen seconds of inactivity, at most every two minutes, without notifications; the top bar shows the time of the last save.
@@ -55,13 +59,8 @@ Jjodel 3.0 was released on 15 September 2026 and is live at [app.jjodel.io](http
 
 **Known limits**
 
-- User-defined validation is not part of 3.0. What 3.0 checks is conformance to the metamodel: the JjScript `validate` command, the problem marker in the tree view, and the status line of a form in the Data Manager.
 - `jjodel/*` annotations are not preserved by an Ecore export and re-import.
 - An instance created from the Data Manager while the canvas of its model is closed appears on the diagram only once you open the canvas.
-
-**Planned**
-
-- Validation, in 3.5. It is fully implemented and integrated in the workbench, and it is a complete redesign: invariants and constraints are written declaratively on metamodel classes, with the full expressiveness of JjEL, each rule carries its own message, and a model is checked on demand with its violations marked on the canvas. The ECA-based validation of 1.5 has been removed. See [Validation](../user-guide/validation/).
 
 ## v2.0
 

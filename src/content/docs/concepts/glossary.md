@@ -116,9 +116,9 @@ sidebar:
 
 **Trace** -- The record a transformation leaves after running: which source elements produced which target elements, and whether each mapping is invertible.
 
-**Validation Rule** <span class="badge-next">3.5</span> -- An invariant attached to a metamodel class: a JjEL expression that must evaluate to `true` on every instance of the class and of its subclasses, and the message shown when it does not. Rules are declarative and are evaluated when a model is validated. See [Validation](../../user-guide/validation).
+**Validation Rule** -- An invariant attached to a metamodel class: a JjEL expression that must evaluate to `true` on every instance of the class and of its subclasses, and the message shown when it does not. Rules are declarative and are evaluated when a model is validated. See [Validation](../../user-guide/validation).
 
-**Validation Viewpoint** <span class="badge-next">3.5</span> -- The viewpoint that holds the validation rules of a project. It contains rules, not views.
+**Validation Viewpoint** -- The viewpoint that holds the validation rules of a project. It contains rules, not views.
 
 **View** -- A component of a viewpoint that targets instances of a specific metaclass. Every view has a kind, which decides what it produces: a vertex draws a node, an edge draws a connection, a row draws a single value. How it draws is described declaratively, through symbol, structure, and form; the 1.5 combination of a JSX template and an SCSS style is no longer interpreted. A predicate selects the instances it applies to, and ECA events give it behavior.
 

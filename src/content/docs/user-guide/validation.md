@@ -4,16 +4,15 @@ description: Write invariants on metamodel classes as JjEL rules, with your own 
 sidebar:
   order: 8
   badge:
-    text: "3.5"
+    text: "3.0"
     variant: default
+    class: version-3-0
   label: Validation
 ---
 
 A metamodel says which elements exist and how they connect. It cannot say that a relationship joins two different entities, that every entity has a key, or that a state machine has exactly one initial state. Validation rules say it. A rule is an invariant attached to a class: a JjEL expression that must be true for every instance of that class, and a message that tells the modeler what is wrong when it is not.
 
-:::caution[Planned for 3.5]
-Validation is implemented and integrated in the workbench, and ships with Jjodel 3.5. The 3.0 release at [app.jjodel.io](https://app.jjodel.io) does not include it.
-:::
+Available since Jjodel 3.0.
 
 ## Rules are declarative
 

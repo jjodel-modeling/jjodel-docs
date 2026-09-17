@@ -113,7 +113,7 @@ Since 3.0 a view is described declaratively. You choose a shape and say where th
 
 ## Validation
 
-Validation rules ensure model integrity beyond what the metamodel structure can express <span class="badge-next">3.5</span>. A rule is a JjEL invariant on a metamodel class with its own message. Rules live in the project's validation viewpoint; when you validate a model, the violations are listed with their messages and marked on the nodes. See [Validation](../../user-guide/validation).
+Validation rules ensure model integrity beyond what the metamodel structure can express. A rule is a JjEL invariant on a metamodel class with its own message. Rules live in the project's validation viewpoint; when you validate a model, the violations are listed with their messages and marked on the nodes. See [Validation](../../user-guide/validation).
 
 ## Feedback surfaces
 

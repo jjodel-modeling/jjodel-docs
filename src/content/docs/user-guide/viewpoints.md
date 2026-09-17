@@ -125,7 +125,7 @@ The result: all State instances show an orange outline on top of whatever concre
 
 The template is listed as required because the overlay must know the structural context, but in practice you can leave it empty to inherit the exclusive viewpoint's template. The style is where the decoration happens.
 
-## Validation Viewpoints <span class="badge-next">3.5</span>
+## Validation Viewpoints
 
 A validation viewpoint holds rules, not views. Each rule is a JjEL invariant on a metamodel class with its own message, and a model is checked against the active rules on demand. The 1.5 approach, a validation overlay whose views carried `onDataUpdate` rules writing error keys into `node.state`, and the **Default Validation** overlay that earlier builds seeded, have been removed. See [Validation](../validation/).
 

@@ -15,7 +15,7 @@ The tree view is the upper part of the right rail, above the properties panel. I
 The root is **Megamodel**. Under it:
 
 - **Metamodels**: one node per metamodel. Packages expand to classes, classes to attributes and references, each with its type and multiplicity on the right. Abstract classes are shown in italics. Under each metamodel, a **Models** section lists the models that conform to it; a model expands to its instances, nested by containment, with singletons listed first.
-- **Viewpoints**: grouped into **Syntax** and **Validation** (in 3.5 also **Data Manager**, and the **Validation** branch lists the validation rules with their context class). A viewpoint expands to its views; vertex, row, and edge views carry different icons. A viewpoint that can be stacked on others shows a stack marker.
+- **Viewpoints**: grouped into **Syntax**, **Data Manager** and **Validation**; the **Validation** branch lists the validation rules with their context class. A viewpoint expands to its views; vertex, row, and edge views carry different icons. A viewpoint that can be stacked on others shows a stack marker.
 - **Documentation**: the documentation attached to the project.
 - **Transformations**: one node per JjTL transformation, expanding to its rules and helpers. The section appears only when the project has transformations.
 
