@@ -105,7 +105,7 @@ The **type** you pick when you create a viewpoint decides how it composes with t
 
 ![A syntax viewpoint draws the node and overlays add badges, markers and behavior on top of it](./images/viewpoint-stack.svg)
 
-A **Syntax** viewpoint is exclusive. It provides the notation, so only one can be active at a time, and switching from one to another swaps the whole visual language while leaving the model untouched. **Decoration**, **Validation**, **Semantics**, and **Editor behavior** viewpoints are overlays: any number of them can be active together, and each adds to what the syntax viewpoint has already drawn. The current build applies syntax viewpoints only; the overlay types are planned <span class="badge-next">3.5</span>.
+A **Syntax** viewpoint is exclusive. It provides the notation, so only one can be active at a time, and switching from one to another swaps the whole visual language while leaving the model untouched. **Decoration**, **Semantics**, and **Editor behavior** viewpoints are overlays: any number of them can be active together, and each adds to what the syntax viewpoint has already drawn. The current build applies syntax viewpoints only; the overlay types are planned <span class="badge-next">3.5</span>.
 
 Inside a viewpoint, a view has two parts that matter. Its **predicate** selects the instances it applies to, which is usually all instances of one metaclass but can be narrower. Its **kind** decides what the view produces: a **vertex** draws a node on the canvas, an **edge** draws a connection between two nodes, and a **row** draws a single value wherever it appears, inside a node, in a table cell, or in a form.
 
@@ -113,14 +113,14 @@ Since 3.0 a view is described declaratively. You choose a shape and say where th
 
 ## Validation
 
-Validation rules ensure model integrity beyond what the metamodel structure can express. They live in validation viewpoints, which the current build does not run yet <span class="badge-next">3.5</span>, and report through the editor: a warning triangle on the affected row in the tree, a marker on the node, and a message when you hover it.
+Validation rules ensure model integrity beyond what the metamodel structure can express <span class="badge-next">3.5</span>. A rule is a JjEL invariant on a metamodel class with its own message. Rules live in the project's validation viewpoint; when you validate a model, the violations are listed with their messages and marked on the nodes. See [Validation](../../user-guide/validation).
 
 ## Feedback surfaces
 
 Three places report what the tools are doing:
 
 - The **status bar** at the bottom of an editor, with the element counts and the conformance state of the model
-- The **Problems** and **Output** tabs of the Transformation Editor, for validation errors and execution details
+- The **Problems** and **Output** tabs of the Transformation Editor, for compilation errors and execution details
 - The [Console](../../user-guide/console), where JjScript and JjEL run and Jjodie answers
 
 :::tip[One project, many perspectives]

@@ -15,7 +15,7 @@ The tree view is the upper part of the right rail, above the properties panel. I
 The root is **Megamodel**. Under it:
 
 - **Metamodels**: one node per metamodel. Packages expand to classes, classes to attributes and references, each with its type and multiplicity on the right. Abstract classes are shown in italics. Under each metamodel, a **Models** section lists the models that conform to it; a model expands to its instances, nested by containment, with singletons listed first.
-- **Viewpoints**: grouped into **Syntax** and **Validation**. A viewpoint expands to its views; vertex, row, and edge views carry different icons. A viewpoint that can be stacked on others shows a stack marker.
+- **Viewpoints**: grouped into **Syntax** and **Validation** (in 3.5 also **Data Manager**, and the **Validation** branch lists the validation rules with their context class). A viewpoint expands to its views; vertex, row, and edge views carry different icons. A viewpoint that can be stacked on others shows a stack marker.
 - **Documentation**: the documentation attached to the project.
 - **Transformations**: one node per JjTL transformation, expanding to its rules and helpers. The section appears only when the project has transformations.
 
@@ -44,7 +44,7 @@ The bar is absent when no viewpoint is active or when the viewpoint renders ever
 
 ## Row Markers
 
-- A **warning triangle** marks an element with a validation problem. Hover it to read the message; the color follows the severity.
+- A **warning triangle** marks an element with a conformance problem, or with a validation violation from the last run. Hover it to read the message; the color follows the severity.
 - A **curve marker** on a class means the active viewpoint renders it as an edge rather than a node.
 - While a JjScript runs, the pane shows an **Executing** badge, and the elements the script creates get a short-lived **NEW** badge.
 

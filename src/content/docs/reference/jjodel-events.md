@@ -9,7 +9,9 @@ sidebar:
 ---
 
 :::caution[Not in the 3.0 build]
-The current build renders through **Syntax** viewpoints only. Overlays (Decoration, Validation, Semantics, Editor behavior), the ECA rules behind them, and sub-views are being restored and are planned for 3.5. What follows describes how they work, so that these pages stay usable when they return.
+The current build renders through **Syntax** viewpoints only. Overlays (Decoration, Semantics, Editor behavior), the ECA rules behind them, and sub-views are being restored and are planned for 3.5. What follows describes how they work, so that these pages stay usable when they return.
+
+ECA rules are no longer used for validation. Invariants are written declaratively as JjEL rules: see [Validation](../../user-guide/validation/).
 :::
 
 A view can react. Beside the structure that says how an element draws, it holds a set of handlers that run when something happens to that element, and custom actions that the template can call. Handlers are written in the **Events** tab of the view.
@@ -39,7 +41,7 @@ The action runs on the element the view applies to. Inside a handler you get the
 | `whileRotating` | On every tick of a rotation |
 | `onRotationEnd` | A rotation ends |
 
-`onDataUpdate` is the one that carries most of the work: it is what makes validation, derived values, and simulation react to an edit. The drag, resize, and rotation events belong to the layout submodel, and a handler on them reads and writes `node`.
+`onDataUpdate` is the one that carries most of the work: it is what makes derived values and simulation react to an edit. The drag, resize, and rotation events belong to the layout submodel, and a handler on them reads and writes `node`.
 
 Clicks are not in this list. A view reacts to a click through the element that receives it: a button or any other element in the template calls a custom action by name.
 
@@ -74,37 +76,11 @@ The template presents, the action manipulates. That separation is what keeps a v
 
 Handlers communicate with templates through `node.state`, a free-form object on the layout node. A rule writes a key, the template reads it and draws accordingly.
 
-```javascript title="The validation pattern"
-if (condition) {
-    node.state = {error_type: error_message}
-} else {
-    node.state = {error_type: undefined}
-}
-```
-
-The key names the kind of error. `error_lowerbound` for a multiplicity that is not satisfied, `error_naming` for an identifier that does not conform, `error_custom` for a domain rule. Setting the key to `undefined` clears the error, which is what makes the rule handle both directions: the error appears when the model breaks the constraint and goes away when the user fixes it.
-
-### One initial state
-
-A state machine metamodel cannot say in its structure that exactly one initial state is allowed. A rule can:
-
 ```javascript title="onDataUpdate on the State view"
-let count = data.father.allSubObjects
-    .filter(o => o.instanceof.name === 'State' && o.$isInitial && o.$isInitial.value)
-    .length;
-
-if (count > 1) {
-    node.state = {error_initial: "Only one initial state allowed!"}
-} else {
-    node.state = {error_initial: undefined}
-}
+node.state = {unnamed: !data.$name.value}
 ```
 
-The rule walks up to the container, counts the siblings that declare themselves initial, and writes the error when there is more than one. A validation viewpoint then renders it: its generic error view reads the keys in `node.state` and draws the marker next to the element.
-
-### Rules that ship with Jjodel
-
-The default validation viewpoint carries two rules and one view. The **lowerbound** rule reports a reference whose minimum multiplicity is not met, as `error_lowerbound`. The **naming** rule reports a name that is not a legal identifier, as `error_naming`. The **generic error** view holds no rule: it is the shape every error is drawn with, so that errors look the same wherever they come from.
+The template reads `node.state.unnamed` and can change the look of the node. A handler that writes state should write it on every run, so that the value follows the model in both directions.
 
 ## Observed properties
 

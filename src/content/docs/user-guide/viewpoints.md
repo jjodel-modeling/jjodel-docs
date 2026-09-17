@@ -15,7 +15,7 @@ A viewpoint defines a perspective on a model. It controls how elements look, wha
 Available since Jjodel 1.5. Viewpoints, views and predicates work as they did, and Jjodel 3.0 adds a declarative way to author views, documented in [View Designer](../view-designer/). What changed is the predicate itself: it is now expressed in the form of the **Applies to** tab rather than written in OCL.
 
 :::caution[Not in the 3.0 build]
-The current build renders through **Syntax** viewpoints only. Overlays (Decoration, Validation, Semantics, Editor behavior), the ECA rules behind them, and sub-views are being restored and are planned for 3.5. What follows describes how they work, so that these pages stay usable when they return.
+The current build renders through **Syntax** viewpoints only. Overlays (Decoration, Semantics, Editor behavior), the ECA rules behind them, and sub-views are being restored and are planned for 3.5. What follows describes how they work, so that these pages stay usable when they return. Validation no longer works through overlays and ECA rules: see [Validation](../validation/).
 :::
 
 
@@ -43,7 +43,7 @@ Each view has up to four components:
 
 **Style** controls the visual appearance using SCSS. Styles are scoped to the view and can be layered with overlay viewpoints.
 
-**Events** <span class="badge-next">3.5</span> define behavior using the ECA (Event-Condition-Action) model. An event rule fires on data changes and can update node state attributes, enabling computed properties, validation feedback, and simulation.
+**Events** <span class="badge-next">3.5</span> define behavior using the ECA (Event-Condition-Action) model. An event rule fires on data changes and can update node state attributes, enabling computed properties and simulation.
 
 ![A viewpoint and its views in the tree](./images/viewpoints-panel-views.png)
 
@@ -67,7 +67,7 @@ Overlay viewpoints serve several purposes:
 
 **Decoration**: add visual markers to existing nodes. For example, an orange outline on all State instances, or a colored badge on elements that meet certain criteria.
 
-**Validation**: check constraints that the metamodel syntax alone cannot express. For example, enforcing that a state machine has exactly one Initial State.
+**Validation**: check constraints that the metamodel syntax alone cannot express, such as a state machine with exactly one Initial State. Validation viewpoints hold declarative JjEL rules rather than views, and are described in [Validation](../validation/).
 
 **Semantics and simulation**: attach runtime behavior to model elements. For state machines, a semantics overlay tracks which state is active, lets users fire events through buttons, and highlights the active state visually. The overlay uses state attributes as observed properties and custom event actions to implement the transition system semantics.
 
@@ -125,55 +125,9 @@ The result: all State instances show an orange outline on top of whatever concre
 
 The template is listed as required because the overlay must know the structural context, but in practice you can leave it empty to inherit the exclusive viewpoint's template. The style is where the decoration happens.
 
-## Validation Overlays <span class="badge-next">3.5</span>
+## Validation Viewpoints <span class="badge-next">3.5</span>
 
-Earlier builds seeded every project with a **Default Validation** overlay made of three views: a generic error view, a lower bound check on references, and a naming check on instance names. That viewpoint is no longer created, and validation overlays are not evaluated in the current build. The checks it carried now run in the conformance validator, which reports missing names, malformed names, and unsatisfied lower bounds on the model indicator and on the nodes themselves, with no viewpoint involved.
-
-What follows describes how a validation overlay is written, for when overlays return.
-
-### View component requirements for validation
-
-| View Component | Required | Optional | Not Applicable |
-|----------------|----------|----------|----------------|
-| Predicate      |          | Y        |                |
-| Template       |          |          | Y              |
-| Observed Properties |     | Y        |                |
-| Style          |          |          | Y              |
-| Event rule (ECA) | Y      |          |                |
-
-Validation views rely entirely on the ECA rule. No template or style is needed; the validation viewpoint uses the Generic error view's template to render any errors.
-
-### Validation rule pattern
-
-A validation rule checks a condition and writes an error to `node.state`. The pattern:
-
-```javascript title="Validation Rule Pattern"
-if (condition) {
-    node.state = {error_type: error_message}
-} else {
-    node.state = {error_type: undefined}
-}
-```
-
-The `error_type` key identifies the kind of error (e.g., `error_lowerbound`, `error_naming`). Setting it to `undefined` clears the error when the condition is no longer violated.
-
-### Example: enforce a single Initial State
-
-To enforce that a state machine has exactly one Initial State, create a validation view targeting the `Initial State` metaclass with this `onDataUpdate` rule:
-
-```javascript title="Single Initial State Validation"
-// Count all Initial State instances in the model
-let count = data.$parent.$children
-    .filter(c => c.$className === 'Initial State').length;
-
-if (count > 1) {
-    node.state = {error_initial: "Only one initial state allowed!"}
-} else {
-    node.state = {error_initial: undefined}
-}
-```
-
-When a second Initial State is added to the model, the validation overlay immediately shows an error notification next to the offending instance.
+A validation viewpoint holds rules, not views. Each rule is a JjEL invariant on a metamodel class with its own message, and a model is checked against the active rules on demand. The 1.5 approach, a validation overlay whose views carried `onDataUpdate` rules writing error keys into `node.state`, and the **Default Validation** overlay that earlier builds seeded, have been removed. See [Validation](../validation/).
 
 ## Views in Detail
 
@@ -224,11 +178,11 @@ Silent views are the mechanism behind all arrow-based notations in Jjodel: ER re
 
 ### Events (ECA)
 
-See [Jjodel Events](../../reference/jjodel-events) for the full ECA model. In viewpoint context, the most common event is `onDataUpdate`, which fires whenever the model data changes and lets you update `node.state` with computed or validation results.
+See [Jjodel Events](../../reference/jjodel-events) for the full ECA model. In viewpoint context, the most common event is `onDataUpdate`, which fires whenever the model data changes and lets you update `node.state` with computed results.
 
 ## Default Viewpoints
 
-Every metamodel starts with one built-in viewpoint. **Default** is an exclusive syntax viewpoint that provides a generic rendering for all metaclass instances. It shows each instance as a labeled box with its attributes. This is the fallback when no custom syntax viewpoint is active. The **Default Validation** overlay that earlier builds added next to it is no longer seeded, as explained above under Validation Overlays.
+Every metamodel starts with one built-in viewpoint. **Default** is an exclusive syntax viewpoint that provides a generic rendering for all metaclass instances. It shows each instance as a labeled box with its attributes. This is the fallback when no custom syntax viewpoint is active. The **Default Validation** overlay that earlier builds added next to it is no longer seeded; the checks it carried are part of conformance.
 
 When you create a custom exclusive viewpoint (e.g., "State Machine Visual Syntax"), it takes precedence over the Default viewpoint. Any metaclass not covered by a view in the custom viewpoint falls back to the Default viewpoint's rendering.
 

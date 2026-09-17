@@ -132,7 +132,7 @@ The layout submodel of an element on a canvas.
 |----------|------|-------------|
 | `x`, `y` | `Number` | Position |
 | `w`, `h` | `Number` | Size |
-| `state` | `Object` | Free-form state, the place where ECA rules write validation errors and simulation flags |
+| `state` | `Object` | Free-form state, the place where ECA rules write derived values and simulation flags |
 | `zoom` | `Object` | Zoom of the node contents |
 | `isSelected` | `Object` | Selection, per user |
 | `subElements` | `Array` | Nodes nested in this one |

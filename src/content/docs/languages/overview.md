@@ -37,7 +37,7 @@ All three languages follow the same design criteria, in priority order:
 
 ## Where to use each language
 
-Use **JjEL** in the Console to query models, in viewpoint templates to compute display values, and in validation constraints.
+Use **JjEL** in the Console to query models, in viewpoint templates to compute display values, and in validation rules.
 
 Use **JjTL** in the Transformation Editor to define model-to-model transformations with automatic traceability.
 

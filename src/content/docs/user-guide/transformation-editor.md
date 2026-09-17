@@ -6,7 +6,7 @@ sidebar:
     text: "3.0"
     variant: default
     class: version-3-0
-  order: 9
+  order: 10
 ---
 
 The Transformation Editor is a dedicated environment for writing and executing JjTL model-to-model transformations.

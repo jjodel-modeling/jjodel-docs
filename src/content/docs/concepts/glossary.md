@@ -82,7 +82,7 @@ sidebar:
 
 **Model** -- A simplified representation of a system that captures relevant aspects for a given purpose. In Jjodel, models are instances (M1) that conform to a metamodel (M2).
 
-**Node** -- The concrete syntax counterpart of a model instance. A node carries layout information (position, size) and state attributes (computed values, validation results). Nodes exist in the JjOM's node submodel.
+**Node** -- The concrete syntax counterpart of a model instance. A node carries layout information (position, size) and state attributes (computed values, simulation state). Nodes exist in the JjOM's node submodel.
 
 **Notation** -- A definition of how abstract syntax elements are visually represented. In Jjodel, a notation is associated with one metamodel and contains viewpoints. Each viewpoint defines a different perspective on the same abstract syntax.
 
@@ -90,7 +90,7 @@ sidebar:
 
 **Operational Semantics** -- The meaning of a language defined by how its constructs execute step by step. In Jjodel, operational semantics can be implemented through overlay viewpoints that use ECA rules and state attributes to simulate execution (e.g., state machine firing transitions).
 
-**Overlay Viewpoint** <span class="badge-next">3.5</span> -- A viewpoint of type Decoration, Validation, Semantics, or Editor behavior. Overlays can be active at the same time as an exclusive viewpoint and as each other, adding features on top of its rendering. See also: Exclusive Viewpoint.
+**Overlay Viewpoint** <span class="badge-next">3.5</span> -- A viewpoint of type Decoration, Semantics, or Editor behavior. Overlays can be active at the same time as an exclusive viewpoint and as each other, adding features on top of its rendering. See also: Exclusive Viewpoint.
 
 **Panel** -- A JSX component of the 1.5 Model view template, no longer interpreted. Panels create floating titled containers on the canvas with custom content (buttons, text, dynamic queries). Used for simulation controls, legends, and model-level tools.
 
@@ -106,7 +106,7 @@ sidebar:
 
 **Silent View** -- A view whose node is invisible (width: 0, height: 0). The view renders only an Edge component, drawing an arrow between two other nodes. Used for Transition-like metaclasses where the element itself should not appear as a box.
 
-**State Attributes** -- Computed properties stored in `node.state`. Updated by ECA event rules, state attributes hold derived values like validation errors, aggregated counts, or simulation state. Analogous to attribute grammars in compiler theory.
+**State Attributes** -- Computed properties stored in `node.state`. Updated by ECA event rules, state attributes hold derived values like aggregated counts or simulation state. Analogous to attribute grammars in compiler theory.
 
 **Symbol** -- The shape that draws a node: rectangle, stadium, diamond, ellipse, and the other presets of the catalogue, together with its fill, border, padding, and sizing. The symbol constrains what the structure of the view can offer.
 
@@ -116,10 +116,12 @@ sidebar:
 
 **Trace** -- The record a transformation leaves after running: which source elements produced which target elements, and whether each mapping is invertible.
 
-**Validation View** <span class="badge-next">3.5</span> -- A view in a validation overlay viewpoint. Contains an ECA rule that checks a constraint and writes error information to `node.state`. Does not need a template or style; validation feedback is rendered by the Generic error view.
+**Validation Rule** <span class="badge-next">3.5</span> -- An invariant attached to a metamodel class: a JjEL expression that must evaluate to `true` on every instance of the class and of its subclasses, and the message shown when it does not. Rules are declarative and are evaluated when a model is validated. See [Validation](../../user-guide/validation).
+
+**Validation Viewpoint** <span class="badge-next">3.5</span> -- The viewpoint that holds the validation rules of a project. It contains rules, not views.
 
 **View** -- A component of a viewpoint that targets instances of a specific metaclass. Every view has a kind, which decides what it produces: a vertex draws a node, an edge draws a connection, a row draws a single value. How it draws is described declaratively, through symbol, structure, and form; the 1.5 combination of a JSX template and an SCSS style is no longer interpreted. A predicate selects the instances it applies to, and ECA events give it behavior.
 
 **View Designer** -- The properties panel of a view when the view is authored declaratively. Its tabs describe what the view applies to, the symbol, the structure of the node, and the form.
 
-**Viewpoint** -- A perspective on a model, grouping related views. Its type, one of Syntax, Decoration, Validation, Semantics, and Editor behavior, decides whether it is exclusive or an overlay. In ISO 42010 terms, a viewpoint defines concerns; its views realize them.
+**Viewpoint** -- A perspective on a model, grouping related views. Its type, one of Syntax, Decoration, Semantics, and Editor behavior, decides whether it is exclusive or an overlay. Validation has viewpoints of its own kind, which hold rules rather than views. In ISO 42010 terms, a viewpoint defines concerns; its views realize them.
