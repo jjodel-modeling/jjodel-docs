@@ -55,12 +55,13 @@ Jjodel 3.0 was released on 15 September 2026 and is live at [app.jjodel.io](http
 
 **Known limits**
 
+- User-defined validation is not part of 3.0. You cannot write validation rules or invariants, validation viewpoints are not executed, and the editor shows no per-model indicator or per-node badges for them. What 3.0 checks is conformance to the metamodel: the JjScript `validate` command, the problem marker in the tree view, and the status line of a form in the Data Manager. User-defined validation is planned for 3.5.
 - `jjodel/*` annotations are not preserved by an Ecore export and re-import.
 - An instance created from the Data Manager while the canvas of its model is closed appears on the diagram only once you open the canvas.
 
 **Planned**
 
-- Conformance validation feedback in the editor (per-model indicator, per-node badges) and user-defined invariants in JjEL.
+- Validation, in 3.5: user-defined invariants written in JjEL, authored in a dedicated environment, with feedback in the editor (per-model indicator, per-node badges).
 
 ## v2.0
 
