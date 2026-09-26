@@ -4,6 +4,22 @@ Newest-first per day: a new entry goes right under this line. Never append at th
 Log locale di questo repo, distinto da `docs/claude-code-log.md` di `jjodel` (E1 del
 2026-09-03 14:55: la traccia harness di `jjodel-docs` resta in `jjodel-docs`).
 
+## 2026-09-27 — chore(harness): Claude Code settings for launched lanes
+**Prompt**: give this repository the minimum a `lane-run` lane needs: `.claude/settings.json`
+with the `claude-opus-5-5` pin and `effortLevel` `xhigh`, `git push` under `ask` (a refusal
+under `-p`), the whole-tree git forms, `--no-verify`, `rm -rf` and `.env` reads under `deny`,
+`cleanupPeriodDays` 3650. No hooks, no `CLAUDE.md`.
+**File toccati**: .claude/settings.json (new), docs/claude-code-log.md,
+docs/prompts/claude_2026-09-27_0030_prompt_docs_harness_seed.md
+**Esito**: ✅ completed (`JSON.parse` on the file exits 0; single commit)
+**Nome del documento prompt**: P-2026-09-27-0030
+**Nota**: shape and `$schema` taken from `jjodel-release/.claude/settings.json` (read only, no
+git run there). Its `allow` list and its two hooks were not carried over: `bash-guard.mjs`
+depends on `lib.mjs` and on the frontend's docs-versus-code pathspec rule, which does not
+apply here; a hook layer for this repository is a later decision. The first `lane-run` lane
+outside jjodel-frontend. The three untracked files under `scripts/video-pills/` were left
+alone.
+
 ## 2026-09-03 — fix: version badges on the current-page sidebar row
 **Prompt**: sulla riga attiva della sidebar (colori invertiti da Starlight) i badge di versione usano la palette del tema opposto; 1.5 invisibile in light, 3.0 quasi invisibile in dark
 **Corregge**: 2026-09-03 14:55, 2026-09-03 22:22

@@ -3,7 +3,7 @@
 Prompt-ID: P-2026-09-27-0030
 Chat: C-2026-09-26-1702
 Lane: fast (two files, one commit, no visual check; the first `lane-run` lane outside jjodel-frontend)
-Status: da eseguire
+Status: eseguito 2026-09-27 · lane docs-harness · single commit
 
 Worktree: `~/jjodel-docs`, branch `docs/2026-09-update`, a fresh session started by `lane-run` from `~/jjodel-release/frontend/scripts/lane-run.mjs`. Before anything else: `pwd` is `/Users/alfonso/jjodel-docs`, branch `docs/2026-09-update`, `git log -1` is the commit that adds this file (subject `docs: add prompt P-2026-09-27-0030, harness seed`), `git status` shows nothing but the three untracked files under `scripts/video-pills/` (a `node_modules` folder and two images, left alone). Otherwise stop with `Outcome: blocked`. Every reply opens with `[P-2026-09-27-0030 · session <id>]` and ends with an `Outcome:` line.
 
