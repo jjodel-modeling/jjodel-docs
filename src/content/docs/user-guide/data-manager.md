@@ -74,7 +74,7 @@ The Data Manager has one configuration per project, separate from the viewpoints
 To edit the configuration, click **Data Manager** in the project sidebar. The properties rail shows:
 
 - **Form theme**: the layout preset of the form, which sets label placement, density and section style: **Comfortable**, **Compact**, **Sectioned**, **Dense**. **Default (Comfortable)** is the built-in one.
-- **Palette**: the colours of the table and the form together. **Slate** is the default; **Paper**, **Ink** and **Mist** are the alternatives, each with a light and a dark variant.
+- **Palette**: the colours of the table and the form together. **Slate** is the default; **Paper**, **Ink** and **Mist** are the alternatives.
 - **Fields**: pick a **Metaclass** and choose the **Widget** of each feature. The list offers only the widgets compatible with the feature's type; a feature with no override keeps the widget its type derives.
 
 A project that never touched these settings has no configuration stored, and every model uses the defaults. The first change creates it. Under **Data Manager** the sidebar then lists the metaclasses that differ from the defaults, with the overridden features below each one; resetting every override of a metaclass removes it from the list.
