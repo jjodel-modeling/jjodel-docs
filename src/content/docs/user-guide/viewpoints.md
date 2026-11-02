@@ -14,8 +14,8 @@ A viewpoint defines a perspective on a model. It controls how elements look, wha
 
 Available since Jjodel 1.5. Viewpoints, views and predicates work as they did, and Jjodel 3.0 adds a declarative way to author views, documented in [View Designer](../view-designer/). What changed is the predicate itself: it is now expressed in the form of the **Applies to** tab rather than written in OCL.
 
-:::caution[Not in the 3.0 build]
-The current build renders through **Syntax** viewpoints only. Overlays (Decoration, Semantics, Editor behavior), the ECA rules behind them, and sub-views are being restored and are planned for 3.5. What follows describes how they work, so that these pages stay usable when they return. Validation no longer works through overlays and ECA rules: see [Validation](../validation/).
+:::caution[Not in the current build]
+The current build renders through **Syntax** viewpoints only. Overlays (Decoration, Semantics, Editor behavior), the ECA rules behind them, and sub-views are being restored and are planned for 3.5. What follows describes how they work, so that these pages stay usable when they return. Validation no longer works through overlays and ECA rules: see [Validation](../validation/). Simulation does not use them either: see [Simulation](../simulation/).
 :::
 
 
@@ -69,7 +69,7 @@ Overlay viewpoints serve several purposes:
 
 **Validation**: check constraints that the metamodel syntax alone cannot express, such as a state machine with exactly one Initial State. Validation viewpoints hold declarative JjEL rules rather than views, and are described in [Validation](../validation/).
 
-**Semantics and simulation**: attach runtime behavior to model elements. For state machines, a semantics overlay tracks which state is active, lets users fire events through buttons, and highlights the active state visually. The overlay uses state attributes as observed properties and custom event actions to implement the transition system semantics.
+**Semantics and simulation**: attach runtime behavior to model elements. For state machines, a semantics overlay tracks which state is active, lets users fire events through buttons, and highlights the active state visually. The overlay uses state attributes as observed properties and custom event actions to implement the transition system semantics. To run a model today, use the [simulator](../simulation/), which needs no overlay.
 
 **Editor behavior enhancement**: modify how the editor responds to user actions on specific elements.
 
@@ -179,6 +179,19 @@ Silent views are the mechanism behind all arrow-based notations in Jjodel: ER re
 ### Events (ECA)
 
 See [Jjodel Events](../../reference/jjodel-events) for the full ECA model. In viewpoint context, the most common event is `onDataUpdate`, which fires whenever the model data changes and lets you update `node.state` with computed results.
+
+## Deriving a Viewpoint from a Metamodel
+
+Available since Jjodel 3.1, in Advanced mode. **Derive viewpoint** creates a new viewpoint with one view per class of a metamodel, in a notation you choose, so you start from a working notation instead of an empty viewpoint.
+
+1. Switch the editor to **Advanced** mode.
+2. Right-click the metamodel in the project tree and choose **Derive viewpoint**.
+3. Pick a **Notation**: Generic, State machine (UML statechart), Petri net, Petri net (classic), Flowchart, Flowchart (ISO 5807), Activity (UML), or ER (Chen).
+4. Check the **Metaclass roles** table and click **Derive**.
+
+The table has one row per class, and each row says which role the class plays in the notation: a state, a place, an entity. Jjodel prefills it from the latest derived viewpoint, else from the simulation roles, else from the names and the structure of the metamodel. Every row stays editable. A class with no role of its own inherits the role of its nearest superclass, and the row says so. **Derive** stays off until a class has a role. Generic reads the structure alone and has no table.
+
+The new viewpoint is named `<metamodel> / <notation label>`, with a suffix such as ` (1)` when the name is taken. Its tab opens, but it is not activated: the current viewpoint keeps rendering until you switch. The derivation is one undo step and does not change your simulation roles. A metamodel with no concrete class has nothing to derive.
 
 ## Default Viewpoints
 

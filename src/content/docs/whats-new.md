@@ -5,6 +5,52 @@ sidebar:
   order: 2
 ---
 
+## v3.1, October 2026
+
+Jjodel 3.1 was released on 27 October 2026 and is live at [app.jjodel.io](https://app.jjodel.io). Models can now run: you configure a semantics once on a metamodel and run any model that conforms to it.
+
+Projects: 3.1 saves in format 2.230 and opens projects saved by 3.0. An older save is migrated when you open it. A project saved by 3.1 cannot be opened by an earlier version.
+
+**Simulation**
+
+- Run a model step by step. Bind the concepts of a metamodel to the roles of the engine, with a profile as a starting point: Petri net, flowchart or activity, state machine, extended state machine, DFA, NFA, Moore, Mealy. See [Simulation](../user-guide/simulation/).
+- Events are instances in the model, guards and actions are JjEL expressions, and state attributes have a finite domain (boolean, enumeration, integer range). The rules of a step are in [Simulation semantics](../reference/simulation-semantics/).
+- Inspecting a run: choose by hand or at random among enabled transitions, step back, move along a timeline, set invariants and breakpoints, save a run as a replayable scenario, and see coverage on the canvas.
+- I/O board: drive a running model from buttons, switches, sliders, a keypad, LEDs, 7-segment displays and gauges. A Clock device presses an event at a fixed period. The board has a front panel skin with four themes.
+
+**Viewpoints and notation**
+
+- Derive viewpoint: generate a viewpoint from a metamodel in Generic, UML statechart, Petri net, flowchart, UML activity or ER (Chen) notation. See [Deriving a viewpoint from a metamodel](../user-guide/viewpoints/#deriving-a-viewpoint-from-a-metamodel).
+- Containers: a node can contain other nodes, drawn as frames and partitions, which covers BPMN lanes, composite states and orthogonal regions.
+- Auto layout in the toolbar arranges the whole graph, containers and outside labels included.
+- Edge ends: seven end glyphs, conditional ends and end roles on edge views.
+- A viewpoint option gives each metaclass its own pastel colour, derived from a base colour, with per-class overrides.
+- Symbol Editor: conditional borders per side, corner radius set by rules, a cloud shape, and a preview on three instances while you edit.
+- Vertex labels can sit outside the symbol. Edge views and row views can be created from the canvas menus.
+
+**Validation**
+
+- A complete redesign of validation. Invariants and constraints are written declaratively on metamodel classes, with the full expressiveness of JjEL, and each rule carries its own message. A model is checked on demand: the results list every violation with its message, and the violating nodes are marked on the canvas. The ECA-based validation of 1.5 has been removed. See [Validation](../user-guide/validation/).
+
+**JjScript and Jjodie**
+
+- JjScript creates an M1 instance inside its container: `create instance of X "n" in Parent.ref`.
+- On M1, `=` on a single-valued reference replaces its target and `= null` empties it; `+=` appends while the slot has room; `-=` and `remove y from x.ref` take a value out.
+- Jjodie refuses a generated script that uses a reserved word as a name, and says why.
+
+**Data Manager and AI providers**
+
+- A reference section in the detail of a row links, changes and removes references, following the rules of the slot.
+- **Test connection** lists the models of Anthropic, OpenAI and Gemini. The picker shows the newest model per family and the older ones on demand.
+
+**Fixes**
+
+- Two metaclasses with the same name in different metamodels are distinct for views.
+- Undo after an inline edit on the canvas restores the previous value.
+- Canvas export works for PNG, JPEG, SVG and the clipboard.
+- A malformed `do` block in JjScript stops with an error instead of freezing the tab.
+- Deleting an M1 edge removes the link, not the reference.
+
 ## v3.0, September 2026
 
 Jjodel 3.0 was released on 15 September 2026 and is live at [app.jjodel.io](https://app.jjodel.io). It replaces the public beta that ran from July to September.
@@ -43,10 +89,6 @@ Jjodel 3.0 was released on 15 September 2026 and is live at [app.jjodel.io](http
 - Annotations in the `jjodel/` namespace drive rendering: `renderer`, `unit`, `min`, `max`, `multiline`. See [Metamodel Annotations](../reference/metamodel-annotations/).
 - Names are unique among siblings in a model (two instances with the same container cannot share a name) and across a metamodel (case-sensitive, with a warning on near-duplicates; datatypes have their own namespace). Auto-generated names never shadow a name you typed, and a duplicate metamodel or model name gets a numeric suffix.
 - An `EInt` attribute marked as ID numbers new instances automatically.
-
-**Validation**
-
-- A complete redesign of validation. Invariants and constraints are written declaratively on metamodel classes, with the full expressiveness of JjEL, and each rule carries its own message. A model is checked on demand: the results list every violation with its message, and the violating nodes are marked on the canvas. The ECA-based validation of 1.5 has been removed. See [Validation](../user-guide/validation/).
 
 **Saving**
 

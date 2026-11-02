@@ -4,6 +4,14 @@ Newest-first per day: a new entry goes right under this line. Never append at th
 Log locale di questo repo, distinto da `docs/claude-code-log.md` di `jjodel` (E1 del
 2026-09-03 14:55: la traccia harness di `jjodel-docs` resta in `jjodel-docs`).
 
+## 2026-11-02 — docs: Jjodel 3.1, what's new, simulation, derive viewpoint
+
+**Prompt**: aggiornare docs.jjodel.io per la 3.1
+**File toccati**: src/content/docs/whats-new.md, src/content/docs/user-guide/simulation.md (nuovo), src/content/docs/reference/simulation-semantics.md (nuovo), src/content/docs/user-guide/viewpoints.md, src/content/docs/user-guide/validation.md, docs/claude-code-log.md
+**Esito**: ✅ completato su `main`; build verde
+**Note**: guida e semantica portate da `docs/help/simulation/` di jjodel-frontend (`dotnet-backend-integration`), senza gli ID delle decisioni. Validation spostata da 3.0 a 3.1 secondo la decisione del 2026-10-23. Containers, Auto layout e Symbol Editor stanno solo nel What's New: pagine da scrivere. Eseguito da Claude via bridge desktop
+**Nome del documento prompt**: 2026-11-02 18:27
+
 ## 2026-09-03 — fix: version badges on the current-page sidebar row
 **Prompt**: sulla riga attiva della sidebar (colori invertiti da Starlight) i badge di versione usano la palette del tema opposto; 1.5 invisibile in light, 3.0 quasi invisibile in dark
 **Corregge**: 2026-09-03 14:55, 2026-09-03 22:22
