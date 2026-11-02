@@ -16,7 +16,26 @@ Projects: 3.1 saves in format 2.230 and opens projects saved by 3.0. An older sa
 - Run a model step by step. Bind the concepts of a metamodel to the roles of the engine, with a profile as a starting point: Petri net, flowchart or activity, state machine, extended state machine, DFA, NFA, Moore, Mealy. See [Simulation](../user-guide/simulation/).
 - Events are instances in the model, guards and actions are JjEL expressions, and state attributes have a finite domain (boolean, enumeration, integer range). The rules of a step are in [Simulation semantics](../reference/simulation-semantics/).
 - Inspecting a run: choose by hand or at random among enabled transitions, step back, move along a timeline, set invariants and breakpoints, save a run as a replayable scenario, and see coverage on the canvas.
+- Registers can have a fixed bit width, read per element at Reset, and JjEL has fixed-width bit-vector values.
 - I/O board: drive a running model from buttons, switches, sliders, a keypad, LEDs, 7-segment displays and gauges. A Clock device presses an event at a fixed period. The board has a front panel skin with four themes.
+
+**Jjodie and Refactorings**
+
+- Jjodie moved to a panel docked at the right of the editor, resizable from 420 to 760 pixels. The editor shrinks with it instead of sitting under it.
+- A generated script arrives as a card with its effects listed. The effects are drawn on the canvas as a ghost preview before anything changes, the script can be edited with the preview following, and **Apply** is one undo step. See [Jjodie](../ai/jjodie/#generating-metamodels-and-models).
+- In JjEL mode, the last expression is evaluated again whenever the canvas selection changes, and an evaluation that runs too long stops with a message.
+- A script can be saved as a **Refactoring**, a project artifact you edit beside its metamodel or model and run from the Tools menu. See [Refactorings](../ai/jjodie/#refactorings).
+
+**Templates and project structure**
+
+- A Templates page under BROWSE holds starter projects and worked examples you clone into your workspace, with search and filters by concept and level. Seven gallery projects come with it: Library, Families and Persons, StateMachine, Graph, Shapes, Turnstile, Petri producer-consumer.
+- **File › New** offers Project, Metamodel, Model, Viewpoint, Transformation and From template. The new model dialog asks which metamodel the model conforms to.
+
+**Interface and performance**
+
+- The top bar, editor toolbar, left palette, rails, status bar and menus were restyled on one set of tokens, with a denser layout.
+- Sign in, registration and password reset have a new layout.
+- Large models respond faster: References lists are built only when opened, and the canvas recomputes only the vertices that changed.
 
 **Viewpoints and notation**
 

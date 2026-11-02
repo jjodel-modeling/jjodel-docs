@@ -10,7 +10,7 @@ sidebar:
   label: Jjodie
 ---
 
-Jjodie is the conversational side of AI in Jjodel. It lives in the [Console](../../user-guide/console), in the mode named after it, and does two things: it answers questions about Model-Driven Engineering and about Jjodel, and it turns editing requests into [JjScript](../../languages/jjscript) that you run yourself.
+Jjodie is the conversational side of AI in Jjodel. Since 3.1 it lives in a panel docked at the right of the editor, which also holds the other [Console](../../user-guide/console) modes, and does two things: it answers questions about Model-Driven Engineering and about Jjodel, and it turns editing requests into [JjScript](../../languages/jjscript) that you run yourself.
 
 ![The Console in Jjodie mode: a request and the JjScript answer](./images/jjodie-request-answer.png)
 
@@ -28,7 +28,7 @@ Editing requests come back as JjScript, never as direct changes. With the Consol
 add a Person class with a name attribute of type String and an age of type Int
 ```
 
-Jjodie answers with a sentence and a **JJSCRIPT** block, with **Run** and **Copy** in its header:
+Jjodie answers with a sentence and the script:
 
 ```jjscript title="Jjodie's answer"
 # Create the Person class
@@ -41,13 +41,19 @@ create attribute name in Person type String
 create attribute age in Person type int
 ```
 
-Pressing **Run** does not execute anything yet. It turns the block into a script panel: the line count, a copy button, **Step**, **Run**, and a cross to close it.
+With a model or metamodel in scope, the script arrives as a collapsed card: a status line, its name, the line count, chips with the effects it would have, and a line for any warning. Nothing has changed yet. Jjodie plans the effects without touching the artifact and draws them on the canvas as a ghost preview. The newest card previews by itself; click an older card to preview that one.
 
-![The script panel with Step and Run](./images/jjodie-script-block.png)
+<!-- TODO: screenshot: script card in the docked panel, with the ghost preview on the canvas (new UI) -->
 
-**Run** executes the whole script. **Step** executes one command at a time, which is the way to follow what a longer script does to your metamodel, and to stop before a command you do not want. As commands run, each line gets a check mark, the header turns to **Completed**, and a summary counts the commands applied.
+The bar on the canvas holds **Apply** and **Discard**. **Apply** runs the script as one undo step and reports a mismatch if the real effects differ from the planned ones.
 
-![The script after Run: check marks and 3 commands applied](./images/jjodie-script-completed.png)
+The card offers three more actions:
+
+- **Show script** expands the text.
+- **Edit script** opens it in the panel's editor. Changed lines get a green margin bar, and the preview follows your edits.
+- **Open as file** stores the script as a [Refactoring](#refactorings). A later reply that targets that file offers **Update file**, a diff with **Accept** and **Reject**.
+
+Without a model or metamodel in scope, the script stays a code block with **Run** and **Copy**. **Run** there opens a script panel with **Step** and **Run**: **Step** executes one command at a time, and each line gets a check mark as it runs.
 
 The class is now in the metamodel, with `name` as `EString` and `age` as `EInt`. The tree view shows it at once, and so does the canvas:
 
@@ -56,6 +62,18 @@ The class is now in the metamodel, with `name` as `EString` and `age` as `EInt`.
 The same flow builds models. With the Console bound to a model, a request such as "create two Person instances, Alice and Bob" comes back as the JjScript that instantiates the classes and sets their slots. Jjodie routes between the two levels from the context chip, so bind the Console to the right artifact before you ask.
 
 If you type something that already parses as a JjScript command while in Jjodie mode, the Console does not send it to the model. It shows a card, **This looks like a JjScript command**, with **Run** and **Ask Jjodie**: run it as is, or send it to Jjodie as a question.
+
+## Live JjEL on the Selection
+
+In JjEL mode, the panel keeps your last expression and evaluates it again each time the canvas selection changes. One selected element shows the value and its type; several show a two-column list. **Pin** freezes the elements until you unpin them. An evaluation that runs longer than half a second stops with a "timed out" message.
+
+## Refactorings
+
+A Refactoring is a saved script, stored in the project. Here the word has a broad meaning: an in-place change of a metamodel or of a model, with no guarantee that the meaning is preserved.
+
+You create one from the **Refactoring** entry of the artifact menu, with **Open as file** on a script card, or with **Save as file** in the panel's editor. Its tab opens beside the tab of its target, with the script on the left and the real canvas on the right, and marks unresolved names and warnings in the editor.
+
+To run it, use **Run on** in its tab, **Run refactoring…** in the menu of a metamodel or model tab, or **Run refactoring on <name>…** under Tools. A run always goes through the ghost preview, and **Apply** is one undo step.
 
 ## Meta-Commands
 
@@ -69,7 +87,7 @@ A slash command Jjodie does not know is reported as such and not sent to the mod
 
 ## When Something Fails
 
-A JjScript block that fails stops at the failing command. A dialog shows the error message with two choices: **Skip Line** moves past that command and continues with the rest of the script, **Close** ends the run there. The commands already applied stay applied; the summary counts them along with the error, and the panel shows an **Error** badge in place of **Completed**. There is no button that sends the failure back to Jjodie: to get a fix, tell it what happened in a new message, error message included, and ask only for the part that is missing. [Tutorial 4](../../tutorials/04-jjodie) walks through one such recovery. If the provider selected for the chat has no key but another one does, Jjodie switches to it and says so in the transcript. If no provider is configured at all, the answer tells you to open Settings; see [Providers](../providers).
+A script run from a code block stops at the failing command. A dialog shows the error message with two choices: **Skip Line** moves past that command and continues with the rest of the script, **Close** ends the run there. The commands already applied stay applied; the summary counts them along with the error, and the panel shows an **Error** badge in place of **Completed**. There is no button that sends the failure back to Jjodie: to get a fix, tell it what happened in a new message, error message included, and ask only for the part that is missing. [Tutorial 4](../../tutorials/04-jjodie) walks through one such recovery. If the provider selected for the chat has no key but another one does, Jjodie switches to it and says so in the transcript. If no provider is configured at all, the answer tells you to open Settings; see [Providers](../providers).
 
 ## Explain This
 

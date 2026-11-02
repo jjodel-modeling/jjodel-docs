@@ -4,6 +4,14 @@ Newest-first per day: a new entry goes right under this line. Never append at th
 Log locale di questo repo, distinto da `docs/claude-code-log.md` di `jjodel` (E1 del
 2026-09-03 14:55: la traccia harness di `jjodel-docs` resta in `jjodel-docs`).
 
+## 2026-11-02 22:21: docs: Jjodie panel, Refactorings e Templates nella 3.1
+
+**Prompt**: elencare esattamente cosa c'e' di nuovo in 3.1
+**File toccati**: src/content/docs/whats-new.md, src/content/docs/ai/jjodie.md, docs/claude-code-log.md
+**Esito**: ✅ completato su `main`; build verde
+**Note**: testi ricavati dal codice in produzione e da R-JJD, non provati sull'app live; screenshot del nuovo pannello da fare
+**Nome del documento prompt**: 2026-11-02 22:21
+
 ## 2026-11-02 — docs: Jjodel 3.1, what's new, simulation, derive viewpoint
 
 **Prompt**: aggiornare docs.jjodel.io per la 3.1
